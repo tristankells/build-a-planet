@@ -1,0 +1,51 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "fun categories",
+      "intents": [
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "YesIntent",
+          "slots": [],
+          "samples": [
+            "yes i would like to play",
+            "yes please",
+            "yes"
+          ]
+        },
+        {
+          "name": "CountryIntent",
+          "slots": [
+            {
+              "name": "Country",
+              "type": "AMAZON.Country"
+            }
+          ],
+          "samples": [
+            "{Country}"
+          ]
+        }
+      ],
+      "types": []
+    }
+  }
+}
