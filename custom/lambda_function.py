@@ -125,10 +125,12 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
 class PlanetSizeHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
-        return is_intent_name(Intents.PLANET_SIZE)(handler_input) and session_variables['state'] == State.LAUNCH
+        return is_intent_name(Intents.PLANET_SIZE)(handler_input) \
+               and session_variables['state'] == State.PLANET_SIZE
 
     def handle(self, handler_input):
-        session_variables['state'] = "planetsize"
+        global session_variables
+        session_variables['state'] = State.PLANET_DISTANCE
 
         planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
         speech_text = f'Your planet is {planet_size}. '
@@ -141,10 +143,12 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
 class PlanetDistanceHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
-        return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) and session_variables['state'] == State.PLANET_DISTANCE
+        return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
+               and session_variables['state'] == State.PLANET_DISTANCE
 
     def handle(self, handler_input):
-        session_variables['state'] = "planetdistance"
+        global session_variables
+        session_variables['state'] = State.PLANET_ATMOSPHERE
         
         planet_distance = str(handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
         speech_text = f'Your planet is {planet_distance}. '
@@ -157,9 +161,11 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
 class PlanetAtmosphereHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
-        return is_intent_name(Intents.PLANET_ATMOSPHERE)(handler_input) and session_variables['state'] == State.PLANET_DISTANCE
+        return is_intent_name(Intents.PLANET_ATMOSPHERE)(handler_input) \
+               and session_variables['state'] == State.PLANET_ATMOSPHERE
 
     def handle(self, handler_input):
+        global session_variables
         session_variables['state'] = State.PLANET_ATMOSPHERE
 
         planet_atmosphere = str(handler_input.request_envelope.request.intent.slots[Slots.ATMOSPHERE].value).lower()
