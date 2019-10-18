@@ -10,6 +10,8 @@ from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
 
 # Custom skill code
+from alexa_intents import Intents
+from intent_slots import Slots
 
 SKILL_TITLE = 'Build A Planet'
 sb = SkillBuilder()
@@ -43,6 +45,52 @@ class LaunchRequestHandler(AbstractRequestHandler):
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
             False)
+        return handler_input.response_builder.response
+
+
+class StarBrightnessIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.STAR_BRIGHT)(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+
+        star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
+        speech_text = f'Your star brightness is {star_brightness}'
+
+        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
+            SimpleCard("Hello World", speech_text))
+        return handler_input.response_builder.response
+
+
+class StarAgeIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.STAR_AGE)(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        star_age = str(handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
+        speech_text = f'Your star age is {star_age}'
+
+        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
+            SimpleCard("Hello World", speech_text))
+        return handler_input.response_builder.response
+
+
+class StarSizeIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.STAR_SIZE)(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        star_size = str(handler_input.request_envelope.request.intent.slots[Slots.SIZE].value).lower()
+        speech_text = f'Your star brightness is {star_size}'
+
+        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
+            SimpleCard("Hello World", speech_text))
         return handler_input.response_builder.response
 
 
