@@ -77,7 +77,8 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         session_variables["state"] = State.STAR_AGE
 
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
-        speech_text = f'Your star brightness is {star_brightness}'
+        speech_text = f'Your star brightness is {star_brightness}. '
+        speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -95,7 +96,8 @@ class StarAgeIntentHandler(AbstractRequestHandler):
         session_variables["state"] = State.STAR_SIZE
 
         star_age = str(handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
-        speech_text = f'Your star age is {star_age}'
+        speech_text = f'Your star age is {star_age}. '
+        speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -113,7 +115,8 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         session_variables["state"] = State.PLANET_SIZE
 
         star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
-        speech_text = f'Your star size is {star_size}'
+        speech_text = f'Your star size is {star_size}. '
+        speech_text += Translator.Planet.planet_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -128,7 +131,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
         session_variables['state'] = "planetsize"
 
         planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
-        speech_text = f'Your planet is {planet_size}'
+        speech_text = f'Your planet is {planet_size}. '
+        speech_text += Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -143,7 +147,8 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         session_variables['state'] = "planetdistance"
         
         planet_distance = str(handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
-        speech_text = f'Your planet is {planet_distance}'
+        speech_text = f'Your planet is {planet_distance}. '
+        speech_text += Translator.Planet.planet_atmosphere
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -158,7 +163,7 @@ class PlanetAtmosphereHandler(AbstractRequestHandler):
         session_variables['state'] = State.PLANET_ATMOSPHERE
 
         planet_atmosphere = str(handler_input.request_envelope.request.intent.slots[Slots.ATMOSPHERE].value).lower()
-        speech_text = f'Your planet is {planet_atmosphere}'
+        speech_text = f'Your planet is {planet_atmosphere}. '
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
