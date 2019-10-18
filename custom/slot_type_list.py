@@ -1,5 +1,6 @@
 brightness = ["white", "red", "blue"]
-size = ["dwarf", "giant", "super"]
+StarSize = ["dwarf", "giant", "super"]
 age = ["middleaged", "old", "young"]
 distance = ["close", "midway", "far"]
 atmosphere = ["hydrogen", "nitrogen", "oxygen"]
+PlanetSize = ["large", "medium", "small"]
