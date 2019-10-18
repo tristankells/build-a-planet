@@ -13,7 +13,7 @@ from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
 
 SKILL_TITLE = 'Build A Planet'
 sb = SkillBuilder()
-
+session_variables = {}
 
 class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
@@ -21,7 +21,14 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
     def process(self, handler_input):
         print("Request received: {}".format(handler_input.request_envelope.request))
+
+        global session_variables
         session_variables = handler_input.attributes_manager.session_attributes
+
+        if session_variables is None:
+            session_variables = {
+                "state": "test"
+            }
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
@@ -102,7 +109,8 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
 
     def process(self, handler_input, response):
         print("Response generated: {}".format(response))
-
+        global session_variables
+        handler_input.attributes_manager.session_attributes = session_variables
 
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
