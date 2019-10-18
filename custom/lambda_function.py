@@ -8,6 +8,7 @@ from ask_sdk_model.ui import SimpleCard
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
+from translator.translator import Translator
 
 # Custom skill code
 from alexa_intents import Intents
