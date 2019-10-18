@@ -27,7 +27,7 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
 
         if session_variables is None:
             session_variables = {
-                "state": "test"
+                "state": "init"
             }
 
 
@@ -38,7 +38,8 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-
+        global session_variables
+        session_variables['state'] = "launch"
         speech_text = "You can say hello to me!"
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
@@ -111,6 +112,43 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
         print("Response generated: {}".format(response))
         global session_variables
         handler_input.attributes_manager.session_attributes = session_variables
+
+class PlanetSizeHandler(AbstractExceptionHandler):
+    def can_handle(self, handler_input, exception):
+        global session_variables
+        return is_intent_name("PlanetSize")(handler_input) & session_variables['state'] == "launch"
+
+    def handle(self, handler_input, exception):
+        global session_variables
+        session_variables['state'] = "planetsize"
+        speech = "How large is the planet? Small, medium, or large?"
+        handler_input.response_builder.speak(speech).ask(speech)
+        return handler_input.response_builder.response
+
+
+class PlanetDistanceHandler(AbstractExceptionHandler):
+    def can_handle(self, handler_input, exception):
+        return is_intent_name("PlanetDistance")(handler_input) & session_variables['state'] == "planetsize"
+
+    def handle(self, handler_input, exception):
+        global session_variables
+        session_variables['state'] = "planetdistance"
+        speech = "How far away from the star?"
+        handler_input.response_builder.speak(speech).ask(speech)
+        return handler_input.response_builder.response
+
+
+class PlanetAtmosphereHandler(AbstractExceptionHandler):
+    def can_handle(self, handler_input, exception):
+        return is_intent_name("PlanetAtmosphere")(handler_input) & session_variables['state'] == "planetdistance"
+
+    def handle(self, handler_input, exception):
+        global session_variables
+        session_variables['state'] = "planetatmosphere"
+        speech = "What atmospheric condition is the planet?"
+        handler_input.response_builder.speak(speech).ask(speech)
+        return handler_input.response_builder.response
+
 
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
