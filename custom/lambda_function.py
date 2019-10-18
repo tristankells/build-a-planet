@@ -103,8 +103,8 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        star_size = str(handler_input.request_envelope.request.intent.slots[Slots.SIZE].value).lower()
-        speech_text = f'Your star brightness is {star_size}'
+        star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
+        speech_text = f'Your star size is {star_size}'
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))

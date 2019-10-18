@@ -1,6 +1,7 @@
 class Slots:
     BRIGHTNESS = 'Brightness'
-    SIZE = 'Size'
+    STAR_SIZE = 'StarSize'
+    PLANET_SIZE = 'PlanetSize'
     AGE = 'Age'
     DISTANCE = 'Distance'
     ATMOSPHERE = 'Atmosphere'
