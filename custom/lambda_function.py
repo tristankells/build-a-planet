@@ -12,6 +12,7 @@ from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
 # Custom skill code
 from alexa_intents import Intents
 from intent_slots import Slots
+from build_states import State
 
 SKILL_TITLE = 'Build A Planet'
 sb = SkillBuilder()
@@ -29,7 +30,7 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
 
         if session_variables is None:
             session_variables = {
-                "state": "init"
+                "state": State.STAR_BRIGHTNESS
             }
 
 
@@ -66,7 +67,8 @@ class HelpIntentHandler(AbstractRequestHandler):
 class StarBrightnessIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.STAR_BRIGHT)(handler_input)
+        return is_intent_name(Intents.STAR_BRIGHT)(handler_input) \
+               and session_variables["state"] == State.STAR_BRIGHTNESS
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
