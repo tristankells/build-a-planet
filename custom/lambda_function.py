@@ -114,7 +114,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 class PlanetSizeHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         global session_variables
-        return is_intent_name("PlanetSize")(handler_input) & session_variables['state'] == "launch"
+        return is_intent_name(Intents.PLANET_SIZE)(handler_input) & session_variables['state'] == "launch"
 
     def handle(self, handler_input):
         global session_variables
@@ -126,7 +126,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
 class PlanetDistanceHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
-        return is_intent_name("PlanetDistance")(handler_input) & session_variables['state'] == "planetsize"
+        return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) & session_variables['state'] == "planetsize"
 
     def handle(self, handler_input):
         global session_variables
@@ -138,7 +138,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
 class PlanetAtmosphereHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
-        return is_intent_name("PlanetAtmosphere")(handler_input) & session_variables['state'] == "planetdistance"
+        return is_intent_name(Intents.PLANET_ATMOSPHERE)(handler_input) & session_variables['state'] == "planetdistance"
 
     def handle(self, handler_input):
         global session_variables
