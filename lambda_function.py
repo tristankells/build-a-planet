@@ -21,9 +21,7 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
     def process(self, handler_input):
         print("Request received: {}".format(handler_input.request_envelope.request))
-
         session_variables = handler_input.attributes_manager.session_attributes
-
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
@@ -39,8 +37,6 @@ class LaunchRequestHandler(AbstractRequestHandler):
             SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
             False)
         return handler_input.response_builder.response
-
-
 
 
 class HelpIntentHandler(AbstractRequestHandler):
@@ -106,8 +102,6 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
 
     def process(self, handler_input, response):
         print("Response generated: {}".format(response))
-
-        handler_input.attributes_manager.session_attributes = categories.get_session_attributes()
 
 
 sb.add_request_handler(LaunchRequestHandler())
