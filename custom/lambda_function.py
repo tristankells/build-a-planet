@@ -8,6 +8,7 @@ from ask_sdk_model.ui import SimpleCard
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
+from translator.translator import Translator
 
 # Custom skill code
 from alexa_intents import Intents
@@ -122,8 +123,12 @@ class PlanetSizeHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         global session_variables
         session_variables['state'] = "planetsize"
-        speech = "How large is the planet? Small, medium, or large?"
-        handler_input.response_builder.speak(speech).ask(speech)
+
+        planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
+        speech_text = f'Your planet is {planet_size}'
+
+        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
+            SimpleCard("Hello World", speech_text))
         return handler_input.response_builder.response
 
 
@@ -134,8 +139,12 @@ class PlanetDistanceHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         global session_variables
         session_variables['state'] = "planetdistance"
-        speech = "How far away from the star?"
-        handler_input.response_builder.speak(speech).ask(speech)
+        
+        planet_distance = str(handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
+        speech_text = f'Your planet is {planet_distance}'
+
+        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
+            SimpleCard("Hello World", speech_text))
         return handler_input.response_builder.response
 
 
@@ -146,8 +155,12 @@ class PlanetAtmosphereHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         global session_variables
         session_variables['state'] = "planetatmosphere"
-        speech = "What atmospheric condition is the planet?"
-        handler_input.response_builder.speak(speech).ask(speech)
+
+        planet_atmosphere = str(handler_input.request_envelope.request.intent.slots[Slots.ATMOSPHERE].value).lower()
+        speech_text = f'Your planet is {planet_atmosphere}'
+
+        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
+            SimpleCard("Hello World", speech_text))
         return handler_input.response_builder.response
 
 
