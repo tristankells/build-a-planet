@@ -43,7 +43,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         global session_variables
-        session_variables['state'] = "launch"
+        session_variables['state'] = State.STAR_BRIGHTNESS
         speech_text = "You can say hello to me!"
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
