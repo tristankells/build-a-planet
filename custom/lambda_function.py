@@ -67,6 +67,9 @@ class HelpIntentHandler(AbstractRequestHandler):
 class StarBrightnessIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
+        print(State.STAR_BRIGHTNESS)
+        print(session_variables["state"])
+
         return is_intent_name(Intents.STAR_BRIGHT)(handler_input) \
                and session_variables["state"] == State.STAR_BRIGHTNESS
 
