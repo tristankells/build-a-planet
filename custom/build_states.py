@@ -1,4 +1,5 @@
 class State:
+    LAUNCH = 'launch'
     STAR_BRIGHTNESS = 'star_brightness'
     STAR_SIZE = 'star_size'
     STAR_AGE = 'star_age'

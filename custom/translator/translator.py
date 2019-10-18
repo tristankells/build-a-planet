@@ -1,4 +1,7 @@
 class Translator:
+    class Launch:
+        launch = "Welcome to Build a Planet!"
+
     class Star:
         star_brightness = "How bright is the star?"
         star_age = "How old is the star?"
