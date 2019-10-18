@@ -44,7 +44,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
-        speech_text = Translator.Launch.launch
+        speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
             False)
@@ -155,7 +155,7 @@ class PlanetAtmosphereHandler(AbstractRequestHandler):
         return is_intent_name(Intents.PLANET_ATMOSPHERE)(handler_input) and session_variables['state'] == State.PLANET_DISTANCE
 
     def handle(self, handler_input):
-        session_variables['state'] = STATE.PLANET_ATMOSPHERE
+        session_variables['state'] = State.PLANET_ATMOSPHERE
 
         planet_atmosphere = str(handler_input.request_envelope.request.intent.slots[Slots.ATMOSPHERE].value).lower()
         speech_text = f'Your planet is {planet_atmosphere}'
