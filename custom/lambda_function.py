@@ -74,29 +74,10 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         global session_variables
-        session_variables["state"] = State.STAR_AGE
+        session_variables["state"] = State.STAR_SIZE
 
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
         speech_text = f'Your star brightness is {star_brightness}. '
-        speech_text += Translator.Star.star_size
-
-        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-            SimpleCard("Hello World", speech_text))
-        return handler_input.response_builder.response
-
-
-class StarAgeIntentHandler(AbstractRequestHandler):
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.STAR_AGE)(handler_input) and session_variables["state"] == State.STAR_AGE
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        global session_variables
-        session_variables["state"] = State.STAR_SIZE
-
-        star_age = str(handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
-        speech_text = f'Your star age is {star_age}. '
         speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
@@ -112,11 +93,30 @@ class StarSizeIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         global session_variables
-        session_variables["state"] = State.PLANET_SIZE
+        session_variables["state"] = State.STAR_AGE
 
         star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
         speech_text = f'Your star size is {star_size}. '
         speech_text += Translator.Planet.planet_size
+
+        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
+            SimpleCard("Hello World", speech_text))
+        return handler_input.response_builder.response
+
+
+class StarAgeIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.STAR_AGE)(handler_input) and session_variables["state"] == State.STAR_AGE
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        global session_variables
+        session_variables["state"] = State.PLANET_SIZE
+
+        star_age = str(handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
+        speech_text = f'Your star age is {star_age}. '
+        speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
