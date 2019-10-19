@@ -35,6 +35,7 @@ SKILL_TITLE = 'Build A Planet'
 sb = SkillBuilder()
 session_variables = {}
 
+
 def _load_apl_document(file_path):
     # type: (str) -> Dict[str, Any]
     """Load the apl json document at the path into a dict object."""
@@ -116,13 +117,13 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
-        #     .add_directive(
-        #     RenderDocumentDirective(
-        #         token="testToken",
-        #         document=_load_apl_document('./templates/main.json'),
-        #         datasources=_load_apl_document('./data/main.json')
-        #     )
-        # )
+        .add_directive(
+            RenderDocumentDirective(
+                token="testToken",
+                document=_load_apl_document('./templates/main.json'),
+                datasources=_load_apl_document('./data/main.json')
+            )
+        )
         return handler_input.response_builder.response
 
 
