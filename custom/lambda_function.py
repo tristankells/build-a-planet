@@ -157,7 +157,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        speech_text = f'Your star brightness is {star_size}. '
+        speech_text = f'Your star size is {star_size}. '
         speech_text += Translator.Planet.planet_size
 
         handler_input.response_builder.speak(speech_text).add_directive(
