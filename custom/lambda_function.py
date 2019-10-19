@@ -249,7 +249,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        planet_story.speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        planet_story.speech_text += Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
