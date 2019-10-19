@@ -165,6 +165,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
+        session_variables[PLANET] = {SIZE: planet_size}
 
         speech_text = speech_text = f'Your planet is {planet_size}. '
 
@@ -174,8 +175,6 @@ class PlanetSizeHandler(AbstractRequestHandler):
             speech_text += Translator.Planet.planet_size_medium
         if planet_size == "small":
             speech_text += Translator.Planet.planet_size_small
-
-        session_variables[PLANET][SIZE] = planet_size
 
         speech_text = f'Your planet is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
