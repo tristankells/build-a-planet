@@ -158,15 +158,6 @@ class StarSizeIntentHandler(AbstractRequestHandler):
                 document=_load_apl_document("./templates/main.json"),
                 datasources=_load_apl_document("./data/main.json")
             )
-        ).add_directive(
-            ExecuteCommandsDirective(
-                token="pagerToken",
-                commands=[
-                    AutoPageCommand(
-                        component_id="pagerComponentId",
-                        duration=5000)
-                ]
-            )
         )
 
         return handler_input.response_builder.response
