@@ -66,10 +66,44 @@ class LaunchRequestHandler(AbstractRequestHandler):
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
 
-        speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
-        handler_input.response_builder.speak(speech_text).set_card(
-            SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
-            False)
+        # speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        # handler_input.response_builder.speak(speech_text).set_card(
+        #     SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
+        #     False)
+        # return handler_input.response_builder.response
+
+        speech = 'This is the pager template!'
+
+        handler_input.response_builder.speak(speech).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("pager.json"),
+                datasources={
+                    'pagerTemplateData': {
+                        'type': 'object',
+                        'properties': {
+                            'hintString': 'try the blue cheese!'
+                        },
+                        'transformers': [
+                            {
+                                'inputPath': 'hintString',
+                                'transformer': 'textToHint'
+                            }
+                        ]
+                    }
+                }
+            )
+        ).add_directive(
+            ExecuteCommandsDirective(
+                token="pagerToken",
+                commands=[
+                    AutoPageCommand(
+                        component_id="pagerComponentId",
+                        duration=5000)
+                ]
+            )
+        )
+
         return handler_input.response_builder.response
 
 
