@@ -1,7 +1,7 @@
 {
-    "bodyTemplate2Data": {
+    "bodyTemplate3Data": {
         "type": "object",
-        "objectId": "bt2Sample",
+        "objectId": "bt3Sample",
         "backgroundImage": {
             "contentDescription": null,
             "smallSourceUrl": null,
@@ -21,20 +21,20 @@
                 }
             ]
         },
-        "title": "Parmigiano Reggiano",
+        "title": "Planet Story",
         "image": {
             "contentDescription": null,
             "smallSourceUrl": null,
             "largeSourceUrl": null,
             "sources": [
                 {
-                    "url": "https://d2o906d8ln7ui1.cloudfront.net/images/details_01.png",
+                    "url": "https://d2o906d8ln7ui1.cloudfront.net/images/details_bt3.png",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "https://d2o906d8ln7ui1.cloudfront.net/images/details_01.png",
+                    "url": "https://d2o906d8ln7ui1.cloudfront.net/images/details_bt3.png",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
@@ -44,18 +44,22 @@
         "textContent": {
             "title": {
                 "type": "PlainText",
-                "text": "Parmigiano Reggiano"
+                "text": "Your Planet Name Here"
             },
             "subtitle": {
                 "type": "PlainText",
-                "text": "Country of origin: Italy"
+                "text": "Planet Story"
             },
             "primaryText": {
                 "type": "PlainText",
-                "text": "Parmesan cheese is made from unpasteurized milk. It has a hard, gritty texture, and is fruity and nutty in taste."
+                "text": "This is a picture of your planet... I need to add stuff about the size, distance from sun, etc..."
+            },
+            "bulletPoint": {
+                "type": "PlainText",
+                "text": "• The cheese is named after the Dutch city of Gouda. "
             }
         },
         "logoUrl": "https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png",
-        "hintText": "Try, \"Alexa, give me a fact about cheese\""
+        "hintText": "Try, \"Alexa, tell me more about my planet\""
     }
 }

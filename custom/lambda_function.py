@@ -75,15 +75,6 @@ class LaunchRequestHandler(AbstractRequestHandler):
                 document=_load_apl_document("./templates/main.json"),
                 datasources=_load_apl_document("./data/main.json")
             )
-        ).add_directive(
-            ExecuteCommandsDirective(
-                token="pagerToken",
-                commands=[
-                    AutoPageCommand(
-                        component_id="pagerComponentId",
-                        duration=5000)
-                ]
-            )
         )
 
         return handler_input.response_builder.response
@@ -95,7 +86,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
-            and session_variables["state"] == State.STAR_BRIGHTNESS
+               and session_variables["state"] == State.STAR_BRIGHTNESS
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -107,14 +98,12 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
             handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
         session_variables[STAR] = {BRIGHTNESS: star_brightness}
 
-        speech_text = f'Your star brightness is {star_brightness}'
-
         if star_brightness == "red":
-            speech_text += Translator.Star.star_brightness_red
+            Translator.Star.star_brightness_red
         if star_brightness == "blue":
-            speech_text += Translator.Star.star_brightness_blue
+            Translator.Star.star_brightness_blue
         if star_brightness == "white":
-            speech_text += Translator.Star.star_brightness_white
+            Translator.Star.star_brightness_white
 
         speech_text = f'Your star brightness is {star_brightness}. '
         speech_text += Translator.Star.star_size
@@ -154,16 +143,14 @@ class StarSizeIntentHandler(AbstractRequestHandler):
             handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
         session_variables[STAR][SIZE] = star_size
 
-        speech_text = f'Your star size is {star_size}. '
-
         if star_size == "dwarf":
-            speech_text += Translator.Star.star_size_dwarf
+            Translator.Star.star_size_dwarf
         if star_size == "giant":
-            speech_text += Translator.Star.star_size_giant
+            Translator.Star.star_size_giant
         if star_size == "super":
-            speech_text += Translator.Star.star_size_super
+            Translator.Star.star_size_super
 
-        speech_text += Translator.Planet.planet_size
+        speech_text = Translator.Star.star_size + '. ' + Translator.Planet.planet_size
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
@@ -193,7 +180,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 class PlanetSizeHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_SIZE)(handler_input) \
-            and session_variables['state'] == State.PLANET_SIZE
+               and session_variables['state'] == State.PLANET_SIZE
 
     def handle(self, handler_input):
         global session_variables
@@ -205,16 +192,14 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         session_variables['planets'].append({SIZE: planet_size})
 
-        speech_text = f'Your planet is {planet_size}. '
-
         if planet_size == "large":
-            speech_text += Translator.Planet.planet_size_large
+            Translator.Planet.planet_size_large
         if planet_size == "medium":
-            speech_text += Translator.Planet.planet_size_medium
+            Translator.Planet.planet_size_medium
         if planet_size == "small":
-            speech_text += Translator.Planet.planet_size_small
+            Translator.Planet.planet_size_small
 
-        speech_text += Translator.Planet.planet_distance
+        speech_text = Translator.Planet.planet_size + '. ' + Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
@@ -238,8 +223,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
 class PlanetDistanceHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
-        return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
-            and session_variables['state'] == State.PLANET_DISTANCE
+               and session_variables['state'] == State.PLANET_DISTANCE
 
     def handle(self, handler_input):
         global session_variables
@@ -258,13 +242,14 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         speech_text = f'Your planet is {planet_distance}. '
 
         if planet_distance == "near":
-            speech_text += Translator.Planet.planet_distance_near
+            Translator.Planet.planet_distance_near
         if planet_distance == "midway":
-            speech_text += Translator.Planet.planet_distance_midway
+            Translator.Planet.planet_distance_midway
         if planet_distance == "far":
-            speech_text += Translator.Planet.planet_distance_far
+            Translator.Planet.planet_distance_far
 
-        speech_text += Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        speech_text = Translator.Planet.planet_distance + '. ' + Translator.Launch.launch + ' '\
+                      + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
@@ -322,7 +307,7 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name("AMAZON.CancelIntent")(handler_input) \
-            or is_intent_name("AMAZON.StopIntent")(handler_input)
+               or is_intent_name("AMAZON.StopIntent")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -422,7 +407,6 @@ sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelAndStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
-
 
 # region Custom handlers
 
