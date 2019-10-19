@@ -1,4 +1,6 @@
 # Generic ASK SDK imports
+from typing import Dict, Any
+
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type, is_intent_name
@@ -18,6 +20,9 @@ from build_states import State
 
 # For APL
 import json
+from ask_sdk_model.interfaces.alexa.presentation.apl import (
+    RenderDocumentDirective, ExecuteCommandsDirective, SpeakItemCommand,
+    AutoPageCommand, HighlightMode)
 
 # Const strings
 STAR = 'star'
@@ -31,11 +36,13 @@ SKILL_TITLE = 'Build A Planet'
 sb = SkillBuilder()
 session_variables = {}
 
+
 def _load_apl_document(file_path):
     # type: (str) -> Dict[str, Any]
     """Load the apl json document at the path into a dict object."""
     with open(file_path) as f:
         return json.load(f)
+
 
 class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
@@ -43,7 +50,8 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
 
     def process(self, handler_input):
-        print("Request received: {}".format(handler_input.request_envelope.request))
+        print("Request received: {}".format(
+            handler_input.request_envelope.request))
 
         global session_variables
         session_variables = handler_input.attributes_manager.session_attributes
@@ -85,7 +93,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
-               and session_variables["state"] == State.STAR_BRIGHTNESS
+            and session_variables["state"] == State.STAR_BRIGHTNESS
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -93,7 +101,8 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         session_variables["state"] = State.STAR_SIZE
 
         # Store answer in session variables
-        star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
+        star_brightness = str(
+            handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
         session_variables[STAR] = {BRIGHTNESS: star_brightness}
 
         speech_text = f'Your star brightness is {star_brightness}'
@@ -109,10 +118,14 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-            SimpleCard("Hello World", speech_text)).addDirective({
-                                                        type : 'Alexa.Presentation.APL.RenderDocument',
-                                                        document : _load_apl_document('./templates/main.json'),
-                                                        datasources : _load_apl_document('./data/main.json')})
+            SimpleCard("Hello World", speech_text)
+            .add_directive(
+            RenderDocumentDirective(
+                token="testToken",
+                document=_load_apl_document('./templates/main.json'),
+                datasources=_load_apl_document('./data/main.json')
+            ))
+
         return handler_input.response_builder.response
 
 
@@ -124,13 +137,14 @@ class StarSizeIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         global session_variables
-        session_variables["state"] = State.PLANET_SIZE
+        session_variables["state"]=State.PLANET_SIZE
 
         # Store answer in session variables
-        star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
-        session_variables[STAR][SIZE] = star_size
+        star_size=str(
+            handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
+        session_variables[STAR][SIZE]=star_size
 
-        speech_text = f'Your star size is {star_size}. '
+        speech_text=f'Your star size is {star_size}. '
 
         if star_size == "dwarf":
             speech_text += Translator.Star.star_size_dwarf
@@ -168,17 +182,18 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 class PlanetSizeHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_SIZE)(handler_input) \
-               and session_variables['state'] == State.PLANET_SIZE
+            and session_variables['state'] == State.PLANET_SIZE
 
     def handle(self, handler_input):
         global session_variables
-        session_variables['state'] = State.PLANET_DISTANCE
+        session_variables['state']=State.PLANET_DISTANCE
 
         # Store answer in session variables
-        planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
-        session_variables[PLANET] = {SIZE: planet_size}
+        planet_size=str(
+            handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
+        session_variables[PLANET]={SIZE: planet_size}
 
-        speech_text = f'Your planet is {planet_size}. '
+        speech_text=f'Your planet is {planet_size}. '
 
         if planet_size == "large":
             speech_text += Translator.Planet.planet_size_large
@@ -197,16 +212,17 @@ class PlanetSizeHandler(AbstractRequestHandler):
 class PlanetDistanceHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
-               and session_variables['state'] == State.PLANET_DISTANCE
+            and session_variables['state'] == State.PLANET_DISTANCE
 
     def handle(self, handler_input):
         global session_variables
-        session_variables['state'] = State.STAR_BRIGHTNESS
+        session_variables['state']=State.STAR_BRIGHTNESS
 
         # Store answer in session variables
-        planet_distance = str(handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
-        session_variables[PLANET][DISTANCE] = planet_distance
-        speech_text = f'Your planet is {planet_distance}. '
+        planet_distance=str(
+            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
+        session_variables[PLANET][DISTANCE]=planet_distance
+        speech_text=f'Your planet is {planet_distance}. '
 
         if planet_distance == "near":
             speech_text += Translator.Planet.planet_distance_near
@@ -244,11 +260,11 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name("AMAZON.CancelIntent")(handler_input) \
-               or is_intent_name("AMAZON.StopIntent")(handler_input)
+            or is_intent_name("AMAZON.StopIntent")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text = "Goodbye!"
+        speech_text="Goodbye!"
 
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -275,9 +291,9 @@ class FallbackHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        speech = "Fallback"
+        speech="Fallback. "
 
-        property_question_dict = {
+        property_question_dict={
             State.STAR_BRIGHTNESS: {
                 Translator.Star.star_brightness
             },
@@ -317,7 +333,7 @@ class AllExceptionHandler(AbstractExceptionHandler):
         # Log the exception in CloudWatch Logs
         print('EXCEPTION: ' + str(exception))
 
-        speech = "Sorry, I didn't get it. Can you please say it again!!"
+        speech="Sorry, I didn't get it. Can you please say it again!!"
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
@@ -330,7 +346,7 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
     def process(self, handler_input, response):
         print("Response generated: {}".format(response))
         global session_variables
-        handler_input.attributes_manager.session_attributes = session_variables
+        handler_input.attributes_manager.session_attributes=session_variables
 
 
 sb.add_request_handler(LaunchRequestHandler())
@@ -361,4 +377,4 @@ sb.add_exception_handler(AllExceptionHandler())
 
 sb.add_request_handler(FallbackHandler())
 
-lambda_handler = sb.lambda_handler()
+lambda_handler=sb.lambda_handler()
