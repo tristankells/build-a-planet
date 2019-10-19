@@ -30,11 +30,13 @@ SKILL_TITLE = 'Build A Planet'
 sb = SkillBuilder()
 session_variables = {}
 
+
 def _load_apl_document(file_path):
     # type: (str) -> Dict[str, Any]
     """Load the apl json document at the path into a dict object."""
     with open(file_path) as f:
         return json.load(f)
+
 
 class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
@@ -42,7 +44,8 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
 
     def process(self, handler_input):
-        print("Request received: {}".format(handler_input.request_envelope.request))
+        print("Request received: {}".format(
+            handler_input.request_envelope.request))
 
         global session_variables
         session_variables = handler_input.attributes_manager.session_attributes
@@ -83,7 +86,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
-               and session_variables["state"] == State.STAR_BRIGHTNESS
+            and session_variables["state"] == State.STAR_BRIGHTNESS
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -91,7 +94,8 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         session_variables["state"] = State.STAR_SIZE
 
         # Store answer in session variables
-        star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
+        star_brightness = str(
+            handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
         session_variables[STAR] = {BRIGHTNESS: star_brightness}
 
         speech_text = f'Your star brightness is {star_brightness}'
@@ -108,9 +112,9 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text)).addDirective({
-                                                        type : 'Alexa.Presentation.APL.RenderDocument',
-                                                        document : _load_apl_document('./templates/main.json'),
-                                                        datasources : _load_apl_document('./data/main.json')})
+                type: 'Alexa.Presentation.APL.RenderDocument',
+                document: _load_apl_document('./templates/main.json'),
+                datasources: _load_apl_document('./data/main.json')})
         return handler_input.response_builder.response
 
 
@@ -125,7 +129,8 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         session_variables["state"] = State.PLANET_SIZE
 
         # Store answer in session variables
-        star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
+        star_size = str(
+            handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
         session_variables[STAR][SIZE] = star_size
 
         speech_text = f'Your star size is {star_size}. '
@@ -166,14 +171,15 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 class PlanetSizeHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_SIZE)(handler_input) \
-               and session_variables['state'] == State.PLANET_SIZE
+            and session_variables['state'] == State.PLANET_SIZE
 
     def handle(self, handler_input):
         global session_variables
         session_variables['state'] = State.PLANET_DISTANCE
 
         # Store answer in session variables
-        planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
+        planet_size = str(
+            handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
         session_variables[PLANET] = {SIZE: planet_size}
 
         speech_text = f'Your planet is {planet_size}. '
@@ -195,14 +201,15 @@ class PlanetSizeHandler(AbstractRequestHandler):
 class PlanetDistanceHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
-               and session_variables['state'] == State.PLANET_DISTANCE
+            and session_variables['state'] == State.PLANET_DISTANCE
 
     def handle(self, handler_input):
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
 
         # Store answer in session variables
-        planet_distance = str(handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
+        planet_distance = str(
+            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
         session_variables[PLANET][DISTANCE] = planet_distance
         speech_text = f'Your planet is {planet_distance}. '
 
@@ -242,7 +249,7 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name("AMAZON.CancelIntent")(handler_input) \
-               or is_intent_name("AMAZON.StopIntent")(handler_input)
+            or is_intent_name("AMAZON.StopIntent")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
