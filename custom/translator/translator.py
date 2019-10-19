@@ -1,14 +1,14 @@
 class Translator:
     class Launch:
-        launch = "Welcome to Build a Planet!"
+        launch = "Welcome to Planet Story!"
 
     class Solar_System:
         planetary_system_create = "To get started, let’s build a planetary system! Do you want to learn more about planetary systems?"
-        planetary_system_yes = "Awesome, here’s what you need to know. A planetary system contains a star (like our sun) with a set of gravitationally bound objects in orbit around it (like the planets in our solar system).As the creator of the universe, your choices will determine what kind of planet you’ll build… will it be a new earth? An icy rock? A gaseous giant? Your planet story awaits..."
+        planetary_system_yes = "Awesome, here’s what you need to know.A planetary system contains a star (like our sun) with a set of gravitationally bound objects in orbit around it (like the planets in our solar system).As the creator of the universe, your choices will determine what kind of planet you’ll build… will it be a new earth? An icy rock? A gaseous giant? Your planet story awaits..."
         planetary_system_no = "Awesome, Let’s create your planetary system."
 
     class Star:
-        star_create = "Would you like to create a star?"
+        star_create = "Whould you like to create a star?"
         star_brightness = "What is the brightness of your star? Blue or Yellow or Red?"
         star_brightness_blue = "Blue stars are super hot. The temperature is between 7 to 30 million degrees celsius. These are the hottest stars in the known universe. An example of a blue star is Sirius, located in the Vega constellation."
         star_brightness_yellow = "Yellow stars are hot. The temperature is between 5-6 million degrees celsius. These stars are fairly hot and bright. An example is our own sun."
@@ -29,16 +29,26 @@ class Translator:
         
 
     class Planet:
-        planet_create = "Whould you like to create a planet"
+        planet_create = "Would you like to learn more about how to create planets?"
+        planet_create_yes = ""
+        planet_create_no = "Ok, let’s get started!"
 
-        planet_size = "What size is your planet? Small, medium, or large?"
-        planet_size_large = ""
-        planet_size_small = ""
-        planet_size_medium = ""
+        planet_distance = "Let’s build your planet. How far is the distance between your planet and the star? very close, near or far"
+        planet_distance_very_close = "Your planet will be located very close to the star. hmm, it feels a bit too warm here"
+        planet_distance_near = "Your planet will be somewhat near the star"
+        planet_distance_far = "Your planet will very far from the star"
 
-        planet_distance = "How far away is your planet from the star? near, midway, or far?"
-        planet_distance_near = "Planets that are near blah blah blah"
-        planet_distance_midway = "Planets that are near blah blah blah"
-        planet_distance_far = "Planets that are near blah blah blah"
+        planet_size = "What size would you like your planet to be? Small, regular, or large?"
+        planet_size_large = "Your planet is gigantic, has very strong gravitational force and a very dense atmosphere."
+        planet_size_regular = "Your planet is regular sized, has normal gravitational force, and a thick atmosphere."
+        planet_size_small = "Your planet is tiny, has very weak gravitational force, and very thin atmosphere."
 
-        planet_atmosphere = "What atmospheric condition is your planet? Hydrogen, nitrogen, or oxygen?"
+        planet_age = "What is the age of your age planet? Young, Middle-aged or Old?"
+        planet_age_young = "Your planet was formed fairly recently and has volatile seismic activity"
+        planet_age_middleaged = "Your planet has been in existence for awhile and has fairly regular but stable seismic activity"
+        planet_age_old = "Your planet has been around for a long time, and its seismic activity has ceased"
+
+    class End_Game:
+        game_end = "Awesome! You have created a planetary system! Do you want to learn more about it?"
+        game_end_yes = "Displaying your planet with the stars"
+        game_end_no = "Thanks for playing"
