@@ -127,7 +127,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         if star_size == "super":
             speech_text += Translator.Star.star_size_super
 
-        speech_text += Translator.Planet.planet_atmosphere
+        speech_text += Translator.Planet.planet_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -166,7 +166,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
         planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
         session_variables[PLANET] = {SIZE: planet_size}
 
-        speech_text = speech_text = f'Your planet is {planet_size}. '
+        speech_text = f'Your planet is {planet_size}. '
 
         if planet_size == "large":
             speech_text += Translator.Planet.planet_size_large
@@ -175,7 +175,6 @@ class PlanetSizeHandler(AbstractRequestHandler):
         if planet_size == "small":
             speech_text += Translator.Planet.planet_size_small
 
-        speech_text = f'Your planet is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
