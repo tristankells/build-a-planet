@@ -16,15 +16,16 @@ class Translator:
         star_brightness_other = "This is not a valid brightness. You have to choose between Blue, Yellow or Red."
 
         star_size = "How large should your star be?  super giant, giant, or Dwarf?"
-        star_size_super_giant = ""
-        star_size_giant = ""
-        star_size_dwarf = ""
-       
+        star_size_super_giant = "Supergiants are the biggest and the brightest among the stars. An example of supergiant star is  Rigel located on the constellation of Orion."
+        star_size_giant = "Giants stars have a greater radius and brightness compared to the dwarf stars. An example of giant star is VY Canis Majoris."
+        star_size_dwarf = "Dwarf stars has an average or low brightness and size compared to the other stars. An example of a dwarf star is Proxima Centauri, and our own sun."
+        star_size_other = "Sorry, that’s not a valid choice for star size, try again. Choose between super giant, giant or dwarf."
 
         star_age = "What is the age of your star? Young, Middleaged or old ?"
-        star_age_young = ""     
-        star_age_middleaged = ""
-        star_age_old = ""
+        star_age_young = "Your star was born not too long ago."     
+        star_age_middleaged = "Your star has been active for awhile."
+        star_age_old = "Your star is nearing the end of its life."
+        star_age_other = "The age of the planet is Invalid"
         
 
     class Planet:

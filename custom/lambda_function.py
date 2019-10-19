@@ -147,7 +147,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         if star_size == "giant":
             Translator.Star.star_size_giant
         if star_size == "super":
-            Translator.Star.star_size_super
+            Translator.Star.star_size_super_giant
 
         speech_text = f'Your star brightness is {star_size}. '
         speech_text += Translator.Planet.planet_size
