@@ -119,7 +119,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/yellow_star.png'
 
         # Ask next question
-        planet_story.speech_text += Translator.Star.star_size
+        planet_story.speech_text += (' ' + Translator.Star.star_size)
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
@@ -207,7 +207,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        planet_story.speech_text += Translator.Planet.planet_distance
+        planet_story.speech_text += (' ' + Translator.Planet.planet_distance)
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
@@ -249,7 +249,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        planet_story.speech_text += Translator.Planet.planet_distance + ' ' + Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        planet_story.speech_text += ' ' + Translator.Planet.planet_distance + ' ' + Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
