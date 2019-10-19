@@ -36,7 +36,7 @@ class Translator:
         planet_size_small = ""
         planet_size_medium = ""
 
-        planet_distance = "How far away is your planet from the star? Close, midway, or far?"
+        planet_distance = "How far away is your planet from the star? near, midway, or far?"
         planet_distance_near = "Planets that are near blah blah blah"
         planet_distance_midway = "Planets that are near blah blah blah"
         planet_distance_far = "Planets that are near blah blah blah"
