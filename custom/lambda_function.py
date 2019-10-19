@@ -20,8 +20,8 @@ from build_states import State
 # For APL
 import json
 from ask_sdk_model.interfaces.alexa.presentation.apl import (
-    RenderDocumentDirective, ExecuteCommandsDirective, SpeakItemCommand,
-    AutoPageCommand, HighlightMode)
+    RenderDocumentDirective, ExecuteCommandsDirective,
+    AutoPageCommand)
 
 # Const strings
 STAR = 'star'
@@ -66,32 +66,13 @@ class LaunchRequestHandler(AbstractRequestHandler):
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
 
-        # speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
-        # handler_input.response_builder.speak(speech_text).set_card(
-        #     SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
-        #     False)
-        # return handler_input.response_builder.response
+        speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
-        speech = 'This is the pager template!'
-
-        handler_input.response_builder.speak(speech).add_directive(
+        handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
-                datasources={
-                    'pagerTemplateData': {
-                        'type': 'object',
-                        'properties': {
-                            'hintString': 'try the blue cheese!'
-                        },
-                        'transformers': [
-                            {
-                                'inputPath': 'hintString',
-                                'transformer': 'textToHint'
-                            }
-                        ]
-                    }
-                }
+                datasources=_load_apl_document("./data/main.json")
             )
         ).add_directive(
             ExecuteCommandsDirective(
@@ -116,9 +97,27 @@ class HelpIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         speech_text = "You can say hello to me!"
 
-        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-            SimpleCard("Hello World", speech_text))
+        handler_input.response_builder.speak(speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=_load_apl_document("./data/main.json")
+            )
+        ).add_directive(
+            ExecuteCommandsDirective(
+                token="pagerToken",
+                commands=[
+                    AutoPageCommand(
+                        component_id="pagerComponentId",
+                        duration=5000)
+                ]
+            )
+        )
+
         return handler_input.response_builder.response
+
+
+# region Star Handlers
 
 
 class StarBrightnessIntentHandler(AbstractRequestHandler):
@@ -147,12 +146,22 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         speech_text = f'Your star brightness is {star_brightness}. '
         speech_text += Translator.Star.star_size
 
-        handler_input.response_builder.speak(speech_text).ask(speech_text).add_directive(
+        handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
-                token="testToken",
-                document=_load_apl_document('./templates/main.json'),
-                datasources=_load_apl_document('./data/main.json')
-            ))
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=_load_apl_document("./data/main.json")
+            )
+        ).add_directive(
+            ExecuteCommandsDirective(
+                token="pagerToken",
+                commands=[
+                    AutoPageCommand(
+                        component_id="pagerComponentId",
+                        duration=5000)
+                ]
+            )
+        )
 
         return handler_input.response_builder.response
 
@@ -181,28 +190,29 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
         speech_text = Translator.Planet.planet_size
 
-        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-            SimpleCard("Hello World", speech_text))
+        handler_input.response_builder.speak(speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=_load_apl_document("./data/main.json")
+            )
+        ).add_directive(
+            ExecuteCommandsDirective(
+                token="pagerToken",
+                commands=[
+                    AutoPageCommand(
+                        component_id="pagerComponentId",
+                        duration=5000)
+                ]
+            )
+        )
+
         return handler_input.response_builder.response
 
 
-# class StarAgeIntentHandler(AbstractRequestHandler):
-#     def can_handle(self, handler_input):
-#         # type: (HandlerInput) -> bool
-#         return is_intent_name(Intents.STAR_AGE)(handler_input) and session_variables["state"] == State.STAR_AGE
-#
-#     def handle(self, handler_input):
-#         # type: (HandlerInput) -> Response
-#         global session_variables
-#         session_variables["state"] = State.PLANET_SIZE
-#
-#         star_age = str(handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
-#         speech_text = f'Your star age is {star_age}. '
-#         speech_text += Translator.Star.star_size
-#
-#         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-#             SimpleCard("Hello World", speech_text))
-#         return handler_input.response_builder.response
+# endregion
+
+# region Planet Handlers
 
 
 class PlanetSizeHandler(AbstractRequestHandler):
@@ -228,8 +238,23 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         speech_text = Translator.Planet.planet_distance
 
-        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-            SimpleCard("Hello World", speech_text))
+        handler_input.response_builder.speak(speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=_load_apl_document("./data/main.json")
+            )
+        ).add_directive(
+            ExecuteCommandsDirective(
+                token="pagerToken",
+                commands=[
+                    AutoPageCommand(
+                        component_id="pagerComponentId",
+                        duration=5000)
+                ]
+            )
+        )
+
         return handler_input.response_builder.response
 
 
@@ -256,28 +281,27 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
-        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-            SimpleCard("Hello World", speech_text))
+        handler_input.response_builder.speak(speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=_load_apl_document("./data/main.json")
+            )
+        ).add_directive(
+            ExecuteCommandsDirective(
+                token="pagerToken",
+                commands=[
+                    AutoPageCommand(
+                        component_id="pagerComponentId",
+                        duration=5000)
+                ]
+            )
+        )
 
         return handler_input.response_builder.response
 
 
-# class PlanetAtmosphereHandler(AbstractRequestHandler):
-#     def can_handle(self, handler_input):
-#         return is_intent_name(Intents.PLANET_ATMOSPHERE)(handler_input) \
-#                and session_variables['state'] == State.PLANET_ATMOSPHERE
-#
-#     def handle(self, handler_input):
-#         global session_variables
-#         session_variables['state'] = State.PLANET_ATMOSPHERE
-#
-#         planet_atmosphere = str(handler_input.request_envelope.request.intent.slots[Slots.ATMOSPHERE].value).lower()
-#         speech_text = f'Your planet is {planet_atmosphere}. '
-#
-#         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-#             SimpleCard("Hello World", speech_text))
-#         return handler_input.response_builder.response
-
+# endregion
 
 class CancelAndStopIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
@@ -314,7 +338,7 @@ class FallbackHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        speech = "Fallback. "
+        speech_text = "Fallback. "
 
         property_question_dict = {
             State.STAR_BRIGHTNESS: {
@@ -331,9 +355,25 @@ class FallbackHandler(AbstractRequestHandler):
             }
         }
 
-        speech += property_question_dict[session_variables['state']]
+        speech_text += property_question_dict[session_variables['state']]
 
-        handler_input.response_builder.speak(speech).ask(speech)
+        handler_input.response_builder.speak(speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=_load_apl_document("./data/main.json")
+            )
+        ).add_directive(
+            ExecuteCommandsDirective(
+                token="pagerToken",
+                commands=[
+                    AutoPageCommand(
+                        component_id="pagerComponentId",
+                        duration=5000)
+                ]
+            )
+        )
+
         return handler_input.response_builder.response
 
 
