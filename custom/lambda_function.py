@@ -78,20 +78,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
-                datasources={
-                    'pagerTemplateData': {
-                        'type': 'object',
-                        'properties': {
-                            'hintString': 'try the blue cheese!'
-                        },
-                        'transformers': [
-                            {
-                                'inputPath': 'hintString',
-                                'transformer': 'textToHint'
-                            }
-                        ]
-                    }
-                }
+                datasources=_load_apl_document("./data/main.json")
             )
         ).add_directive(
             ExecuteCommandsDirective(
