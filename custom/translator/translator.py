@@ -21,11 +21,11 @@ class Translator:
         star_size_dwarf = "Dwarf stars has an average or low brightness and size compared to the other stars. An example of a dwarf star is Proxima Centauri, and our own sun."
         star_size_other = "Sorry, that’s not a valid choice for star size, try again. Choose between super giant, giant or dwarf."
 
-        star_age = "What is the age of your star? Young or Middleaged or Old ?"
+        star_age = "What is the age of your star? Young or Middleaged or Old?"
         star_age_young = "Your star was born not too long ago."     
         star_age_middleaged = "Your star has been active for awhile."
         star_age_old = "Your star is nearing the end of its life."
-        star_age_other = "The age of the planet is Invalid"
+        star_age_other = "The age of the planet is Invalid."
         
 
     class Planet:
