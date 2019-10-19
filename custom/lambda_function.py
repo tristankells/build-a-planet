@@ -116,14 +116,14 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-            SimpleCard("Hello World", speech_text))
-        .add_directive(
+            SimpleCard("Hello World", speech_text)
+            .add_directive(
             RenderDocumentDirective(
                 token="testToken",
                 document=_load_apl_document('./templates/main.json'),
                 datasources=_load_apl_document('./data/main.json')
             )
-        )
+
         return handler_input.response_builder.response
 
 
@@ -135,14 +135,14 @@ class StarSizeIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         global session_variables
-        session_variables["state"] = State.PLANET_SIZE
+        session_variables["state"]=State.PLANET_SIZE
 
         # Store answer in session variables
-        star_size = str(
+        star_size=str(
             handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
-        session_variables[STAR][SIZE] = star_size
+        session_variables[STAR][SIZE]=star_size
 
-        speech_text = f'Your star size is {star_size}. '
+        speech_text=f'Your star size is {star_size}. '
 
         if star_size == "dwarf":
             speech_text += Translator.Star.star_size_dwarf
@@ -184,14 +184,14 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         global session_variables
-        session_variables['state'] = State.PLANET_DISTANCE
+        session_variables['state']=State.PLANET_DISTANCE
 
         # Store answer in session variables
-        planet_size = str(
+        planet_size=str(
             handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
-        session_variables[PLANET] = {SIZE: planet_size}
+        session_variables[PLANET]={SIZE: planet_size}
 
-        speech_text = f'Your planet is {planet_size}. '
+        speech_text=f'Your planet is {planet_size}. '
 
         if planet_size == "large":
             speech_text += Translator.Planet.planet_size_large
@@ -214,13 +214,13 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         global session_variables
-        session_variables['state'] = State.STAR_BRIGHTNESS
+        session_variables['state']=State.STAR_BRIGHTNESS
 
         # Store answer in session variables
-        planet_distance = str(
+        planet_distance=str(
             handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
-        session_variables[PLANET][DISTANCE] = planet_distance
-        speech_text = f'Your planet is {planet_distance}. '
+        session_variables[PLANET][DISTANCE]=planet_distance
+        speech_text=f'Your planet is {planet_distance}. '
 
         if planet_distance == "near":
             speech_text += Translator.Planet.planet_distance_near
@@ -262,7 +262,7 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text = "Goodbye!"
+        speech_text="Goodbye!"
 
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -289,9 +289,9 @@ class FallbackHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        speech = "Fallback. "
+        speech="Fallback. "
 
-        property_question_dict = {
+        property_question_dict={
             State.STAR_BRIGHTNESS: {
                 Translator.Star.star_brightness
             },
@@ -322,7 +322,7 @@ class AllExceptionHandler(AbstractExceptionHandler):
         # Log the exception in CloudWatch Logs
         print('EXCEPTION: ' + str(exception))
 
-        speech = "Sorry, I didn't get it. Can you please say it again!!"
+        speech="Sorry, I didn't get it. Can you please say it again!!"
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
@@ -335,7 +335,7 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
     def process(self, handler_input, response):
         print("Response generated: {}".format(response))
         global session_variables
-        handler_input.attributes_manager.session_attributes = session_variables
+        handler_input.attributes_manager.session_attributes=session_variables
 
 
 sb.add_request_handler(LaunchRequestHandler())
@@ -366,4 +366,4 @@ sb.add_exception_handler(AllExceptionHandler())
 
 sb.add_request_handler(FallbackHandler())
 
-lambda_handler = sb.lambda_handler()
+lambda_handler=sb.lambda_handler()
