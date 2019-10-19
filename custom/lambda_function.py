@@ -20,8 +20,8 @@ from build_states import State
 # For APL
 import json
 from ask_sdk_model.interfaces.alexa.presentation.apl import (
-    RenderDocumentDirective, ExecuteCommandsDirective, SpeakItemCommand,
-    AutoPageCommand, HighlightMode)
+    RenderDocumentDirective, ExecuteCommandsDirective,
+    AutoPageCommand)
 
 # Const strings
 STAR = 'star'
@@ -66,15 +66,9 @@ class LaunchRequestHandler(AbstractRequestHandler):
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
 
-        # speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
-        # handler_input.response_builder.speak(speech_text).set_card(
-        #     SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
-        #     False)
-        # return handler_input.response_builder.response
+        speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
-        speech = 'This is the pager template!'
-
-        handler_input.response_builder.speak(speech).add_directive(
+        handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
