@@ -142,12 +142,20 @@ class StarSizeIntentHandler(AbstractRequestHandler):
             handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
         session_variables[STAR][SIZE] = star_size
 
+        apl_datasource = _load_apl_document("./data/main.json")
+
         if star_size == "dwarf":
             Translator.Star.star_size_dwarf
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if star_size == "giant":
             Translator.Star.star_size_giant
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if star_size == "super":
-            Translator.Star.star_size_super
+            Translator.Star.star_size_super_giant
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
         speech_text = f'Your star brightness is {star_size}. '
         speech_text += Translator.Planet.planet_size
@@ -156,7 +164,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
-                datasources=_load_apl_document("./data/main.json")
+                datasources=apl_datasource
             )
         )
 
@@ -183,12 +191,20 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         session_variables['planets'].append({SIZE: planet_size})
 
+        apl_datasource = _load_apl_document("./data/main.json")
+
         if planet_size == "large":
             Translator.Planet.planet_size_large
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "medium":
             Translator.Planet.planet_size_medium
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "small":
             Translator.Planet.planet_size_small
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
         speech_text = f'Your star brightness is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
@@ -197,16 +213,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
-                datasources=_load_apl_document("./data/main.json")
-            )
-        ).add_directive(
-            ExecuteCommandsDirective(
-                token="pagerToken",
-                commands=[
-                    AutoPageCommand(
-                        component_id="pagerComponentId",
-                        duration=5000)
-                ]
+                datasources=apl_datasource
             )
         )
 
@@ -232,12 +239,20 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planets[len(planets) - 1][DISTANCE] = planet_distance
 
+        apl_datasource = _load_apl_document("./data/main.json")
+
         if planet_distance == "near":
             Translator.Planet.planet_distance_near
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_distance == "midway":
             Translator.Planet.planet_distance_midway
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_distance == "far":
             Translator.Planet.planet_distance_far
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
         speech_text = Translator.Planet.planet_distance + '. ' + Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
@@ -245,16 +260,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
-                datasources=_load_apl_document("./data/main.json")
-            )
-        ).add_directive(
-            ExecuteCommandsDirective(
-                token="pagerToken",
-                commands=[
-                    AutoPageCommand(
-                        component_id="pagerComponentId",
-                        duration=5000)
-                ]
+                datasources=apl_datasource
             )
         )
 
