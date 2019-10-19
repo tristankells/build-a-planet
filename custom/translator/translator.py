@@ -25,8 +25,8 @@ class Translator:
         planet_size_medium = "planet is medium"
 
         planet_distance = "How far away is your planet from the star? near, midway, or far?"
-        planet_distance_near = "Planet that are near "
-        planet_distance_midway = "Planet that are midway"
-        planet_distance_far = "Planets that are far "
+        planet_distance_near = "Planet is near "
+        planet_distance_midway = "Planet is midway"
+        planet_distance_far = "Planets is far "
 
         planet_atmosphere = "What atmospheric condition is your planet? Hydrogen, nitrogen, or oxygen?"
