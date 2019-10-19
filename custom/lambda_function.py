@@ -176,6 +176,50 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+class StarAgeIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.STAR_SIZE)(
+            handler_input) and planet_story.current_question == Question.Star.STAR_AGE
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        star_size = str(
+            handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
+
+        planet_story.set_star_size(star_size)
+
+        apl_datasource = _load_apl_document("./data/main.json")
+
+        planet_story.speech_text = f'Your star size is {star_size}. '
+
+        ## If blue sun
+        if star_size == "dwarf":
+            planet_story.speech_text += Translator.Star.star_size_dwarf
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF
+        if star_size == "giant":
+            planet_story.speech_text += Translator.Star.star_size_giant
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
+        if star_size == "super":
+            planet_story.speech_text += Translator.Star.star_size_super_giant
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
+
+        planet_story.speech_text += (' ' + Translator.Planet.planet_size)
+
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=apl_datasource
+            )
+        )
+
+        return handler_input.response_builder.response
+
+
 # endregion
 
 # region Planet Handlers
