@@ -16,6 +16,7 @@ from translator.translator import Translator
 from alexa_intents import Intents
 from intent_slots import Slots
 from build_states import State
+from planet_story.planet_story import PlanetStory
 
 # For APL
 import json
@@ -32,8 +33,10 @@ SIZE = 'size'
 DISTANCE = 'distance'
 
 SKILL_TITLE = 'Build A Planet'
+
 sb = SkillBuilder()
-session_variables = {}
+session_variables: dict = {}
+planet_story: PlanetStory
 
 
 def _load_apl_document(file_path):
@@ -47,13 +50,13 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
     Request interceptors are invoked immediately before execution of the request handler for an incoming request.
     """
-
     def process(self, handler_input):
         print("Request received: {}".format(
             handler_input.request_envelope.request))
 
-        global session_variables
+        global session_variables, planet_story
         session_variables = handler_input.attributes_manager.session_attributes
+        planet_story = PlanetStory(session_variables)
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
@@ -63,20 +66,15 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        global session_variables
-        session_variables['state'] = State.STAR_BRIGHTNESS
-        session_variables['planets'] = []
+        planet_story.launch()
 
-        speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
-
-        handler_input.response_builder.speak(speech_text).add_directive(
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
                 datasources=_load_apl_document("./data/main.json")
             )
         )
-
         return handler_input.response_builder.response
 
 # region Star Handlers
