@@ -108,8 +108,8 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
             Translator.Star.star_brightness_blue
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
-        if star_brightness == "white":
-            Translator.Star.star_brightness_white
+        if star_brightness == "yellow":
+            Translator.Star.star_brightness_yellow
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-03.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-03.png'
 
