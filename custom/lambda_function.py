@@ -237,12 +237,12 @@ sb.add_request_handler(SessionEndedRequestHandler())
 # region Custom handlers
 
 # Star
-sb.add_request_handler(StarAgeIntentHandler())
+# sb.add_request_handler(StarAgeIntentHandler())
 sb.add_request_handler(StarBrightnessIntentHandler())
 sb.add_request_handler(StarSizeIntentHandler())
 
 # Planets
-sb.add_request_handler(PlanetAtmosphereHandler())
+# sb.add_request_handler(PlanetAtmosphereHandler())
 sb.add_request_handler(PlanetDistanceHandler())
 sb.add_request_handler(PlanetSizeHandler())
 
