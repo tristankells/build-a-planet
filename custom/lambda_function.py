@@ -118,15 +118,6 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
                 document=_load_apl_document("./templates/main.json"),
                 datasources=apl_datasource
             )
-        ).add_directive(
-            ExecuteCommandsDirective(
-                token="pagerToken",
-                commands=[
-                    AutoPageCommand(
-                        component_id="pagerComponentId",
-                        duration=5000)
-                ]
-            )
         )
 
         return handler_input.response_builder.response
