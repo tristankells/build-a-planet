@@ -41,7 +41,9 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
 
         if session_variables is None:
             session_variables = {
-                "state": State.STAR_BRIGHTNESS
+                "state": State.STAR_BRIGHTNESS,
+                STAR: {},
+                PLANET: {}
             }
 
 
