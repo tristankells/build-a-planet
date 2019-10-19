@@ -223,7 +223,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
 class PlanetDistanceHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
-        and session_variables['state'] == State.PLANET_DISTANCE
+        return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
+               and session_variables['state'] == State.PLANET_DISTANCE
 
     def handle(self, handler_input):
         global session_variables
