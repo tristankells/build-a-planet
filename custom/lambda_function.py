@@ -32,6 +32,7 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
     Request interceptors are invoked immediately before execution of the request handler for an incoming request.
     """
+
     def process(self, handler_input):
         print("Request received: {}".format(handler_input.request_envelope.request))
 
@@ -201,7 +202,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         if planet_distance == "far":
             speech_text += Translator.Planet.planet_distance_far
 
-        speech_text += Translator.Launch.launch
+        speech_text += Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
