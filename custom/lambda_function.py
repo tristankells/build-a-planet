@@ -1,4 +1,6 @@
 # Generic ASK SDK imports
+from typing import Dict, Any
+
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type, is_intent_name
@@ -273,7 +275,7 @@ class FallbackHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        speech = "Fallback"
+        speech = "Fallback. "
 
         property_question_dict = {
             State.STAR_BRIGHTNESS: {
