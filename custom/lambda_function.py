@@ -33,6 +33,7 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
     Request interceptors are invoked immediately before execution of the request handler for an incoming request.
     """
+
     def process(self, handler_input):
         print("Request received: {}".format(handler_input.request_envelope.request))
 
@@ -49,7 +50,6 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
-
 
         speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
         handler_input.response_builder.speak(speech_text).set_card(
@@ -117,7 +117,6 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         # Store answer in session variables
         star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
         session_variables[STAR][SIZE] = star_size
-
 
         speech_text = f'Your star size is {star_size}. '
 
@@ -205,7 +204,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         if planet_distance == "far":
             speech_text += Translator.Planet.planet_distance_far
 
-        speech_text += Translator.Launch.launch
+        speech_text += Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -281,7 +280,6 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
         print("Response generated: {}".format(response))
         global session_variables
         handler_input.attributes_manager.session_attributes = session_variables
-
 
 
 sb.add_request_handler(LaunchRequestHandler())
