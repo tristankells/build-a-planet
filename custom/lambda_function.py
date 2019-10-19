@@ -196,13 +196,11 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         global session_variables
-        session_variables['state'] = State.PLANET_ATMOSPHERE
+        session_variables['state'] = State.STAR_BRIGHTNESS
 
         # Store answer in session variables
         planet_distance = str(handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
         session_variables[PLANET][DISTANCE] = planet_distance
-
-
         speech_text = f'Your planet is {planet_distance}. '
 
         if planet_distance == "near":
@@ -212,10 +210,11 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         if planet_distance == "far":
             speech_text += Translator.Planet.planet_distance_far
 
-        speech_text += Translator.Planet.planet_atmosphere
+        speech_text += Translator.Launch.launch
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
+
         return handler_input.response_builder.response
 
 
@@ -287,6 +286,7 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
         print("Response generated: {}".format(response))
         global session_variables
         handler_input.attributes_manager.session_attributes = session_variables
+
 
 
 sb.add_request_handler(LaunchRequestHandler())
