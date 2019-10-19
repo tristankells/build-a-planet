@@ -4,7 +4,7 @@ class Translator:
 
     class Solar_System:
         planetary_system_create = "To get started, let’s build a planetary system! Do you want to learn more about planetary systems?"
-        planetary_system_yes = "Awesome, here’s what you need to know. A planetary system contains a star (like our sun) with a set of gravitationally bound objects in orbit around it (like the planets in our solar system). As the creator of the universe, your choices will determine what kind of planet you’ll build… will it be a new earth? An icy rock? A gaseous giant? Your planet story awaits."
+        planetary_system_yes = "Awesome, here’s what you need to know.A planetary system contains a star (like our sun) with a set of gravitationally bound objects in orbit around it (like the planets in our solar system).As the creator of the universe, your choices will determine what kind of planet you’ll build… will it be a new earth? An icy rock? A gaseous giant? Your planet story awaits..."
         planetary_system_no = "Awesome, Let’s create your planetary system."
 
     class Star:
@@ -15,7 +15,7 @@ class Translator:
         star_brightness_red = "Red stars are Warm. The temperature is between 2-4 Million degrees celsius. These stars are colder than most and are far less brighter. An example of this is Betelgeuse in the Antares constellation."
         star_brightness_other = "This is not a valid brightness. You have to choose between Blue or Yellow or Red."
 
-        star_size = "How large should your star be?  super giant,or giant or Dwarf?"
+        star_size = "How large should your star be?  super giant, giant, or Dwarf?"
         star_size_super_giant = "Supergiants are the biggest and the brightest among the stars. An example of supergiant star is  Rigel located on the constellation of Orion."
         star_size_giant = "Giants stars have a greater radius and brightness compared to the dwarf stars. An example of giant star is VY Canis Majoris."
         star_size_dwarf = "Dwarf stars has an average or low brightness and size compared to the other stars. An example of a dwarf star is Proxima Centauri, and our own sun."
@@ -32,11 +32,13 @@ class Translator:
         planet_create = "Whould you like to create a planet"
 
         planet_size = "What size is your planet? Small, medium, or large?"
+        planet_size_large = ""
         planet_size_small = ""
         planet_size_medium = ""
-        planet_size_large = ""
 
-        planet_distance = "How far away is your planet from the star? Close, midway, or far?"
+        planet_distance = "How far away is your planet from the star? near, midway, or far?"
         planet_distance_near = "Planets that are near blah blah blah"
         planet_distance_midway = "Planets that are near blah blah blah"
         planet_distance_far = "Planets that are near blah blah blah"
+
+        planet_atmosphere = "What atmospheric condition is your planet? Hydrogen, nitrogen, or oxygen?"
