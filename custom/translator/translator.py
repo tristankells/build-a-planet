@@ -9,5 +9,5 @@ class Translator:
 
     class Planet:
         planet_size = "What size is your planet? Small, medium, or large?"
-        planet_distance = "How far away is your planet from the star? Close, midway, or far?"
+        planet_distance = "How far away is your planet from the star? Near, midway, or far?"
         planet_atmosphere = "What atmospheric condition is your planet? Hydrogen, nitrogen, or oxygen?"
