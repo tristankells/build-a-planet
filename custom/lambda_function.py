@@ -15,8 +15,8 @@ from translator.translator import Translator
 # Custom skill code
 from alexa_intents import Intents
 from intent_slots import Slots
-from build_states import State
 from planet_story.planet_story import PlanetStory
+from planet_story.solar_questions import Question
 
 # For APL
 import json
@@ -78,42 +78,43 @@ class LaunchRequestHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 # region Star Handlers
+
+
 class StarBrightnessIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
-               and session_variables["state"] == State.STAR_BRIGHTNESS
+               and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        global session_variables
-        session_variables["state"] = State.STAR_SIZE
 
-        # Store answer in session variables
         star_brightness = str(
             handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
-        session_variables[STAR] = {BRIGHTNESS: star_brightness}
+
+        planet_story.set_star_brightness(star_brightness)
 
         apl_datasource = _load_apl_document("./data/main.json")
-        speech_text = f'Your star brightness is {star_brightness}. '
+
+        planet_story.speech_text = f'Your star brightness is {star_brightness}. '
 
         if star_brightness == "red":
-            speech_text += Translator.Star.star_brightness_red
+            planet_story.speech_text += Translator.Star.star_brightness_red
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/red_star.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/red_star.png'
         if star_brightness == "blue":
-            speech_text += Translator.Star.star_brightness_blue
+            planet_story.speech_text += Translator.Star.star_brightness_blue
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/blue_star.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/blue_star.png'
         if star_brightness == "yellow":
-            speech_text += Translator.Star.star_brightness_yellow
+            planet_story.speech_text += Translator.Star.star_brightness_yellow
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/yellow_star.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/yellow_star.png'
 
-        ## Ask next question
-        speech_text += Translator.Star.star_size
+        # Ask next question
+        planet_story.speech_text += Translator.Star.star_size
 
-        handler_input.response_builder.speak(speech_text).add_directive(
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
@@ -127,38 +128,35 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 class StarSizeIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.STAR_SIZE)(handler_input) and session_variables["state"] == State.STAR_SIZE
+        return is_intent_name(Intents.STAR_SIZE)(handler_input) and planet_story.current_question == Question.Star.STAR_SIZE
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        global session_variables
-        session_variables["state"] = State.PLANET_SIZE
-
-        # Store answer in session variables
         star_size = str(
             handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
-        session_variables[STAR][SIZE] = star_size
+
+        planet_story.set_star_size(star_size)
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        speech_text = f'Your star size is {star_size}. '
+        planet_story.speech_text = f'Your star size is {star_size}. '
 
         if star_size == "dwarf":
-            speech_text +=Translator.Star.star_size_dwarf
+            planet_story.speech_text +=Translator.Star.star_size_dwarf
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if star_size == "giant":
-            speech_text +=Translator.Star.star_size_giant
+            planet_story.speech_text +=Translator.Star.star_size_giant
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if star_size == "super":
-            speech_text +=Translator.Star.star_size_super_giant
+            planet_story.speech_text +=Translator.Star.star_size_super_giant
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        speech_text += Translator.Planet.planet_size
+        planet_story.speech_text += Translator.Planet.planet_size
 
-        handler_input.response_builder.speak(speech_text).add_directive(
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
@@ -177,38 +175,34 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 class PlanetSizeHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_SIZE)(handler_input) \
-               and session_variables['state'] == State.PLANET_SIZE
+               and planet_story.current_question == Question.Planet.PLANET_SIZE
 
     def handle(self, handler_input):
-        global session_variables
-        session_variables['state'] = State.PLANET_DISTANCE
-
-        # Store answer in session variables
         planet_size = str(
             handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
 
-        session_variables['planets'].append({SIZE: planet_size})
+        planet_story.set_planet_size(planet_size)
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        speech_text = f'Your planet size is {planet_size}. '
+        planet_story.speech_text = f'Your planet size is {planet_size}. '
 
         if planet_size == "large":
-            speech_text += Translator.Planet.planet_size_large
+            planet_story.speech_text += Translator.Planet.planet_size_large
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "medium":
-            speech_text += Translator.Planet.planet_size_medium
+            planet_story.speech_text += Translator.Planet.planet_size_medium
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "small":
-            speech_text += Translator.Planet.planet_size_small
+            planet_story.speech_text += Translator.Planet.planet_size_small
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        speech_text += Translator.Planet.planet_distance
+        planet_story.speech_text += Translator.Planet.planet_distance
 
-        handler_input.response_builder.speak(speech_text).add_directive(
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
@@ -222,40 +216,33 @@ class PlanetSizeHandler(AbstractRequestHandler):
 class PlanetDistanceHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
-               and session_variables['state'] == State.PLANET_DISTANCE
+               and planet_story.current_question == Question.Planet.PLANET_DISTANCE
 
     def handle(self, handler_input):
-        global session_variables
-        session_variables['state'] = State.STAR_BRIGHTNESS
 
-        # Store answer in session variables
         planet_distance = str(
             handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
 
-        session_variables[PLANET][DISTANCE] = planet_distance
-
-        planets: list = session_variables['planets']
-
-        planets[len(planets) - 1][DISTANCE] = planet_distance
+        planet_story.set_planet_distance(planet_distance)
 
         apl_datasource = _load_apl_document("./data/main.json")
 
         if planet_distance == "near":
-            speech_text = Translator.Planet.planet_distance_near
+            planet_story.speech_text = Translator.Planet.planet_distance_near
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_distance == "midway":
-            speech_text = Translator.Planet.planet_distance_midway
+            planet_story.speech_text = Translator.Planet.planet_distance_midway
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_distance == "far":
-            speech_text = Translator.Planet.planet_distance_far
+            planet_story.speech_text = Translator.Planet.planet_distance_far
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        speech_text = Translator.Planet.planet_distance + '. ' + Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        planet_story.speech_text = Translator.Planet.planet_distance + '. ' + Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
-        handler_input.response_builder.speak(speech_text).add_directive(
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
@@ -336,21 +323,21 @@ class FallbackHandler(AbstractRequestHandler):
         speech_text = "Fallback. "
 
         property_question_dict = {
-            State.STAR_BRIGHTNESS: {
+            Question.Star.STAR_BRIGHTNESS: {
                 Translator.Star.star_brightness
             },
-            State.STAR_SIZE: {
+            Question.Star.STAR_SIZE: {
                 Translator.Star.star_age
             },
-            State.PLANET_DISTANCE: {
+            Question.Planet.PLANET_DISTANCE: {
                 Translator.Planet.planet_distance
             },
-            State.PLANET_SIZE: {
+            Question.Planet.PLANET_SIZE: {
                 Translator.Planet.planet_size
             }
         }
 
-        speech_text += property_question_dict[session_variables['state']]
+        speech_text += property_question_dict[planet_story.current_question]
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
@@ -394,8 +381,8 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
 
     def process(self, handler_input, response):
         print("Response generated: {}".format(response))
-        global session_variables
-        handler_input.attributes_manager.session_attributes = session_variables
+
+        handler_input.attributes_manager.session_attributes = planet_story.get_session_variables()
 
 
 sb.add_request_handler(LaunchRequestHandler())
