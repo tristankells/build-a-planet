@@ -1,4 +1,6 @@
 # Generic ASK SDK imports
+from typing import Dict, Any
+
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type, is_intent_name
@@ -272,6 +274,37 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+class FallbackHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return True
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+
+        speech = "Fallback. "
+
+        property_question_dict = {
+            State.STAR_BRIGHTNESS: {
+                Translator.Star.star_brightness
+            },
+            State.STAR_SIZE: {
+                Translator.Star.star_age
+            },
+            State.PLANET_DISTANCE: {
+                Translator.Planet.planet_distance
+            },
+            State.PLANET_SIZE: {
+                Translator.Planet.planet_size
+            }
+        }
+
+        speech += property_question_dict[session_variables['state']]
+
+        handler_input.response_builder.speak(speech).ask(speech)
+        return handler_input.response_builder.response
+
+
 class AllExceptionHandler(AbstractExceptionHandler):
     def can_handle(self, handler_input, exception):
         # type: (HandlerInput, Exception) -> bool
@@ -303,6 +336,7 @@ sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelAndStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 
+
 # region Custom handlers
 
 # Star
@@ -322,5 +356,7 @@ sb.add_global_request_interceptor(SetupRequestInterceptor())
 sb.add_global_response_interceptor(SaveSessionAttributesResponseInterceptor())
 
 sb.add_exception_handler(AllExceptionHandler())
+
+sb.add_request_handler(FallbackHandler())
 
 lambda_handler = sb.lambda_handler()
