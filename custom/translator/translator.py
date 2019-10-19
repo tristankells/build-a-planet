@@ -10,7 +10,7 @@ class Translator:
     class Star:
         star_create = "Whould you like to create a star?"
         star_brightness = "What is the brightness of your star? Blue, Yellow or Red?"
-        star_brightness_blue = "Blue stars are super hot. The temperature is between 7 to 30 million degrees celsius.These are the hottest stars in the known universe. An example of a blue star is Sirius, located in the Vega constellation."
+        star_brightness_blue = "Blue stars are super hot. The temperature is between 7 to 30 million degrees celsius. These are the hottest stars in the known universe. An example of a blue star is Sirius, located in the Vega constellation."
         star_brightness_yellow = "Yellow stars are hot. The temperature is between 5-6 million degrees celsius.These stars are fairly hot and bright. An example is our own sun."
         star_brightness_red = "Red stars are Warm. The temperature is between 2-4 Million degrees celsius.These stars are colder than most and are far less brighter. An example of this is Betelgeuse in the Antares constellation."
         star_brightness_other = "This is not a valid brightness. You have to choose between Blue, Yellow or Red."

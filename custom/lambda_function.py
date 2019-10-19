@@ -80,8 +80,6 @@ class LaunchRequestHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 # region Star Handlers
-
-
 class StarBrightnessIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -145,20 +143,21 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
         apl_datasource = _load_apl_document("./data/main.json")
 
+        speech_text = f'Your star size is {star_size}. '
+
         if star_size == "dwarf":
-            Translator.Star.star_size_dwarf
+            speech_text +=Translator.Star.star_size_dwarf
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if star_size == "giant":
-            Translator.Star.star_size_giant
+            speech_text +=Translator.Star.star_size_giant
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if star_size == "super":
-            Translator.Star.star_size_super_giant
+            speech_text +=Translator.Star.star_size_super_giant
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        speech_text = f'Your star size is {star_size}. '
         speech_text += Translator.Planet.planet_size
 
         handler_input.response_builder.speak(speech_text).add_directive(
@@ -194,20 +193,21 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         apl_datasource = _load_apl_document("./data/main.json")
 
+        speech_text = f'Your planet size is {planet_size}. '
+
         if planet_size == "large":
-            Translator.Planet.planet_size_large
+            speech_text += Translator.Planet.planet_size_large
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "medium":
-            Translator.Planet.planet_size_medium
+            speech_text += Translator.Planet.planet_size_medium
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "small":
-            Translator.Planet.planet_size_small
+            speech_text += Translator.Planet.planet_size_small
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        speech_text = f'Your planet size is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).add_directive(
@@ -243,15 +243,15 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         apl_datasource = _load_apl_document("./data/main.json")
 
         if planet_distance == "near":
-            Translator.Planet.planet_distance_near
+            speech_text = Translator.Planet.planet_distance_near
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_distance == "midway":
-            Translator.Planet.planet_distance_midway
+            speech_text = Translator.Planet.planet_distance_midway
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_distance == "far":
-            Translator.Planet.planet_distance_far
+            speech_text = Translator.Planet.planet_distance_far
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
