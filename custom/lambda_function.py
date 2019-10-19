@@ -90,6 +90,10 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
+        star = session_variables[STAR]
+        star[BRIGHTNESS] = star_brightness
+        session_variables[STAR] = star
+
 
         speech_text = f'Your star brightness is {star_brightness}'
 
@@ -99,8 +103,6 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
             speech_text += Translator.Star.star_brightness_blue
         if star_brightness == "white":
             speech_text += Translator.Star.star_brightness_white
-
-        session_variables[STAR][BRIGHTNESS] = star_brightness
 
         speech_text = f'Your star brightness is {star_brightness}. '
         speech_text += Translator.Star.star_size
