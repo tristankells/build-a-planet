@@ -99,21 +99,22 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         session_variables[STAR] = {BRIGHTNESS: star_brightness}
 
         apl_datasource = _load_apl_document("./data/main.json")
+        speech_text = f'Your star brightness is {star_brightness}. '
 
         if star_brightness == "red":
-            Translator.Star.star_brightness_red
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            speech_text += Translator.Star.star_brightness_red
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/red_star.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/red_star.png'
         if star_brightness == "blue":
-            Translator.Star.star_brightness_blue
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
+            speech_text += Translator.Star.star_brightness_blue
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/blue_star.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/blue_star.png'
         if star_brightness == "yellow":
-            Translator.Star.star_brightness_yellow
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-03.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-03.png'
+            speech_text += Translator.Star.star_brightness_yellow
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/yellow_star.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/yellow_star.png'
 
-        speech_text = f'Your star brightness is {star_brightness}. '
+        ## Ask next question
         speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).add_directive(
