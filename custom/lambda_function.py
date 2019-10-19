@@ -25,6 +25,7 @@ from ask_sdk_model.interfaces.alexa.presentation.apl import (
     AutoPageCommand)
 
 # Const strings
+
 STAR = 'star'
 PLANET = 'planet'
 
@@ -233,6 +234,8 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         apl_datasource = _load_apl_document("./data/main.json")
 
+        planet_story.speech_text = f'Your planet is  {planet_distance}'
+
         if planet_distance == "near":
             planet_story.speech_text = Translator.Planet.planet_distance_near
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
@@ -246,7 +249,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        planet_story.speech_text = Translator.Planet.planet_distance + '. ' + Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        planet_story.speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
