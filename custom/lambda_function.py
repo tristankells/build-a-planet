@@ -160,6 +160,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
                 datasources=_load_apl_document('./data/main.json')
             )
             )
+        )
 
         return handler_input.response_builder.response
 
