@@ -122,7 +122,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
                 token="testToken",
                 document=_load_apl_document('./templates/main.json'),
                 datasources=_load_apl_document('./data/main.json')
-            )
+            ))
 
         return handler_input.response_builder.response
 
