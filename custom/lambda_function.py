@@ -15,9 +15,19 @@ from alexa_intents import Intents
 from intent_slots import Slots
 from build_states import State
 
+# Const strings
+# Objects
+STAR = 'star'
+PLANET = 'planet'
+
+BRIGHTNESS = 'brightness'
+SIZE = 'size'
+DISTANCE = 'distance'
+
 SKILL_TITLE = 'Build A Planet'
 sb = SkillBuilder()
 session_variables = {}
+
 
 class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
@@ -78,7 +88,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
-        session_variables["star_brightness"] = star_brightness
+        session_variables[STAR][BRIGHTNESS] = star_brightness
 
         speech_text = f'Your star brightness is {star_brightness}. '
         speech_text += Translator.Star.star_size
@@ -100,7 +110,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
-        session_variables["star_size"] = star_size
+        session_variables[STAR][SIZE] = star_size
 
         speech_text = f'Your star size is {star_size}. '
         speech_text += Translator.Planet.planet_size
@@ -140,7 +150,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
-        session_variables["planet_size"] = planet_size
+        session_variables[PLANET][SIZE] = planet_size
 
         speech_text = f'Your planet is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
@@ -161,7 +171,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         planet_distance = str(handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
-        session_variables["planet_distance"] = planet_distance
+        session_variables[PLANET][DISTANCE] = planet_distance
 
         speech_text = f'Your planet is {planet_distance}. '
         speech_text += Translator.Planet.planet_atmosphere
