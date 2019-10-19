@@ -148,13 +148,13 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         session_variables[STAR][SIZE] = star_size
 
         if star_size == "dwarf":
-            Translator.Star.star_size_dwarf
+            speech_text = Translator.Star.star_size_dwarf
         if star_size == "giant":
-            Translator.Star.star_size_giant
+            speech_text = Translator.Star.star_size_giant
         if star_size == "super":
-            Translator.Star.star_size_super
+            speech_text = Translator.Star.star_size_super
 
-        speech_text = Translator.Star.star_size + '. ' + Translator.Planet.planet_size
+        speech_text += Translator.Planet.planet_size
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
@@ -197,13 +197,13 @@ class PlanetSizeHandler(AbstractRequestHandler):
         session_variables['planets'].append({SIZE: planet_size})
 
         if planet_size == "large":
-            Translator.Planet.planet_size_large
+            speech_text = Translator.Planet.planet_size_large
         if planet_size == "medium":
-            Translator.Planet.planet_size_medium
+            speech_text = Translator.Planet.planet_size_medium
         if planet_size == "small":
-            Translator.Planet.planet_size_small
+            speech_text = Translator.Planet.planet_size_small
 
-        speech_text = Translator.Planet.planet_size + '. ' + Translator.Planet.planet_distance
+        speech_text += Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
@@ -227,7 +227,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
 class PlanetDistanceHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
-        and session_variables['state'] == State.PLANET_DISTANCE
+        return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
+               and session_variables['state'] == State.PLANET_DISTANCE
 
     def handle(self, handler_input):
         global session_variables
@@ -246,14 +247,13 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         speech_text = f'Your planet is {planet_distance}. '
 
         if planet_distance == "near":
-            Translator.Planet.planet_distance_near
+            speech_text = Translator.Planet.planet_distance_near
         if planet_distance == "midway":
-            Translator.Planet.planet_distance_midway
+            speech_text = Translator.Planet.planet_distance_midway
         if planet_distance == "far":
-            Translator.Planet.planet_distance_far
+            speech_text = Translator.Planet.planet_distance_far
 
-        speech_text = Translator.Planet.planet_distance + '. ' + Translator.Launch.launch + ' '\
-                      + Translator.Star.star_brightness
+        speech_text += Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
