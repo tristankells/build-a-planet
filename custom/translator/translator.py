@@ -8,15 +8,15 @@ class Translator:
         star_brightness_blue = ""
         star_brightness_red = ""
 
-        star_age = "How old is the star? Middleaged, old, or young?"
-        star_age_middleaged = ""
-        star_age_old = ""
-        star_age_young = ""
-
         star_size = "How large is the star? Dwarf, giant, or super?"
         star_size_dwarf = ""
         star_size_giant = ""
         star_size_super = ""
+
+        star_age = "How old is the star? Middleaged, old, or young?"
+        star_age_middleaged = ""
+        star_age_old = ""
+        star_age_young = ""
 
     class Planet:
         planet_size = "What size is your planet? Small, medium, or large?"

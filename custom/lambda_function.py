@@ -86,10 +86,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
-        star = session_variables[STAR]
-        star[BRIGHTNESS] = star_brightness
-        session_variables[STAR] = star
-
+        session_variables[STAR][BRIGHTNESS] = star_brightness
 
         speech_text = f'Your star brightness is {star_brightness}'
 
