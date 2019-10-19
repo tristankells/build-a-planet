@@ -15,12 +15,13 @@ class Translator:
         star_brightness_red = "Red stars are Warm. The temperature is between 2-4 Million degrees celsius.These stars are colder than most and are far less brighter. An example of this is Betelgeuse in the Antares constellation."
         star_brightness_other = "This is not a valid brightness. You have to choose between Blue, Yellow or Red."
 
-        star_size = "How large is the star? Dwarf, giant, or super giant?"
-        star_size_dwarf = ""
+        star_size = "How large should your star be?  super giant, giant, or Dwarf?"
+        star_size_super_giant = ""
         star_size_giant = ""
-        star_size_super = ""
+        star_size_dwarf = ""
+       
 
-        star_age = "How old is the star? Middleaged, old, or young?"
+        star_age = "What is the age of your star? Young, Middleaged or old ?"
         star_age_young = ""     
         star_age_middleaged = ""
         star_age_old = ""
