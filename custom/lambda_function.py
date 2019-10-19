@@ -118,7 +118,6 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
         session_variables[STAR][SIZE] = star_size
 
-
         speech_text = f'Your star size is {star_size}. '
 
         if star_size == "dwarf":
@@ -128,7 +127,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         if star_size == "super":
             speech_text += Translator.Star.star_size_super
 
-        speech_text += Translator.Planet.planet_atmosphere
+        speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
