@@ -77,7 +77,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         handler_input.response_builder.speak(speech).add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
-                document=_load_apl_document("pager.json"),
+                document=_load_apl_document("./templates/main.json"),
                 datasources={
                     'pagerTemplateData': {
                         'type': 'object',
