@@ -4,7 +4,7 @@ class Translator:
 
     class Solar_System:
         planetary_system_create = "To get started, let’s build a planetary system! Do you want to learn more about planetary systems?"
-        planetary_system_yes = "Awesome, here’s what you need to know.A planetary system contains a star (like our sun) with a set of gravitationally bound objects in orbit around it (like the planets in our solar system).As the creator of the universe, your choices will determine what kind of planet you’ll build… will it be a new earth? An icy rock? A gaseous giant? Your planet story awaits..."
+        planetary_system_yes = "Awesome, here’s what you need to know.A planetary system contains a star (like our sun) with a set of gravitationally bound objects in orbit around it like the planets in our solar system. As the creator of the universe, your choices will determine what kind of planet you’ll build… will it be a new earth? An icy rock? A gaseous giant? Your planet story awaits..."
         planetary_system_no = "Awesome, Let’s create your planetary system."
 
     class Star:
