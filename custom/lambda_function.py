@@ -39,11 +39,6 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
         global session_variables
         session_variables = handler_input.attributes_manager.session_attributes
 
-        if session_variables is None:
-            session_variables = {
-                "state": State.STAR_BRIGHTNESS
-            }
-
 
 class LaunchRequestHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
@@ -54,6 +49,8 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
+
+
         speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
@@ -88,6 +85,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
+        session_variables[STAR] = {BRIGHTNESS: star_brightness}
 
         speech_text = f'Your star brightness is {star_brightness}'
 
@@ -97,8 +95,6 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
             speech_text += Translator.Star.star_brightness_blue
         if star_brightness == "white":
             speech_text += Translator.Star.star_brightness_white
-
-        session_variables[STAR][BRIGHTNESS] = star_brightness
 
         speech_text = f'Your star brightness is {star_brightness}. '
         speech_text += Translator.Star.star_size
@@ -169,6 +165,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
+        session_variables[PLANET] = {SIZE: planet_size}
 
         speech_text = speech_text = f'Your planet is {planet_size}. '
 
@@ -178,8 +175,6 @@ class PlanetSizeHandler(AbstractRequestHandler):
             speech_text += Translator.Planet.planet_size_medium
         if planet_size == "small":
             speech_text += Translator.Planet.planet_size_small
-
-        session_variables[PLANET][SIZE] = planet_size
 
         speech_text = f'Your planet is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
