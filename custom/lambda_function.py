@@ -1,4 +1,6 @@
 # Generic ASK SDK imports
+from itertools import starmap
+
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type, is_intent_name
@@ -77,7 +79,16 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         session_variables["state"] = State.STAR_SIZE
 
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
-        speech_text = f'Your star brightness is {star_brightness}. '
+
+        speech_text = f'Your star brightness is {star_brightness}'
+
+        if star_brightness == "red":
+            speech_text += Translator.Star.star_brightness_red
+        if star_brightness == "blue":
+            speech_text += Translator.Star.star_brightness_blue
+        if star_brightness == "white":
+            speech_text += Translator.Star.star_brightness_white
+
         speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
@@ -96,8 +107,17 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         session_variables["state"] = State.PLANET_SIZE
 
         star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
+
         speech_text = f'Your star size is {star_size}. '
-        speech_text += Translator.Planet.planet_size
+
+        if star_size == "dwarf":
+            speech_text += Translator.Star.star_size_dwarf
+        if star_size == "giant":
+            speech_text += Translator.Star.star_size_giant
+        if star_size == "super":
+            speech_text += Translator.Star.star_size_super
+
+        speech_text += Translator.Planet.planet_atmosphere
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -133,7 +153,16 @@ class PlanetSizeHandler(AbstractRequestHandler):
         session_variables['state'] = State.PLANET_DISTANCE
 
         planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
-        speech_text = f'Your planet is {planet_size}. '
+
+        speech_text = speech_text = f'Your planet is {planet_size}. '
+
+        if planet_size == "large":
+            speech_text += Translator.Planet.planet_size_large
+        if planet_distance == "medium":
+            speech_text += Translator.Planet.planet_size_medium
+        if planet_distance == "small":
+            speech_text += Translator.Planet.planet_size_small
+
         speech_text += Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
@@ -151,7 +180,16 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         session_variables['state'] = State.PLANET_ATMOSPHERE
         
         planet_distance = str(handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
+
         speech_text = f'Your planet is {planet_distance}. '
+
+        if planet_distance == "near":
+            speech_text += Translator.Planet.planet_distance_near
+        if planet_distance == "midway":
+            speech_text += Translator.Planet.planet_distance_midway
+        if planet_distance == "far":
+            speech_text += Translator.Planet.planet_distance_far
+
         speech_text += Translator.Planet.planet_atmosphere
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
