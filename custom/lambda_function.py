@@ -237,15 +237,15 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         planet_story.speech_text = f'Your planet is  {planet_distance}'
 
         if planet_distance == "near":
-            planet_story.speech_text = Translator.Planet.planet_distance_near
+            planet_story.speech_text += Translator.Planet.planet_distance_near
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_distance == "midway":
-            planet_story.speech_text = Translator.Planet.planet_distance_midway
+            planet_story.speech_text += Translator.Planet.planet_distance_midway
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_distance == "far":
-            planet_story.speech_text = Translator.Planet.planet_distance_far
+            planet_story.speech_text += Translator.Planet.planet_distance_far
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
