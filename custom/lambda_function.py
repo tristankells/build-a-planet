@@ -240,8 +240,6 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planets[len(planets) - 1][DISTANCE] = planet_distance
 
-        speech_text = f'Your planet is {planet_distance}. '
-
         if planet_distance == "near":
             Translator.Planet.planet_distance_near
         if planet_distance == "midway":
@@ -249,8 +247,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         if planet_distance == "far":
             Translator.Planet.planet_distance_far
 
-        speech_text = Translator.Planet.planet_distance + '. ' + Translator.Launch.launch + ' '\
-                      + Translator.Star.star_brightness
+        speech_text = Translator.Planet.planet_distance + '. ' + Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
