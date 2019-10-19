@@ -16,7 +16,6 @@ from intent_slots import Slots
 from build_states import State
 
 # Const strings
-# Objects
 STAR = 'star'
 PLANET = 'planet'
 
@@ -50,7 +49,6 @@ class LaunchRequestHandler(AbstractRequestHandler):
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
 
-
         speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
@@ -75,7 +73,7 @@ class HelpIntentHandler(AbstractRequestHandler):
 class StarBrightnessIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.STAR_BRIGHT)(handler_input) \
+        return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
                and session_variables["state"] == State.STAR_BRIGHTNESS
 
     def handle(self, handler_input):
@@ -279,7 +277,6 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
         print("Response generated: {}".format(response))
         global session_variables
         handler_input.attributes_manager.session_attributes = session_variables
-
 
 
 sb.add_request_handler(LaunchRequestHandler())
