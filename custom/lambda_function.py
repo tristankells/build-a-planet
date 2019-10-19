@@ -110,8 +110,8 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        # apl_datasource['bodyTemplate3Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
-        # apl_datasource['bodyTemplate3Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
+        apl_datasource['bodyTemplate3Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
+        apl_datasource['bodyTemplate3Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
 
         # apl_datasource = json.dumps(apl_datasource)
 
