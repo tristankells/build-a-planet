@@ -39,13 +39,6 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
         global session_variables
         session_variables = handler_input.attributes_manager.session_attributes
 
-        if session_variables is None:
-            session_variables = {
-                "state": State.STAR_BRIGHTNESS,
-                'star': {},
-                'planet': {}
-            }
-
 
 class LaunchRequestHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
@@ -56,6 +49,9 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
+        session_variables[STAR] = []
+        session_variables[PLANET] = []
+
         speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
