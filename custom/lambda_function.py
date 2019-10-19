@@ -139,12 +139,13 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         session_variables[STAR][SIZE] = star_size
 
         if star_size == "dwarf":
-            speech_text = Translator.Star.star_size_dwarf
+            Translator.Star.star_size_dwarf
         if star_size == "giant":
-            speech_text = Translator.Star.star_size_giant
+            Translator.Star.star_size_giant
         if star_size == "super":
-            speech_text = Translator.Star.star_size_super
+            Translator.Star.star_size_super
 
+        speech_text = f'Your star brightness is {star_size}. '
         speech_text += Translator.Planet.planet_size
 
         handler_input.response_builder.speak(speech_text).add_directive(
@@ -188,12 +189,13 @@ class PlanetSizeHandler(AbstractRequestHandler):
         session_variables['planets'].append({SIZE: planet_size})
 
         if planet_size == "large":
-            speech_text = Translator.Planet.planet_size_large
+            Translator.Planet.planet_size_large
         if planet_size == "medium":
-            speech_text = Translator.Planet.planet_size_medium
+            Translator.Planet.planet_size_medium
         if planet_size == "small":
-            speech_text = Translator.Planet.planet_size_small
+            Translator.Planet.planet_size_small
 
+        speech_text = f'Your star brightness is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).add_directive(
@@ -235,16 +237,14 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planets[len(planets) - 1][DISTANCE] = planet_distance
 
-        speech_text = f'Your planet is {planet_distance}. '
-
         if planet_distance == "near":
-            speech_text = Translator.Planet.planet_distance_near
+            Translator.Planet.planet_distance_near
         if planet_distance == "midway":
-            speech_text = Translator.Planet.planet_distance_midway
+            Translator.Planet.planet_distance_midway
         if planet_distance == "far":
-            speech_text = Translator.Planet.planet_distance_far
+            Translator.Planet.planet_distance_far
 
-        speech_text += Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        speech_text = Translator.Planet.planet_distance + '. ' + Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
