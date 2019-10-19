@@ -35,7 +35,6 @@ DISTANCE = 'distance'
 SKILL_TITLE = 'Build A Planet'
 
 sb = SkillBuilder()
-session_variables: dict = {}
 planet_story: PlanetStory
 
 
@@ -45,6 +44,13 @@ def _load_apl_document(file_path):
     with open(file_path) as f:
         return json.load(f)
 
+# TODO: Fix rest of audio
+# TODO: Make clean ending
+# TODO: Add other properties for planet and star
+# TODO: Check that re-prompts work correctly, eg... play same question back
+# TODO: Adding tracking of long explantions so players doesnt have to listen to it every time
+# TODO: Look into refactoring decision tree stuff / finding apl files stuff
+
 
 class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
@@ -53,10 +59,10 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     def process(self, handler_input):
         print("Request received: {}".format(
             handler_input.request_envelope.request))
+        global planet_story
 
-        global session_variables, planet_story
-        session_variables = handler_input.attributes_manager.session_attributes
-        planet_story = PlanetStory(session_variables)
+        session_attributes = handler_input.attributes_manager.session_attributes
+        planet_story = PlanetStory(session_attributes)
 
 
 class LaunchRequestHandler(AbstractRequestHandler):

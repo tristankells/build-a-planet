@@ -3,9 +3,7 @@ from planet_story.solar_questions import Question
 from translator.translator import Translator
 
 # Custom skill code
-from alexa_intents import Intents
-from intent_slots import Slots
-from build_states import State
+
 from planet_story.planet import Planet
 from planet_story.star import Star
 
