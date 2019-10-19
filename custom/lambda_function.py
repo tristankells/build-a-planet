@@ -65,6 +65,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
+        session_variables['planets'] = []
 
         speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
@@ -74,48 +75,9 @@ class LaunchRequestHandler(AbstractRequestHandler):
                 document=_load_apl_document("./templates/main.json"),
                 datasources=_load_apl_document("./data/main.json")
             )
-        ).add_directive(
-            ExecuteCommandsDirective(
-                token="pagerToken",
-                commands=[
-                    AutoPageCommand(
-                        component_id="pagerComponentId",
-                        duration=5000)
-                ]
-            )
         )
 
         return handler_input.response_builder.response
-
-
-class HelpIntentHandler(AbstractRequestHandler):
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name("AMAZON.HelpIntent")(handler_input)
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        speech_text = "You can say hello to me!"
-
-        handler_input.response_builder.speak(speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=_load_apl_document("./data/main.json")
-            )
-        ).add_directive(
-            ExecuteCommandsDirective(
-                token="pagerToken",
-                commands=[
-                    AutoPageCommand(
-                        component_id="pagerComponentId",
-                        duration=5000)
-                ]
-            )
-        )
-
-        return handler_input.response_builder.response
-
 
 # region Star Handlers
 
@@ -227,7 +189,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
         # Store answer in session variables
         planet_size = str(
             handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
-        session_variables[PLANET] = {SIZE: planet_size}
+
+        session_variables['planets'].append({SIZE: planet_size})
 
         if planet_size == "large":
             speech_text = Translator.Planet.planet_size_large
@@ -270,7 +233,14 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         # Store answer in session variables
         planet_distance = str(
             handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
+
         session_variables[PLANET][DISTANCE] = planet_distance
+
+        planets: list = session_variables['planets']
+
+        planets[len(planets) - 1][DISTANCE] = planet_distance
+
+        speech_text = f'Your planet is {planet_distance}. '
 
         if planet_distance == "near":
             speech_text = Translator.Planet.planet_distance_near
@@ -302,6 +272,36 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
 
 # endregion
+
+
+class HelpIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("AMAZON.HelpIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        speech_text = "You can say hello to me!"
+
+        handler_input.response_builder.speak(speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=_load_apl_document("./data/main.json")
+            )
+        ).add_directive(
+            ExecuteCommandsDirective(
+                token="pagerToken",
+                commands=[
+                    AutoPageCommand(
+                        component_id="pagerComponentId",
+                        duration=5000)
+                ]
+            )
+        )
+
+        return handler_input.response_builder.response
+
 
 class CancelAndStopIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
