@@ -10,7 +10,6 @@ from ask_sdk_model.ui import SimpleCard
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
-
 from translator.translator import Translator
 
 # Custom skill code
@@ -65,13 +64,46 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         global session_variables
-
         session_variables['state'] = State.STAR_BRIGHTNESS
-        speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
-        handler_input.response_builder.speak(speech_text).set_card(
-            SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
-            False)
+        # speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        # handler_input.response_builder.speak(speech_text).set_card(
+        #     SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
+        #     False)
+        # return handler_input.response_builder.response
+
+        speech = 'This is the pager template!'
+
+        handler_input.response_builder.speak(speech).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources={
+                    'pagerTemplateData': {
+                        'type': 'object',
+                        'properties': {
+                            'hintString': 'try the blue cheese!'
+                        },
+                        'transformers': [
+                            {
+                                'inputPath': 'hintString',
+                                'transformer': 'textToHint'
+                            }
+                        ]
+                    }
+                }
+            )
+        ).add_directive(
+            ExecuteCommandsDirective(
+                token="pagerToken",
+                commands=[
+                    AutoPageCommand(
+                        component_id="pagerComponentId",
+                        duration=5000)
+                ]
+            )
+        )
+
         return handler_input.response_builder.response
 
 
@@ -117,9 +149,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         speech_text = f'Your star brightness is {star_brightness}. '
         speech_text += Translator.Star.star_size
 
-        handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-            SimpleCard("Hello World", speech_text)
-            .add_directive(
+        handler_input.response_builder.speak(speech_text).ask(speech_text).add_directive(
             RenderDocumentDirective(
                 token="testToken",
                 document=_load_apl_document('./templates/main.json'),
@@ -137,14 +167,14 @@ class StarSizeIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         global session_variables
-        session_variables["state"]=State.PLANET_SIZE
+        session_variables["state"] = State.PLANET_SIZE
 
         # Store answer in session variables
-        star_size=str(
+        star_size = str(
             handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
-        session_variables[STAR][SIZE]=star_size
+        session_variables[STAR][SIZE] = star_size
 
-        speech_text=f'Your star size is {star_size}. '
+        speech_text = f'Your star size is {star_size}. '
 
         if star_size == "dwarf":
             speech_text += Translator.Star.star_size_dwarf
@@ -186,14 +216,14 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         global session_variables
-        session_variables['state']=State.PLANET_DISTANCE
+        session_variables['state'] = State.PLANET_DISTANCE
 
         # Store answer in session variables
-        planet_size=str(
+        planet_size = str(
             handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
-        session_variables[PLANET]={SIZE: planet_size}
+        session_variables[PLANET] = {SIZE: planet_size}
 
-        speech_text=f'Your planet is {planet_size}. '
+        speech_text = f'Your planet is {planet_size}. '
 
         if planet_size == "large":
             speech_text += Translator.Planet.planet_size_large
@@ -216,13 +246,13 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         global session_variables
-        session_variables['state']=State.STAR_BRIGHTNESS
+        session_variables['state'] = State.STAR_BRIGHTNESS
 
         # Store answer in session variables
-        planet_distance=str(
+        planet_distance = str(
             handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
-        session_variables[PLANET][DISTANCE]=planet_distance
-        speech_text=f'Your planet is {planet_distance}. '
+        session_variables[PLANET][DISTANCE] = planet_distance
+        speech_text = f'Your planet is {planet_distance}. '
 
         if planet_distance == "near":
             speech_text += Translator.Planet.planet_distance_near
@@ -231,7 +261,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         if planet_distance == "far":
             speech_text += Translator.Planet.planet_distance_far
 
-        speech_text += ' ' + Translator.Star.star_brightness
+        speech_text += Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -264,7 +294,7 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text="Goodbye!"
+        speech_text = "Goodbye!"
 
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -291,23 +321,14 @@ class FallbackHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        speech="Fallback. "
+        speech = "Fallback. "
 
-        property_question_dict={
+        property_question_dict = {
             State.STAR_BRIGHTNESS: {
                 Translator.Star.star_brightness
             },
-
-            State.LAUNCH: {
-                Translator.Launch.launch
-            },
-
-            State.PLANET_ATMOSPHERE: {
-                Translator.Planet.planet_atmosphere
-            },
-
             State.STAR_SIZE: {
-                Translator.Star.star_size
+                Translator.Star.star_age
             },
             State.PLANET_DISTANCE: {
                 Translator.Planet.planet_distance
@@ -333,7 +354,7 @@ class AllExceptionHandler(AbstractExceptionHandler):
         # Log the exception in CloudWatch Logs
         print('EXCEPTION: ' + str(exception))
 
-        speech="Sorry, I didn't get it. Can you please say it again!!"
+        speech = "Sorry, I didn't get it. Can you please say it again!!"
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
@@ -346,7 +367,7 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
     def process(self, handler_input, response):
         print("Response generated: {}".format(response))
         global session_variables
-        handler_input.attributes_manager.session_attributes=session_variables
+        handler_input.attributes_manager.session_attributes = session_variables
 
 
 sb.add_request_handler(LaunchRequestHandler())
@@ -377,4 +398,4 @@ sb.add_exception_handler(AllExceptionHandler())
 
 sb.add_request_handler(FallbackHandler())
 
-lambda_handler=sb.lambda_handler()
+lambda_handler = sb.lambda_handler()
