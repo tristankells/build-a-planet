@@ -109,10 +109,14 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         speech_text += Translator.Star.star_size
 
         apl_datasource = json.loads(_load_apl_document("./data/main.json"))
-        apl_datasource['bodyTemplate3Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
-        apl_datasource['bodyTemplate3Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
+        # print(apl_datasource)
 
-        apl_datasource = json.dumps(apl_datasource)
+        # apl_datasource['bodyTemplate3Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
+        # apl_datasource['bodyTemplate3Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-01.png'
+
+        # apl_datasource = json.dumps(apl_datasource)
+
+        # print(apl_datasource)
 
         handler_input.response_builder.speak(speech_text).add_directive(
             RenderDocumentDirective(
