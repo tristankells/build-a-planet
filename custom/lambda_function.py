@@ -206,7 +206,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
 
-        speech_text = f'Your star brightness is {planet_size}. '
+        speech_text = f'Your planet size is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).add_directive(
