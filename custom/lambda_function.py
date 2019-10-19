@@ -199,7 +199,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
         if planet_size == "small":
             Translator.Planet.planet_size_small
 
-        speech_text = f'Your star brightness is {planet_size}. '
+        speech_text = f'Your planet size is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).add_directive(
