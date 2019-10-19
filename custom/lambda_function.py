@@ -17,6 +17,7 @@ from alexa_intents import Intents
 from intent_slots import Slots
 from planet_story.planet_story import PlanetStory
 from planet_story.solar_questions import Question
+from assets import Assets
 
 # For APL
 import json
@@ -107,16 +108,16 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         if star_brightness == "red":
             planet_story.speech_text += Translator.Star.star_brightness_red
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/red_star.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/red_star.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_BRIGHTNESS
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_BRIGHTNESS
         if star_brightness == "blue":
             planet_story.speech_text += Translator.Star.star_brightness_blue
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/blue_star.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/blue_star.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_BRIGHTNESS
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_BRIGHTNESS
         if star_brightness == "yellow":
             planet_story.speech_text += Translator.Star.star_brightness_yellow
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/yellow_star.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/yellow_star.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_BRIGHTNESS
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_BRIGHTNESS
 
         # Ask next question
         planet_story.speech_text += (' ' + Translator.Star.star_size)
