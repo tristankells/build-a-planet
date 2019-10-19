@@ -1,6 +1,4 @@
 # Generic ASK SDK imports
-from itertools import starmap
-
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type, is_intent_name
@@ -17,9 +15,19 @@ from alexa_intents import Intents
 from intent_slots import Slots
 from build_states import State
 
+# Const strings
+# Objects
+STAR = 'star'
+PLANET = 'planet'
+
+BRIGHTNESS = 'brightness'
+SIZE = 'size'
+DISTANCE = 'distance'
+
 SKILL_TITLE = 'Build A Planet'
 sb = SkillBuilder()
 session_variables = {}
+
 
 class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
@@ -78,6 +86,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         global session_variables
         session_variables["state"] = State.STAR_SIZE
 
+        # Store answer in session variables
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
 
         speech_text = f'Your star brightness is {star_brightness}'
@@ -89,6 +98,9 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         if star_brightness == "white":
             speech_text += Translator.Star.star_brightness_white
 
+        session_variables[STAR][BRIGHTNESS] = star_brightness
+
+        speech_text = f'Your star brightness is {star_brightness}. '
         speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
@@ -106,7 +118,10 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         global session_variables
         session_variables["state"] = State.PLANET_SIZE
 
+        # Store answer in session variables
         star_size = str(handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
+        session_variables[STAR][SIZE] = star_size
+
 
         speech_text = f'Your star size is {star_size}. '
 
@@ -152,17 +167,21 @@ class PlanetSizeHandler(AbstractRequestHandler):
         global session_variables
         session_variables['state'] = State.PLANET_DISTANCE
 
+        # Store answer in session variables
         planet_size = str(handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
 
         speech_text = speech_text = f'Your planet is {planet_size}. '
 
         if planet_size == "large":
             speech_text += Translator.Planet.planet_size_large
-        if planet_distance == "medium":
+        if planet_size == "medium":
             speech_text += Translator.Planet.planet_size_medium
-        if planet_distance == "small":
+        if planet_size == "small":
             speech_text += Translator.Planet.planet_size_small
 
+        session_variables[PLANET][SIZE] = planet_size
+
+        speech_text = f'Your planet is {planet_size}. '
         speech_text += Translator.Planet.planet_distance
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
@@ -178,8 +197,11 @@ class PlanetDistanceHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         global session_variables
         session_variables['state'] = State.PLANET_ATMOSPHERE
-        
+
+        # Store answer in session variables
         planet_distance = str(handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
+        session_variables[PLANET][DISTANCE] = planet_distance
+
 
         speech_text = f'Your planet is {planet_distance}. '
 
