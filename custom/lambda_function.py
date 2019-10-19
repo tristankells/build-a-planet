@@ -19,6 +19,9 @@ from build_states import State
 
 # For APL
 import json
+from ask_sdk_model.interfaces.alexa.presentation.apl import (
+    RenderDocumentDirective, ExecuteCommandsDirective, SpeakItemCommand,
+    AutoPageCommand, HighlightMode)
 
 # Const strings
 STAR = 'star'
@@ -113,10 +116,13 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         speech_text += Translator.Star.star_size
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
-            SimpleCard("Hello World", speech_text)).addDirective({
-                type: 'Alexa.Presentation.APL.RenderDocument',
-                document: _load_apl_document('./templates/main.json'),
-                datasources: _load_apl_document('./data/main.json')})
+            SimpleCard("Hello World", speech_text)).add_directive(
+            RenderDocumentDirective(
+                token="testToken",
+                document=_load_apl_document('./templates/main.json'),
+                datasources=_load_apl_document('./data/main.json')
+            )
+        )
         return handler_input.response_builder.response
 
 
