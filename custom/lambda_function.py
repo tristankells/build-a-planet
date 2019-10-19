@@ -117,7 +117,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+                datasources=json.dumps(apl_datasource)
             )
         )
 
