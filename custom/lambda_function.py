@@ -8,6 +8,7 @@ from ask_sdk_model.ui import SimpleCard
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
+
 from translator.translator import Translator
 
 # Custom skill code
@@ -56,9 +57,10 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         global session_variables
-        session_variables['state'] = State.STAR_BRIGHTNESS
 
+        session_variables['state'] = State.STAR_BRIGHTNESS
         speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard(SKILL_TITLE, speech_text)).set_should_end_session(
             False)
@@ -213,7 +215,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         if planet_distance == "far":
             speech_text += Translator.Planet.planet_distance_far
 
-        speech_text += Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        speech_text += ' ' + Translator.Star.star_brightness
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
             SimpleCard("Hello World", speech_text))
@@ -279,8 +281,17 @@ class FallbackHandler(AbstractRequestHandler):
             State.STAR_BRIGHTNESS: {
                 Translator.Star.star_brightness
             },
+
+            State.LAUNCH: {
+                Translator.Launch.launch
+            },
+
+            State.PLANET_ATMOSPHERE: {
+                Translator.Planet.planet_atmosphere
+            },
+
             State.STAR_SIZE: {
-                Translator.Star.star_age
+                Translator.Star.star_size
             },
             State.PLANET_DISTANCE: {
                 Translator.Planet.planet_distance
