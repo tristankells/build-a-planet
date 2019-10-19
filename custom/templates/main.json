@@ -191,10 +191,10 @@
                         "items": [
                             {
                                 "type": "Image",
-                                "height": "70vh",
                                 "width": "90vw",
+                                "height": "70vh",
                                 "source": "${payload.bodyTemplate7Data.image.sources[0].url}",
-                                "scale": "best-fill",
+                                "scale": "best-fit",
                                 "align": "center"
                             }
                         ]
