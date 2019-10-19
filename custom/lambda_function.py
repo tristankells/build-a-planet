@@ -49,8 +49,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         global session_variables
         session_variables['state'] = State.STAR_BRIGHTNESS
-        session_variables[STAR] = []
-        session_variables[PLANET] = []
+
 
         speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
         handler_input.response_builder.speak(speech_text).set_card(
@@ -86,7 +85,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         # Store answer in session variables
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
-        session_variables[STAR][BRIGHTNESS] = star_brightness
+        session_variables[STAR] = {BRIGHTNESS: star_brightness}
 
         speech_text = f'Your star brightness is {star_brightness}'
 
