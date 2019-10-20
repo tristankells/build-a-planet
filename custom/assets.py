@@ -14,7 +14,7 @@ class Assets:
 
         YELLOW_DWARF = 'https://planet-story.s3.amazonaws.com/stars/yellow-dwarf.png'
         YELLOW_GIANT = 'https://planet-story.s3.amazonaws.com/stars/yellow-giant.png' 
-        YELLOW_SUPER = 'https://planet-story.s3.amazonaws.com/stars/yellow-super.png
+        YELLOW_SUPER = 'https://planet-story.s3.amazonaws.com/stars/yellow-super.png'
 
         BLUE_DWARF_YOUNG = 'https://planet-story.s3.amazonaws.com/stars/blue-dwarf-young.png'
         BLUE_GIANT_YOUNG = 'https://planet-story.s3.amazonaws.com/stars/blue-giant-young.png'
