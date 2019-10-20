@@ -27,7 +27,7 @@ class Translator:
         star_size_other = AUDIO_FORMAT.format("star_size_other")
 
         star_age = AUDIO_FORMAT.format("star_age")
-        star_age_young = AUDIO_FORMAT.format("star_age_size")
+        star_age_young = AUDIO_FORMAT.format("star_age_young")
         star_age_middle = AUDIO_FORMAT.format("star_age_middle")
         star_age_old = AUDIO_FORMAT.format("star_age_old")
         star_age_other = AUDIO_FORMAT.format("star_age_other")
