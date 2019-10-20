@@ -105,6 +105,7 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        print("YesLearnMoreIntentHandler has been CALLED")
         planet_story.learn_about_solar_systems()
 
         apl_datasource = _load_apl_document("./data/main.json")
@@ -135,6 +136,8 @@ class NoLearnMoreIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        print("NoLearnMoreIntentHandler has been CALLED")
+
         planet_story.do_not_learn_about_solar_systems()
 
         apl_datasource = _load_apl_document("./data/main.json")
