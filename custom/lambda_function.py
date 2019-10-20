@@ -157,8 +157,6 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        planet_story.speech_text = f'Your star brightness is {star_brightness}. '
-
         if star_brightness == "red":
             planet_story.speech_text += Translator.Star.star_brightness_red
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_BRIGHTNESS
@@ -205,8 +203,6 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         planet_story.set_star_size(star_size)
 
         apl_datasource = _load_apl_document("./data/main.json")
-
-        planet_story.speech_text = f'Your star size is {star_size}. '
 
         if planet_story.star.brightness == "blue":
             if star_size == "dwarf":
@@ -280,8 +276,6 @@ class StarAgeIntentHandler(AbstractRequestHandler):
         planet_story.set_star_age(star_age)
 
         apl_datasource = _load_apl_document("./data/main.json")
-
-        planet_story.speech_text = f'Your star age is {star_age}. '
 
         if planet_story.star.brightness == "blue" and planet_story.star.size == "dwarf":
             if star_age == "young":
@@ -438,8 +432,6 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        planet_story.speech_text = f'Your planet size is {planet_size}. '
-
         if planet_size == "large":
             planet_story.speech_text += Translator.Planet.planet_size_large
             if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
@@ -499,8 +491,6 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        planet_story.speech_text = f'Your planet is {planet_distance}. '
-
         if planet_distance == "near":
             planet_story.speech_text += Translator.Planet.planet_distance_neighbouring
             if planet_story.star.brightness == "yellow":
@@ -546,8 +536,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_SMALL
                 
-        planet_story.speech_text += ' ' + Translator.Planet.planet_distance + ' ' + \
-                                    Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        planet_story.speech_text += ' ' + Translator.Planet.planet_age
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
@@ -579,8 +568,6 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
         planet_story.set_star_age(planet_age)
 
         apl_datasource = _load_apl_document("./data/main.json")
-
-        planet_story.speech_text = f'Your star age is {planet_age}. '
 
         if planet_story.planet.distance == "near":
             if planet_story.star.brightness == "yellow":
@@ -623,7 +610,6 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
             elif planet_story.planet.size == "small":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_SMALL
-
 
         if planet_age == "young":
             planet_story.speech_text += Translator.Planet.planet_age_young
@@ -730,6 +716,11 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
 
 
 class SessionEndedRequestHandler(AbstractRequestHandler):
+    """
+
+    S K I L L   E N D E D
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_request_type("SessionEndedRequest")(handler_input)
@@ -742,6 +733,11 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
 
 
 class FallbackHandler(AbstractRequestHandler):
+    """
+
+    F A L L B A C K
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return True
@@ -780,6 +776,11 @@ class FallbackHandler(AbstractRequestHandler):
 
 
 class AllExceptionHandler(AbstractExceptionHandler):
+    """
+
+    A L L   E X E C E P T I O N S
+
+    """
     def can_handle(self, handler_input, exception):
         # type: (HandlerInput, Exception) -> bool
         return True
@@ -796,6 +797,9 @@ class AllExceptionHandler(AbstractExceptionHandler):
 
 class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
     """
+
+    R E S P O N S E   I N T E R C E P T O R
+
     Response interceptors are invoked immediately after execution of the request handler for an incoming request.
     """
 

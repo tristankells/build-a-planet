@@ -46,10 +46,10 @@ class IntegrationTests(unittest.TestCase):
         planet_story = PlanetStory({
             'current_question': 'star_brightness',
             'star': {
-                'brightness': 'red', 'size': 'giant'
+                'brightness': 'red', 'size': 'giant', 'age': 'old'
             },
             'planet': {
-                'size': 'huge', 'distance': 'far'
+                'size': 'huge', 'distance': 'far', 'age': 'old'
             }
 
         })
@@ -63,10 +63,10 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(question, Question.Star.STAR_BRIGHTNESS,
                          'Next question should be star brightness')
 
-        self.assertEqual(sun, {'brightness': 'red', 'size': 'giant', 'age': ''},
+        self.assertEqual(sun, {'brightness': 'red', 'size': 'giant', 'age': 'old'},
                          'Should return valid sun as dictionary')
 
-        self.assertEqual(planet, {'size': 'huge', 'distance': 'far', 'age': ''},
+        self.assertEqual(planet, {'size': 'huge', 'distance': 'far', 'age': 'old'},
                          'Should return valid planet as dictionary')
 
     def test__set_sun_brightness_sets_correctly(self):
