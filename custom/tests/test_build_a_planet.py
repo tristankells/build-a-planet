@@ -46,10 +46,10 @@ class IntegrationTests(unittest.TestCase):
         planet_story = PlanetStory({
             'current_question': 'star_brightness',
             'star': {
-                'brightness': 'red', 'size': 'giant'
+                'brightness': 'red', 'size': 'giant', 'age': 'old'
             },
             'planet': {
-                'size': 'huge', 'distance': 'far'
+                'size': 'huge', 'distance': 'far', 'age': 'old'
             }
 
         })

@@ -12,7 +12,7 @@ from planet_story.star import Star
 CURRENT_QUESTION = 'current_question'
 STAR = 'star'
 PLANET = 'planet'
-
+AGE = 'age'
 
 # TODO Removed the redudant tpyes in the questions
 
@@ -30,13 +30,15 @@ class PlanetStory:
             self.current_question = session_variables[
                 CURRENT_QUESTION] if CURRENT_QUESTION in session_variables else Question.Star.STAR_BRIGHTNESS
 
-            star_brightness = session_variables[STAR][Star.BRIGHTNESS] if PLANET in session_variables else ''
-            star_size = session_variables[STAR][Star.SIZE] if PLANET in session_variables else ''
-            self.star = Star(star_brightness, star_size)
+            star_brightness = session_variables[STAR][Star.BRIGHTNESS] if STAR in session_variables else ''
+            star_size = session_variables[STAR][Star.SIZE] if STAR in session_variables else ''
+            star_age = session_variables[STAR][AGE] if STAR in session_variables else ''
+            self.star = Star(star_brightness, star_size, star_age)
 
             planet_size = session_variables[PLANET][Planet.SIZE] if PLANET in session_variables else ''
             planet_distance = session_variables[PLANET][Planet.DISTANCE] if PLANET in session_variables else ''
-            self.planet = Planet(planet_size, planet_distance)
+            planet_age = session_variables[PLANET][AGE] if PLANET in session_variables else ''
+            self.planet = Planet(planet_size, planet_distance, planet_age)
             self.speech_text = ''
 
     def get_session_variables(self):
