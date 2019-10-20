@@ -502,6 +502,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         planet_story.speech_text = f'Your planet is {planet_distance}. '
 
         if planet_distance == "near":
+            planet_story.speech_text += Translator.Planet.planet_distance_neighbouring
             if planet_story.star.brightness == "yellow":
                 if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
@@ -523,6 +524,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
         elif planet_distance == "midway":
+            planet_story.speech_text += Translator.Planet.planet_distance_near
             if planet_story.planet.size == "large":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
@@ -532,7 +534,8 @@ class PlanetDistanceHandler(AbstractRequestHandler):
             elif planet_story.planet.size == "small":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
-        elif planet_distance == "far":    
+        elif planet_distance == "far":
+            planet_story.speech_text += Translator.Planet.planet_distance_far
             if planet_story.planet.size == "large":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_LARGE
