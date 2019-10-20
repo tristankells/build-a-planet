@@ -23,7 +23,7 @@ class Translator:
 
         star_age = "What is the age of your star? Young or Middleaged or Old?"
         star_age_young = "Your star was born not too long ago."     
-        star_age_middleaged = "Your star has been active for awhile."
+        star_age_middle = "Your star has been active for awhile."
         star_age_old = "Your star is nearing the end of its life."
         star_age_other = "The age of the planet is Invalid."
         
@@ -40,7 +40,7 @@ class Translator:
 
         planet_size = "What size would you like your planet to be? Small, regular, or large?"
         planet_size_large = "Your planet is gigantic, has very strong gravitational force and a very dense atmosphere."
-        planet_size_regular = "Your planet is regular sized, has normal gravitational force, and a thick atmosphere."
+        planet_size_medium = "Your planet is medium sized, has normal gravitational force, and a thick atmosphere."
         planet_size_small = "Your planet is tiny, has very weak gravitational force, and very thin atmosphere."
 
         planet_age = "What is the age of your age planet? Young, Middle-aged or Old?"

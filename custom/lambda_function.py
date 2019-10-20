@@ -50,7 +50,7 @@ def _load_apl_document(file_path):
 # TODO: Make clean ending
 # TODO: Add other properties for planet and star
 # TODO: Check that re-prompts work correctly, eg... play same question back
-# TODO: Adding tracking of long explantions so players doesnt have to listen to it every time
+# TODO: Adding tracking of long explanations so players doesnt have to listen to it every time
 # TODO: Look into refactoring decision tree stuff / finding apl files stuff
 
 
@@ -107,8 +107,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        star_brightness = str(
-            handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
+        star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
 
         planet_story.set_star_brightness(star_brightness)
 
@@ -310,7 +309,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        planet_story.speech_text = f'Your planet is  {planet_distance}. '
+        planet_story.speech_text = f'Your planet is {planet_distance}. '
 
         if planet_distance == "neighbouring":
             planet_story.speech_text += ' ' + Translator.Planet.planet_distance_neighbouring
