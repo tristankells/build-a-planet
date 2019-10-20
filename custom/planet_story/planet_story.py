@@ -39,6 +39,9 @@ class PlanetStory:
             planet_distance = session_variables[PLANET][Planet.DISTANCE] if PLANET in session_variables else ''
             planet_age = session_variables[PLANET][AGE] if PLANET in session_variables else ''
             self.planet = Planet(planet_size, planet_distance, planet_age)
+
+            self.is_planet_habitable = False
+
             self.speech_text = ''
 
     def get_session_variables(self):
@@ -141,9 +144,8 @@ class PlanetStory:
             self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star."
         else:  # Planet is not habitable
+            self.is_planet_habitable = False
             self.speech_text = 'Your planet is not habitable'
-
-
 
     def _set_default_session_variables(self):
         self.current_question = Question.Star.STAR_BRIGHTNESS
