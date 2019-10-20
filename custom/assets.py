@@ -46,6 +46,10 @@ class Assets:
         YELLOW_GIANT_OLD = 'https://planet-story.s3.amazonaws.com/stars/yellow-giant-old.png'
         YELLOW_SUPER_OLD = 'https://planet-story.s3.amazonaws.com/stars/yellow-super-old.png'
 
+        GENERIC_SMALL = 'https://planet-story.s3.amazonaws.com/planets/Generic-Small.png'
+        GENERIC_MEDIUM = 'https://planet-story.s3.amazonaws.com/planets/Generic-Med.png'
+        GENERIC_LARGE = 'https://planet-story.s3.amazonaws.com/planets/Generic-Large.png'
+
         EARTH_SMALL = 'https://planet-story.s3.amazonaws.com/planets/Earthlike-Small.png'
         EARTH_MEDIUM = 'https://planet-story.s3.amazonaws.com/planets/Earthlike-Med.png'
         EARTH_LARGE = 'https://planet-story.s3.amazonaws.com/planets/Earthlike-Large.png'
