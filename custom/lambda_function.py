@@ -569,8 +569,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.AGE)(
-            handler_input) and planet_story.current_question == Question.Planet.PLANET_AGE
+        return is_intent_name(Intents.AGE)(handler_input) and planet_story.current_question == Question.Planet.PLANET_AGE
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
