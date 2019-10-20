@@ -57,11 +57,12 @@ class Translator:
 
     class End_Game:
         game_end = AUDIO_FORMAT.format("game_end")
-        game_end_yes = AUDIO_FORMAT.format("game_end_yes")
-        game_end_no = AUDIO_FORMAT.format("game_end_no")
+        game_play_again = AUDIO_FORMAT.format("game_play_again")
+        game_play_again_yes = AUDIO_FORMAT.format("game_play_again_yes")
+        game_play_again_no = AUDIO_FORMAT.format("game_play_again_no")
 
     class Facts:
-        fact_create = "Do you want to know a fact about space?"
+        fact_create = AUDIO_FORMAT.format("fact_create")
         facts = [
                     'There is no atmosphere in space, which means that sound has no medium or way to travel to be heard. Astronauts use radios to stay in communication while in space, since radio waves can still be sent and received.'
                     'Venus is the hottest planet in the solar system and has an average surface temperature of around 450° C. Interestingly, Venus is not the closest planet to the Sun – Mercury is closer but because Mercury has no atmosphere to regulate temperature it has a very large temperature fluctuation.'
