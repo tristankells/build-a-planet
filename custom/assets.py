@@ -45,3 +45,15 @@ class Assets:
         YELLOW_DWARF_OLD = 'https://planet-story.s3.amazonaws.com/stars/yellow-dwarf-old.png'
         YELLOW_GIANT_OLD = 'https://planet-story.s3.amazonaws.com/stars/yellow-giant-old.png'
         YELLOW_SUPER_OLD = 'https://planet-story.s3.amazonaws.com/stars/yellow-super-old.png'
+
+        EARTH_SMALL = 'https://planet-story.s3.amazonaws.com/planets/Earthlike-Small.png'
+        EARTH_MEDIUM = 'https://planet-story.s3.amazonaws.com/planets/Earthlike-Med.png'
+        EARTH_LARGE = 'https://planet-story.s3.amazonaws.com/planets/Earthlike-Large.png'
+
+        FIREBALL_SMALL = 'https://planet-story.s3.amazonaws.com/planets/Fireball-Small.png'
+        FIREBALL_MEDIUM = 'https://planet-story.s3.amazonaws.com/planets/Fireball-Med.png'
+        FIREBALL_LARGE = 'https://planet-story.s3.amazonaws.com/planets/Fireball-Large.png'
+
+        ICEBALL_SMALL = 'https://planet-story.s3.amazonaws.com/planets/Iceball-Small.png'
+        ICEBALL_MEDIUM = 'https://planet-story.s3.amazonaws.com/planets/Iceball-Med.png'
+        ICEBALL_LARGE = 'https://planet-story.s3.amazonaws.com/planets/Iceball-Large.png'
