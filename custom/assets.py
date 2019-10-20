@@ -1,6 +1,6 @@
 class Assets:
     class Pictures:
-        RED_BRIGHTNESS = 'https://planet-story.s3.amazonaws.com/Stars/Red/red_star.png'
+        RED_BRIGHTNESS = 'https://planet-story.s3.amazonaws.com/stars/red.png'
         BLUE_BRIGHTNESS = 'https://planet-story.s3.amazonaws.com/Stars/Blue/blue_star.png'
         YELLOW_BRIGHTNESS = 'https://planet-story.s3.amazonaws.com/Stars/Yellow/yellow_star.png'
 
@@ -13,10 +13,11 @@ class Assets:
         RED_SUPER = ''
 
         YELLOW_DWARF = ''
-        YELLOW_GIANT = ''
+        YELLOW_GIANT = '' 
         YELLOW_SUPER = ''
 
         BLUE_YOUNG_DWARF = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Young/blue-young-dwarf.png'
+        BLUE_YOUNG_DWARF = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Young/blue-young-giant.png'
         BLUE_YOUNG_SUPER = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Young/blue-young-super.png'
         BLUE_MIDDLE_DWARF = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Middle/blue-middle-dwarf.png'
         BLUE_MIDDLE_GIANT = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Middle/blue-middle-giant.png'

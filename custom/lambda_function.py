@@ -108,7 +108,7 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
         planet_story.learn_about_solar_systems()
 
         handler_input.response_builder.speak(planet_story.speech_text)
-        
+
         return handler_input.response_builder.response
 
 
@@ -146,6 +146,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
                and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
+
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -539,22 +540,7 @@ class FallbackHandler(AbstractRequestHandler):
 
         speech_text += property_question_dict[planet_story.current_question]
 
-        handler_input.response_builder.speak(speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=_load_apl_document("./data/main.json")
-            )
-        ).add_directive(
-            ExecuteCommandsDirective(
-                token="pagerToken",
-                commands=[
-                    AutoPageCommand(
-                        component_id="pagerComponentId",
-                        duration=5000)
-                ]
-            )
-        )
+        handler_input.response_builder.speak(speech_text)
 
         return handler_input.response_builder.response
 
