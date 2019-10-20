@@ -442,25 +442,19 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "large":
             planet_story.speech_text += Translator.Planet.planet_size_large
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url']\
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
 
         if planet_size == "medium":
             planet_story.speech_text += Translator.Planet.planet_size_medium
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_MEDIUM
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_MEDIUM
 
         if planet_size == "small":
             planet_story.speech_text += Translator.Planet.planet_size_small
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
+        
         planet_story.speech_text += (' ' + Translator.Planet.planet_distance)
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
@@ -495,24 +489,22 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planet_story.speech_text = f'Your planet is {planet_distance}. '
 
-        if planet_distance == "neighbouring":
-            planet_story.speech_text += ' ' + Translator.Planet.planet_distance_neighbouring
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-        if planet_distance == "near":
-            planet_story.speech_text += ' ' + Translator.Planet.planet_distance_near
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url']\
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-        if planet_distance == "far":
-            planet_story.speech_text += ' ' + Translator.Planet.planet_distance_far
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = \
-                'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] =\
-                'https://planet-story.s3.amazonaws.com/stars-02.png'
+
+        if planet_story.planet.size == "small":
+            if planet_story.star.brightness == "blue":
+                planet_story.speech_text += ' ' + Translator.Planet.planet_distance_neighbouring
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
+
+
+        # elif planet_story.planet.size == "medium":
+
+
+
+        # elif planet_story.planet.size == "large":
+
+
+
 
         planet_story.speech_text += ' ' + Translator.Planet.planet_distance + ' ' + \
                                     Translator.Launch.launch + ' ' + Translator.Star.star_brightness
