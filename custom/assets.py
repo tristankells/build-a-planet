@@ -5,11 +5,11 @@ class Assets:
         YELLOW_BRIGHTNESS = 'https://planet-story.s3.amazonaws.com/stars/yellow.png'
 
         BLUE_DWARF = 'https://planet-story.s3.amazonaws.com/stars/blue-dwarf.png'
-        BLUE_GIANT = 'https://planet-story.s3.amazonaws.com/stars/blue_giant.png'
+        BLUE_GIANT = 'https://planet-story.s3.amazonaws.com/stars/blue-giant.png'
         BLUE_SUPER = 'https://planet-story.s3.amazonaws.com/stars/blue-super.png'
         
         RED_DWARF = 'https://planet-story.s3.amazonaws.com/stars/red-dwarf.png'
-        RED_GIANT = 'https://planet-story.s3.amazonaws.com/stars/red_giant.png'
+        RED_GIANT = 'https://planet-story.s3.amazonaws.com/stars/red-giant.png'
         RED_SUPER = 'https://planet-story.s3.amazonaws.com/stars/red-super.png'
 
         YELLOW_DWARF = 'https://planet-story.s3.amazonaws.com/stars/yellow-dwarf.png'
