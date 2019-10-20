@@ -30,7 +30,7 @@ class Translator:
 
     class Planet:
         planet_create = "Would you like to learn more about how to create planets?"
-        planet_create_yes = ""
+        planet_create_yes = "Nice! Here’s what you need to know. A planet’s size will determine bla bla bla bla"
         planet_create_no = "Ok, let’s get started!"
 
         planet_distance = "Let’s build your planet. How far is the distance between your planet and the star? very close, near or far"
