@@ -288,7 +288,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 planet_story.speech_text += Translator.Star.star_age_young
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF_YOUNG
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF_YOUNG
-            if star_age == "middle":
+            if star_age == "middle-aged":
                 planet_story.speech_text += Translator.Star.star_age_middle
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF_MIDDLE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF_MIDDLE
@@ -301,7 +301,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 planet_story.speech_text += Translator.Star.star_age_young
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_DWARF_YOUNG
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_DWARF_YOUNG
-            if star_age == "middle":
+            if star_age == "middle-aged":
                 planet_story.speech_text += Translator.Star.star_age_middle
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_DWARF_MIDDLE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_DWARF_MIDDLE
@@ -314,7 +314,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 planet_story.speech_text += Translator.Star.star_age_young
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_DWARF_YOUNG
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_DWARF_YOUNG
-            if star_age == "middle":
+            if star_age == "middle-aged":
                 planet_story.speech_text += Translator.Star.star_age_middle
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_DWARF_MIDDLE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_DWARF_MIDDLE
@@ -327,7 +327,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 planet_story.speech_text += Translator.Star.star_age_young
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT_YOUNG
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT_YOUNG
-            if star_age == "middle":
+            if star_age == "middle-aged":
                 planet_story.speech_text += Translator.Star.star_age_middle
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT_MIDDLE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT_MIDDLE
@@ -340,7 +340,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 planet_story.speech_text += Translator.Star.star_age_young
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_GIANT_YOUNG
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_GIANT_YOUNG
-            if star_age == "middle":
+            if star_age == "middle-aged":
                 planet_story.speech_text += Translator.Star.star_age_middle
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_GIANT_MIDDLE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_GIANT_MIDDLE
@@ -353,7 +353,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 planet_story.speech_text += Translator.Star.star_age_young
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_GIANT_YOUNG
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_GIANT_YOUNG
-            if star_age == "middle":
+            if star_age == "middle-aged":
                 planet_story.speech_text += Translator.Star.star_age_middle
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_GIANT_MIDDLE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_GIANT_MIDDLE
@@ -367,7 +367,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 planet_story.speech_text += Translator.Star.star_age_young
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_YOUNG
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_YOUNG
-            if star_age == "middle":
+            if star_age == "middle-aged":
                 planet_story.speech_text += Translator.Star.star_age_middle
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_MIDDLE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_MIDDLE
@@ -380,7 +380,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 planet_story.speech_text += Translator.Star.star_age_young
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_SUPER_YOUNG
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_SUPER_YOUNG
-            if star_age == "middle":
+            if star_age == "middle-aged":
                 planet_story.speech_text += Translator.Star.star_age_middle
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_SUPER_MIDDLE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_SUPER_MIDDLE
@@ -393,7 +393,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 planet_story.speech_text += Translator.Star.star_age_young
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_SUPER_YOUNG
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_SUPER_YOUNG
-            if star_age == "middle":
+            if star_age == "middle-aged":
                 planet_story.speech_text += Translator.Star.star_age_middle
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_SUPER_MIDDLE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_SUPER_MIDDLE
@@ -637,7 +637,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
             elif planet_story.planet.size == "small":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL    
-        if planet_age == "middle":
+        if planet_age == "middle-aged":
             planet_story.speech_text += Translator.Planet.planet_age_middleaged
         if planet_age == "old":
             planet_story.speech_text += Translator.Planet.planet_age_old
