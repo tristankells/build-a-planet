@@ -107,6 +107,16 @@ class PlanetStory:
         self.speech_text = Translator.Solar_System.planetary_system_no
         self.speech_text += Translator.Star.star_brightness
 
+    def test_if_planet_habitable(self):
+        """
+        Called in the StarBrightnessIntentHandler handler
+        :return:
+        """
+        if self.star.age == '':
+            self.speech_text = ''
+        else:  # Planet is not habitable
+            self.speech_text = ''
+
     def _set_default_session_variables(self):
         self.current_question = Question.Star.STAR_BRIGHTNESS
         self.planet = Planet()

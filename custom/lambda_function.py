@@ -315,12 +315,14 @@ class PlanetSizeHandler(AbstractRequestHandler):
                 = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
                 = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+
         if planet_size == "medium":
             planet_story.speech_text += Translator.Planet.planet_size_medium
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] \
                 = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
                 = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+
         if planet_size == "small":
             planet_story.speech_text += Translator.Planet.planet_size_small
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] \
@@ -431,6 +433,9 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
 
+        # Now solar system is built, test if planet is habitable
+        planet_story.test_if_planet_habitable()
+
         planet_story.speech_text += (' ' + Translator.End_Game.game_end)
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
@@ -525,16 +530,22 @@ class FallbackHandler(AbstractRequestHandler):
 
         property_question_dict = {
             Question.Star.STAR_BRIGHTNESS: {
-                Translator.Star.star_brightness
+                Translator.Star.star_brightness_other
             },
             Question.Star.STAR_SIZE: {
-                Translator.Star.star_age
+                Translator.Star.star_size_other
+            },
+            Question.Star.STAR_AGE: {
+                Translator.Star.star_age_other
             },
             Question.Planet.PLANET_DISTANCE: {
                 Translator.Planet.planet_distance
             },
             Question.Planet.PLANET_SIZE: {
                 Translator.Planet.planet_size
+            },
+            Question.Planet.PLANET_AGE: {
+                Translator.Planet.planet_age
             }
         }
 
