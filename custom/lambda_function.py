@@ -442,7 +442,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "large":
             planet_story.speech_text += Translator.Planet.planet_size_large
-            if planet_story.star.brightness == "blue":
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
             else:
@@ -451,7 +451,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "medium":
             planet_story.speech_text += Translator.Planet.planet_size_medium
-            if planet_story.star.brightness == "blue":
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
             else:
@@ -460,7 +460,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "small":
             planet_story.speech_text += Translator.Planet.planet_size_small
-            if planet_story.star.brightness == "blue":
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
             else:
@@ -501,23 +501,38 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planet_story.speech_text = f'Your planet is {planet_distance}. '
 
-
-        if planet_story.planet.size == "small":
-            if planet_story.star.brightness == "blue":
-                planet_story.speech_text += ' ' + Translator.Planet.planet_distance_neighbouring
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-
-
-        # elif planet_story.planet.size == "medium":
-
-
-
-        # elif planet_story.planet.size == "large":
-
-
-
-
+        if planet_distance == "near":
+            if planet_story.star.brightness == "yellow":
+                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
+                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM   
+                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
+            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                if planet_story.planet.size == "large":
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
+                elif planet_story.planet.size == "medium":
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
+                elif planet_story.planet.size == "small":
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
+        elif planet_distance == "midway" or planet_distance == "far":
+            if planet_story.planet.size == "large":
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
+            elif planet_story.planet.size == "medium":
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_MEDIUM
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_MEDIUM
+            elif planet_story.planet.size == "small":
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
+            
         planet_story.speech_text += ' ' + Translator.Planet.planet_distance + ' ' + \
                                     Translator.Launch.launch + ' ' + Translator.Star.star_brightness
 
