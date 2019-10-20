@@ -47,15 +47,15 @@ class Translator:
         planet_size_medium = AUDIO_FORMAT.format("planet_size_medium")
         planet_size_small = AUDIO_FORMAT.format("planet_size_small")
 
-        planet_age = "What is the age of your age planet? Young, Middle-aged or Old?"
-        planet_age_young = "Your planet was formed fairly recently and has volatile seismic activity"
-        planet_age_middleaged = "Your planet has been in existence for awhile and has fairly regular but stable seismic activity"
-        planet_age_old = "Your planet has been around for a long time, and its seismic activity has ceased"
+        planet_age = AUDIO_FORMAT.format("planet_age")
+        planet_age_young = AUDIO_FORMAT.format("planet_age_young")
+        planet_age_middleaged = AUDIO_FORMAT.format("planet_age_middleaged")
+        planet_age_old = AUDIO_FORMAT.format("planet_age_old")
 
     class End_Game:
-        game_end = "Awesome! You have created a planetary system! Do you want to learn more about it?"
-        game_end_yes = "Displaying your planet with the stars"
-        game_end_no = "Thanks for playing"
+        game_end = AUDIO_FORMAT.format("game_end")
+        game_end_yes = AUDIO_FORMAT.format("game_end_yes")
+        game_end_no = AUDIO_FORMAT.format("game_end_no")
 
     class Facts:
         fact_create = "Do you want to know a fact about space?"
