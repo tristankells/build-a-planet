@@ -442,25 +442,19 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "large":
             planet_story.speech_text += Translator.Planet.planet_size_large
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url']\
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_LARGE
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_LARGE
 
         if planet_size == "medium":
             planet_story.speech_text += Translator.Planet.planet_size_medium
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_MEDIUM
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_MEDIUM
 
         if planet_size == "small":
             planet_story.speech_text += Translator.Planet.planet_size_small
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
-                = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_SMALL
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_SMALL
+        
         planet_story.speech_text += (' ' + Translator.Planet.planet_distance)
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
