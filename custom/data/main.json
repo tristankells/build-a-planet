@@ -28,13 +28,13 @@
             "largeSourceUrl": null,
             "sources": [
                 {
-                    "url": "",
+                    "url": "https://planet-story.s3.amazonaws.com/planet-story.png",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "",
+                    "url": "https://planet-story.s3.amazonaws.com/planet-story.png",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
