@@ -28,20 +28,20 @@
             "largeSourceUrl": null,
             "sources": [
                 {
-                    "url": "https://d2o906d8ln7ui1.cloudfront.net/images/MollyforBT7.png",
+                    "url": "",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "https://d2o906d8ln7ui1.cloudfront.net/images/MollyforBT7.png",
+                    "url": "",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
                 }
             ]
         },
-        "logoUrl": "https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png",
-        "hintText": "Try, \"Alexa, search for blue cheese\""
+        "logoUrl": "https://planet-story.s3.amazonaws.com/512px512px.png",
+        "hintText": "Try, \"Alexa, play Planet Story\""
     }
 }
