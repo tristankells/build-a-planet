@@ -24,7 +24,7 @@ class Intents:
     PLANET_DISTANCE = 'PlanetDistanceIntent'
 
     # Samples phrases : 'Create {Atmosphere} distance', 'Create {Atmosphere} ', '{Atmosphere}'
-    PLANET_ATMOSPHERE = 'PlanetAtmosphereIntent'
+    AGE = 'AgeIntent'
 
     # Samples phrases : '{StarSize}', 'can i have a {StarSize} star please ', '{StarSize} star', 'i want a {StarSize} star'
     STAR_SIZE = 'StarSizeIntent'
