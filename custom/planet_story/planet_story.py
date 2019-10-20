@@ -141,6 +141,7 @@ class PlanetStory:
             self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star."
         else:  # Planet is not habitable
+            self.is_planet_habitable = False
             self.speech_text = 'Your planet is not habitable'
 
 
