@@ -100,6 +100,7 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
+        print("YesLearnMoreIntent Can handler has been CALLED")
         return is_intent_name(Intents.YES)(handler_input) \
                and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
 
@@ -629,6 +630,8 @@ sb.add_request_handler(PlanetSizeHandler())
 sb.add_request_handler(PlanetAgeIntentHandler())
 
 # endregion
+
+sb.add_request_handler(YesLearnMoreIntentHandler())
 
 sb.add_global_request_interceptor(SetupRequestInterceptor())
 
