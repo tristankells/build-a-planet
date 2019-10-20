@@ -804,6 +804,7 @@ sb.add_request_handler(PlanetAgeIntentHandler())
 # endregion
 
 sb.add_request_handler(YesLearnMoreIntentHandler())
+sb.add_request_handler(NoLearnMoreIntentHandler())
 
 sb.add_global_request_interceptor(SetupRequestInterceptor())
 
