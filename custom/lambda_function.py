@@ -68,6 +68,11 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
+    """
+
+    L A U N C H
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_request_type("LaunchRequest")(handler_input)
@@ -89,6 +94,11 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
 
 class StarBrightnessIntentHandler(AbstractRequestHandler):
+    """
+
+    S T A R   B R I G H N E S S
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
@@ -133,6 +143,11 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
 
 class StarSizeIntentHandler(AbstractRequestHandler):
+    """
+
+    S T A R   S I Z E
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_SIZE)(handler_input) and planet_story.current_question == Question.Star.STAR_SIZE
@@ -148,21 +163,21 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
         planet_story.speech_text = f'Your star size is {star_size}. '
 
-        ## If blue sun
+        # If blue sun
         if star_size == "dwarf":
-            planet_story.speech_text +=Translator.Star.star_size_dwarf
+            planet_story.speech_text += Translator.Star.star_size_dwarf
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF
         if star_size == "giant":
-            planet_story.speech_text +=Translator.Star.star_size_giant
+            planet_story.speech_text += Translator.Star.star_size_giant
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
         if star_size == "super":
-            planet_story.speech_text +=Translator.Star.star_size_super_giant
+            planet_story.speech_text += Translator.Star.star_size_super_giant
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
 
-        planet_story.speech_text += (' ' + Translator.Planet.planet_size)
+        planet_story.speech_text += (' ' + Translator.Star.star_age)
 
         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
@@ -176,33 +191,38 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
 
 class StarAgeIntentHandler(AbstractRequestHandler):
+    """
+
+    S T A R   A G E
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.STAR_SIZE)(
+        return is_intent_name(Intents.AGE)(
             handler_input) and planet_story.current_question == Question.Star.STAR_AGE
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        star_size = str(
-            handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
+        star_age = str(
+            handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
 
-        planet_story.set_star_size(star_size)
+        planet_story.set_star_age(star_age)
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        planet_story.speech_text = f'Your star size is {star_size}. '
+        planet_story.speech_text = f'Your star age is {star_age}. '
 
-        ## If blue sun
-        if star_size == "dwarf":
-            planet_story.speech_text += Translator.Star.star_size_dwarf
+        # If blue sun
+        if star_age == "young":
+            planet_story.speech_text += Translator.Star.star_age_young
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF
-        if star_size == "giant":
-            planet_story.speech_text += Translator.Star.star_size_giant
+        if star_age == "middle":
+            planet_story.speech_text += Translator.Star.star_age_middleaged
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
-        if star_size == "super":
-            planet_story.speech_text += Translator.Star.star_size_super_giant
+        if star_age == "old":
+            planet_story.speech_text += Translator.Star.star_age_old
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
 
@@ -225,6 +245,11 @@ class StarAgeIntentHandler(AbstractRequestHandler):
 
 
 class PlanetSizeHandler(AbstractRequestHandler):
+    """
+
+    P L A N E T   S I Z E
+
+    """
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_SIZE)(handler_input) \
                and planet_story.current_question == Question.Planet.PLANET_SIZE
@@ -244,7 +269,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "medium":
-            planet_story.speech_text += Translator.Planet.planet_size_medium
+            planet_story.speech_text += Translator.Planet.planet_size_regular
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "small":
@@ -266,6 +291,11 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
 
 class PlanetDistanceHandler(AbstractRequestHandler):
+    """
+
+    P L A N E T   D I S T A N C E
+
+    """
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
                and planet_story.current_question == Question.Planet.PLANET_DISTANCE
@@ -281,12 +311,12 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planet_story.speech_text = f'Your planet is {planet_distance}. '
 
-        if planet_distance == "near":
-            planet_story.speech_text += ' ' + Translator.Planet.planet_distance_near
+        if planet_distance == "neighbouring":
+            planet_story.speech_text += ' ' + Translator.Planet.planet_distance_neighbouring
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
-        if planet_distance == "midway":
-            planet_story.speech_text += ' ' + Translator.Planet.planet_distance_midway
+        if planet_distance == "near":
+            planet_story.speech_text += ' ' + Translator.Planet.planet_distance_near
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_distance == "far":
@@ -307,10 +337,64 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+class PlanetAgeIntentHandler(AbstractRequestHandler):
+    """
+
+    P L A N E T  A G E
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.AGE)(
+            handler_input) and planet_story.current_question == Question.Planet.PLANET_AGE
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_age = str(
+            handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
+
+        planet_story.set_star_age(planet_age)
+
+        apl_datasource = _load_apl_document("./data/main.json")
+
+        planet_story.speech_text = f'Your star age is {planet_age}. '
+
+        if planet_age == "young":
+            planet_story.speech_text += Translator.Planet.planet_age_young
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF
+        if planet_age == "middle":
+            planet_story.speech_text += Translator.Planet.planet_age_middleaged
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
+        if planet_age == "old":
+            planet_story.speech_text += Translator.Planet.planet_age_old
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
+
+        planet_story.speech_text += (' ' + Translator.End_Game.game_end)
+
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=apl_datasource
+            )
+        )
+
+        return handler_input.response_builder.response
+
+
 # endregion
 
 
 class HelpIntentHandler(AbstractRequestHandler):
+    """
+
+    H E L P
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name("AMAZON.HelpIntent")(handler_input)
@@ -340,6 +424,11 @@ class HelpIntentHandler(AbstractRequestHandler):
 
 
 class CancelAndStopIntentHandler(AbstractRequestHandler):
+    """
+
+    C A N C E L   A N D    S T O P
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name("AMAZON.CancelIntent")(handler_input) \

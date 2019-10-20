@@ -7,4 +7,4 @@ class Question:
     class Planet:
         PLANET_SIZE = 'planet_size'
         PLANET_DISTANCE = 'planet_distance'
-        PLANET_ATMOSPHERE = 'planet_atmosphere'
+        PLANET_AGE = 'planet_age'

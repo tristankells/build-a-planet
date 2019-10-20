@@ -14,6 +14,8 @@ STAR = 'star'
 PLANET = 'planet'
 
 
+# TODO Removed the redudant tpyes in the questions
+
 class PlanetStory:
     speech_text: str  # The response given to the user
     current_question: str  # The question currently being asked
@@ -47,7 +49,7 @@ class PlanetStory:
         Called in the Launch handler
         :return:
         """
-        self.speech_text = Translator.Launch.launch + ' ' + Translator.Star.star_brightness
+        self.speech_text = Translator.Launch.launch + ' ' + Translator.Solar_System.planetary_system_create + ' '
 
     def set_star_brightness(self, brightness):
         """
@@ -63,6 +65,14 @@ class PlanetStory:
         :return:
         """
         self.star.size = size
+        self.current_question = Question.Star.STAR_AGE
+
+    def set_star_age(self, age):
+        """
+        Called in the PlanetSizeHandler handler
+        :return:
+        """
+        self.star.age = age
         self.current_question = Question.Planet.PLANET_SIZE
 
     def set_planet_size(self, size):
@@ -79,6 +89,14 @@ class PlanetStory:
         :return:
         """
         self.planet.distance = distance
+        self.current_question = Question.Planet.PLANET_AGE
+
+    def set_planet_age(self, age):
+        """
+        Called in the StarBrightnessIntentHandler handler
+        :return:
+        """
+        self.planet.age = age
         self.current_question = Question.Star.STAR_BRIGHTNESS
 
     def _set_default_session_variables(self):
