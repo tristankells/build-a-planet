@@ -175,12 +175,12 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         # Ask next question
         planet_story.speech_text += (' ' + Translator.Star.star_size)
 
-        handler_input.response_builder.add_directive(
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
                 document=_load_apl_document("./templates/main.json"),
                 datasources=apl_datasource
-            ).speak(planet_story.speech_text)
+            )
         )
 
         return handler_input.response_builder.response
