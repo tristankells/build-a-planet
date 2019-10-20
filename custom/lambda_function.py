@@ -628,6 +628,15 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         if planet_age == "young":
             planet_story.speech_text += Translator.Planet.planet_age_young
+            if planet_story.planet.size == "large":
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
+            elif planet_story.planet.size == "medium":
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_MEDIUM
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_MEDIUM
+            elif planet_story.planet.size == "small":
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL    
         if planet_age == "middle":
             planet_story.speech_text += Translator.Planet.planet_age_middleaged
         if planet_age == "old":
@@ -635,6 +644,9 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         # Now solar system is built, test if planet is habitable
         planet_story.test_if_planet_habitable()
+
+        ## TODO: this passes then change the APL picture to Earth
+
 
         planet_story.speech_text += (' ' + Translator.End_Game.game_end)
 
