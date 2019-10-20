@@ -112,13 +112,8 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
 
         apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_BRIGHTNESS
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
-            )
-        )
+        handler_input.response_builder.speak(planet_story.speech_text)
+        
         return handler_input.response_builder.response
 
 
