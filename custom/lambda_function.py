@@ -646,15 +646,19 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
         planet_story.test_if_planet_habitable()
 
         if planet_story.is_planet_habitable:
-            NotImplemented
             # Change to earth pic
-        else:
-            NotImplemented
-            # Don't change to earth
+            if planet_story.planet.size == "large":
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_LARGE
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_LARGE
+            elif planet_story.planet.size == "medium":
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_MEDIUM
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_MEDIUM
+            elif planet_story.planet.size == "small":
+                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_SMALL
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_SMALL
 
-
-        ## TODO: this passes then change the APL picture to Earth
-
+        # else:
+        #     # Don't change to earth
 
         planet_story.speech_text += (' ' + Translator.End_Game.game_end)
 
