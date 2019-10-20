@@ -20,9 +20,9 @@ class Translator:
 
         star_size = AUDIO_FORMAT.format("star_size")
         star_size_super_giant = AUDIO_FORMAT.format("star_size_super_giant")
-        star_size_giant =  AUDIO_FORMAT.format("star_size_giant")
-        star_size_dwarf =  AUDIO_FORMAT.format("star_size_dwarf")
-        star_size_other =  AUDIO_FORMAT.format("star_size_other")
+        star_size_giant = AUDIO_FORMAT.format("star_size_giant")
+        star_size_dwarf = AUDIO_FORMAT.format("star_size_dwarf")
+        star_size_other = AUDIO_FORMAT.format("star_size_other")
 
         star_age = AUDIO_FORMAT.format("star_age")
         star_age_young = AUDIO_FORMAT.format("star_age_size")
@@ -39,16 +39,19 @@ class Translator:
         planet_distance_neighbouring = "Your planet will be located very close to the star. Hmmm, it feels a bit too warm here"
         planet_distance_near = "Your planet will be somewhat near the star"
         planet_distance_far = "Your planet will very far from the star"
+        planet_distance_other = ""
 
         planet_size = "What size would you like your planet to be? Small, regular, or large?"
         planet_size_large = "Your planet is gigantic, has very strong gravitational force and a very dense atmosphere."
         planet_size_medium = "Your planet is medium sized, has normal gravitational force, and a thick atmosphere."
         planet_size_small = "Your planet is tiny, has very weak gravitational force, and very thin atmosphere."
+        planet_size_other = ""
 
         planet_age = "What is the age of your age planet? Young, Middle-aged or Old?"
         planet_age_young = "Your planet was formed fairly recently and has volatile seismic activity"
         planet_age_middleaged = "Your planet has been in existence for awhile and has fairly regular but stable seismic activity"
         planet_age_old = "Your planet has been around for a long time, and its seismic activity has ceased"
+        planet_age_other = ""
 
     class End_Game:
         game_end = "Awesome! You have created a planetary system! Do you want to learn more about it?"
