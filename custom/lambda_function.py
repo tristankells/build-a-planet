@@ -268,8 +268,8 @@ class StarAgeIntentHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
         if star_age == "old":
             planet_story.speech_text += Translator.Star.star_age_old
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
 
         planet_story.speech_text += (' ' + Translator.Planet.planet_size)
 
@@ -362,8 +362,6 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planet_story.speech_text = f'Your planet is {planet_distance}. '
 
-
-
         if planet_distance == "neighbouring":
             planet_story.speech_text += ' ' + Translator.Planet.planet_distance_neighbouring
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] \
@@ -430,8 +428,8 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
         if planet_age == "old":
             planet_story.speech_text += Translator.Planet.planet_age_old
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_GIANT
+            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT
+            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
 
         planet_story.speech_text += (' ' + Translator.End_Game.game_end)
 
