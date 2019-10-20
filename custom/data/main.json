@@ -9,13 +9,13 @@
             "largeSourceUrl": null,
             "sources": [
                 {
-                    "url": "https://d2o906d8ln7ui1.cloudfront.net/images/BT7_Background.png",
+                    "url": "https://planet-story.s3.amazonaws.com/space-background.png",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "https://d2o906d8ln7ui1.cloudfront.net/images/BT7_Background.png",
+                    "url": "https://planet-story.s3.amazonaws.com/space-background.png",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
