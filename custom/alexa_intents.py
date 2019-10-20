@@ -15,16 +15,13 @@ class Intents:
     NAVIGATE_HOME = 'AMAZON.NavigateHomeIntent'
 
     # Samples phrases : 'Build a {Brightness} star', '{Brightness}', 'I want to have {Brightness}  star'
-    STAR_BRIGHTNESS = 'StarBrightnessIntent'
+    STAR_BRIGHNESST = 'StarBrighnesstIntent'
 
-    # Samples phrases : 'Build star {Age} aged please', 'Star age is {Age}', '{Age}'
-    STAR_AGE = 'StarAgeIntent'
+    # Samples phrases : 'Build planet {Age} aged please', 'Build star {Age} aged please', 'Star age is {Age}', '{Age}'
+    AGE = 'AgeIntent'
 
     # Samples phrases : 'Create {Distance}', 'Create {Distance} distance', '{Distance}'
     PLANET_DISTANCE = 'PlanetDistanceIntent'
-
-    # Samples phrases : 'Create {Atmosphere} distance', 'Create {Atmosphere} ', '{Atmosphere}'
-    AGE = 'AgeIntent'
 
     # Samples phrases : '{StarSize}', 'can i have a {StarSize} star please ', '{StarSize} star', 'i want a {StarSize} star'
     STAR_SIZE = 'StarSizeIntent'
@@ -32,5 +29,8 @@ class Intents:
     # Samples phrases : '{PlanetSize}', 'can i have a {PlanetSize} planet please ', '{PlanetSize} planet', 'i want a {PlanetSize} planet'
     PLANET_SIZE = 'PlanetSizeIntent'
 
-    # Samples phrases : 'please explain', 'i want to know more about this ', 'please tell me more'
-    TELL_ME_MORE = 'TellMeMoreIntent'
+    # Samples phrases : 
+    YES = 'AMAZON.YesIntent'
+
+    # Samples phrases : 
+    NO = 'AMAZON.NoIntent'

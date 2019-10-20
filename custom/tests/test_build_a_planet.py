@@ -38,9 +38,9 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(question, Question.Star.STAR_BRIGHTNESS,
                          'Next question should be star brightness')
 
-        self.assertEqual(sun, {'brightness': '', 'size': ''}, 'Should return valid sun as dictionary')
+        self.assertEqual(sun, {'brightness': '', 'size': '', 'age': ''}, 'Should return valid sun as dictionary')
 
-        self.assertEqual(planet, {'size': '', 'distance': ''}, 'Should return valid planet as dictionary')
+        self.assertEqual(planet, {'size': '', 'distance': '', 'age': ''}, 'Should return valid planet as dictionary')
 
     def test__get_session_variables_returns_saved_values(self):
         planet_story = PlanetStory({
@@ -63,9 +63,11 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(question, Question.Star.STAR_BRIGHTNESS,
                          'Next question should be star brightness')
 
-        self.assertEqual(sun, {'brightness': 'red', 'size': 'giant'}, 'Should return valid sun as dictionary')
+        self.assertEqual(sun, {'brightness': 'red', 'size': 'giant', 'age': ''},
+                         'Should return valid sun as dictionary')
 
-        self.assertEqual(planet, {'size': 'huge', 'distance': 'far'}, 'Should return valid planet as dictionary')
+        self.assertEqual(planet, {'size': 'huge', 'distance': 'far', 'age': ''},
+                         'Should return valid planet as dictionary')
 
     def test__set_sun_brightness_sets_correctly(self):
         planet_story = PlanetStory(None)

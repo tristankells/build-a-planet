@@ -24,11 +24,11 @@
           "samples": []
         },
         {
-          "name": "StarBrightnessIntent",
+          "name": "StarBrighnesstIntent",
           "slots": [
             {
               "name": "Brightness",
-              "type": "Brightness"
+              "type": "brightness"
             }
           ],
           "samples": [
@@ -38,14 +38,15 @@
           ]
         },
         {
-          "name": "StarAgeIntent",
+          "name": "AgeIntent",
           "slots": [
             {
               "name": "Age",
-              "type": "Age"
+              "type": "age"
             }
           ],
           "samples": [
+            "Build planet {Age} aged please",
             "Build star {Age} aged please",
             "Star age is {Age}",
             "{Age}"
@@ -56,27 +57,13 @@
           "slots": [
             {
               "name": "Distance",
-              "type": "Distance"
+              "type": "distance"
             }
           ],
           "samples": [
             "Create {Distance}",
             "Create {Distance} distance",
             "{Distance}"
-          ]
-        },
-        {
-          "name": "PlanetAtmosphereIntent",
-          "slots": [
-            {
-              "name": "Atmosphere",
-              "type": "Atmosphere"
-            }
-          ],
-          "samples": [
-            "Create {Atmosphere} distance",
-            "Create {Atmosphere} ",
-            "{Atmosphere}"
           ]
         },
         {
@@ -110,18 +97,17 @@
           ]
         },
         {
-          "name": "TellMeMoreIntent",
-          "slots": [],
-          "samples": [
-            "please explain",
-            "i want to know more about this ",
-            "please tell me more"
-          ]
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
         }
       ],
       "types": [
         {
-          "name": "Brightness",
+          "name": "brightness",
           "values": [
             {
               "name": {
@@ -161,11 +147,11 @@
           ]
         },
         {
-          "name": "Age",
+          "name": "age",
           "values": [
             {
               "name": {
-                "value": "middle-aged"
+                "value": "middle"
               }
             },
             {
@@ -181,30 +167,39 @@
           ]
         },
         {
-          "name": "Distance",
+          "name": "distance",
           "values": [
             {
               "name": {
-                "value": "near"
-              }
-            },
-            {
-              "name": {
-                "value": "midway",
+                "value": "neighbouring",
                 "synonyms": [
-                  "halfway"
+                  "adjacent"
                 ]
               }
             },
             {
               "name": {
-                "value": "far"
+                "value": "near",
+                "synonyms": [
+                  "outlying",
+                  "nearby",
+                  "vicinity"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "far",
+                "synonyms": [
+                  "outskirts",
+                  "remote"
+                ]
               }
             }
           ]
         },
         {
-          "name": "Atmosphere",
+          "name": "atmosphere",
           "values": [
             {
               "name": {
@@ -230,9 +225,6 @@
               "name": {
                 "value": "large",
                 "synonyms": [
-                  "biggest",
-                  "big",
-                  "massive",
                   "huge"
                 ]
               }
@@ -241,8 +233,7 @@
               "name": {
                 "value": "medium",
                 "synonyms": [
-                  "mid-sized",
-                  "mid sized ",
+                  "large enough",
                   "medium-sized"
                 ]
               }
@@ -251,7 +242,6 @@
               "name": {
                 "value": "small",
                 "synonyms": [
-                  "smallest",
                   "tiny",
                   "smaller"
                 ]
