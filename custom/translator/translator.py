@@ -1,10 +1,13 @@
+ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/'
+AUDIO_FORMAT = "<audio src='" + ROOT_URL + "{}.mp3' />"
+
+
 class Translator:
     class Launch:
-        launch = "Welcome to Planet Story!"
+        launch = AUDIO_FORMAT.format("launch")
 
     class Solar_System:
-        planetary_system_create = "To get started, let’s build a planetary system! Do you want to learn more about planetary systems?"
-        planetary_system_yes = "Awesome, here’s what you need to know.A planetary system contains a star (like our sun) with a set of gravitationally bound objects in orbit around it (like the planets in our solar system).As the creator of the universe, your choices will determine what kind of planet you’ll build… will it be a new earth? An icy rock? A gaseous giant? Your planet story awaits..."
+        planetary_system_yes = "Awesome, here’s what you need to know. A planetary system contains a star (like our sun) with a set of gravitationally bound objects in orbit around it (like the planets in our solar system).As the creator of the universe, your choices will determine what kind of planet you’ll build… will it be a new earth? An icy rock? A gaseous giant? Your planet story awaits..."
         planetary_system_no = "Awesome, Let’s create your planetary system."
 
     class Star:
@@ -34,7 +37,7 @@ class Translator:
         planet_create_no = "Ok, let’s get started!"
 
         planet_distance = "How far is the distance between your planet and the star? Very close, near or far"
-        planet_distance_neighbouring = "Your planet will be located very close to the star. hmm, it feels a bit too warm here"
+        planet_distance_neighbouring = "Your planet will be located very close to the star. Hmmm, it feels a bit too warm here"
         planet_distance_near = "Your planet will be somewhat near the star"
         planet_distance_far = "Your planet will very far from the star"
 
