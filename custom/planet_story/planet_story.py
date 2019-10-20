@@ -37,6 +37,7 @@ class PlanetStory:
             planet_size = session_variables[PLANET][Planet.SIZE] if PLANET in session_variables else ''
             planet_distance = session_variables[PLANET][Planet.DISTANCE] if PLANET in session_variables else ''
             self.planet = Planet(planet_size, planet_distance)
+            self.speech_text = ''
 
     def get_session_variables(self):
         return {
