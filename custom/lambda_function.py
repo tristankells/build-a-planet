@@ -645,6 +645,14 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
         # Now solar system is built, test if planet is habitable
         planet_story.test_if_planet_habitable()
 
+        if planet_story.is_planet_habitable:
+            NotImplemented
+            # Change to earth pic
+        else:
+            NotImplemented
+            # Don't change to earth
+
+
         ## TODO: this passes then change the APL picture to Earth
 
 

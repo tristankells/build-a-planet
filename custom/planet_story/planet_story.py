@@ -21,6 +21,7 @@ class PlanetStory:
     current_question: str  # The question currently being asked
     planet: Planet
     star: Star
+    is_planet_habitable: bool
 
     def __init__(self, session_variables):
         if session_variables is None:
@@ -113,25 +114,36 @@ class PlanetStory:
         :return:
         """
         if (self.star.brightness == 'red' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'large' and self.planet.age != 'young'):
+            self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on. Just be mindful that red star are prone to flares so your planet may be exposed to this from time to time."
         elif (self.star.brightness == 'red' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'near' and self.planet.size == 'large' and self.planet.age != 'young'):
+            self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on. Just be mindful that red star are prone to flares so your planet may be exposed to this from time to time."
         elif (self.star.brightness == 'red' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'medium' and self.planet.age != 'young'):
+            self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star. Just be mindful that red star are prone to flares so your planet may be exposed to this from time to time."
         elif (self.star.brightness == 'red' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'near' and self.planet.size == 'medium' and self.planet.age != 'young'):
+            self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on."
         elif (self.star.brightness == 'yellow' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'large' and self.planet.age != 'young'):
+            self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on."
         elif (self.star.brightness == 'yellow' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'large' and self.planet.age != 'young'):
+            self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on."
         elif (self.star.brightness == 'yellow' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'medium' and self.planet.age != 'young'):
+            self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star."
         elif (self.star.brightness == 'yellow' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'medium' and self.planet.age != 'young'):
+            self.is_planet_habitable = True
             self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star."
         else:  # Planet is not habitable
             self.speech_text = 'Your planet is not habitable'
+
+
 
     def _set_default_session_variables(self):
         self.current_question = Question.Star.STAR_BRIGHTNESS
         self.planet = Planet()
         self.star = Star()
+        self.is_planet_habitable = False
