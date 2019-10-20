@@ -112,10 +112,24 @@ class PlanetStory:
         Called in the StarBrightnessIntentHandler handler
         :return:
         """
-        if self.star.age == '':
-            self.speech_text = ''
+        if (self.star.brightness == 'red' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'large' and self.planet.age != 'young'):
+            self.speech_text = 'Your planet is habitable'
+        elif (self.star.brightness == 'red' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'near' and self.planet.size == 'large' and self.planet.age != 'young'):
+            self.speech_text = 'Your planet is habitable'
+        elif (self.star.brightness == 'red' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'medium' and self.planet.age != 'young'):
+            self.speech_text = 'Your planet is habitable'
+        elif (self.star.brightness == 'red' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'near' and self.planet.size == 'medium' and self.planet.age != 'young'):
+            self.speech_text = 'Your planet is habitable'
+        elif (self.star.brightness == 'yellow' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'large' and self.planet.age != 'young'):
+            self.speech_text = 'Your planet is habitable'
+        elif (self.star.brightness == 'yellow' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'large' and self.planet.age != 'young'):
+            self.speech_text = 'Your planet is habitable'
+        elif (self.star.brightness == 'yellow' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'medium' and self.planet.age != 'young'):
+            self.speech_text = 'Your planet is habitable'
+        elif (self.star.brightness == 'yellow' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'medium' and self.planet.age != 'young'):
+            self.speech_text = 'Your planet is habitable'
         else:  # Planet is not habitable
-            self.speech_text = ''
+            self.speech_text = 'Your planet is not habitable'
 
     def _set_default_session_variables(self):
         self.current_question = Question.Star.STAR_BRIGHTNESS
