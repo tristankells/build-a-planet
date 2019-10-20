@@ -101,11 +101,11 @@ class PlanetStory:
 
     def learn_about_solar_systems(self):
         self.speech_text = Translator.Solar_System.planetary_system_yes
-        self.speech_text += (' ' + Translator.Star.star_brightness)
+        self.speech_text += Translator.Star.star_brightness
 
     def do_not_learn_about_solar_systems(self):
         self.speech_text = Translator.Solar_System.planetary_system_no
-        self.speech_text += (' ' + Translator.Star.star_brightness)
+        self.speech_text += Translator.Star.star_brightness
 
     def _set_default_session_variables(self):
         self.current_question = Question.Star.STAR_BRIGHTNESS
