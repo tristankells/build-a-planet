@@ -17,7 +17,6 @@ class Assets:
         BLUE_OLD_GIANT = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Old/blue-old-giant.png'
         BLUE_OLD_SUPER = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Old/blue-old-super.png'
 
-
         YELLOW_YOUNG_DWARF = 'https://planet-story.s3.amazonaws.com/Stars/Yellow/Young/yellow-young-dwarf.png'
         YELLOW_YOUNG_GIANT = 'https://planet-story.s3.amazonaws.com/Stars/Yellow/Young/yellow-young-giant.png'
         YELLOW_YOUNG_SUPER = 'https://planet-story.s3.amazonaws.com/Stars/Yellow/Young/yellow-young-super.png'
@@ -27,3 +26,13 @@ class Assets:
         YELLOW_OLD_DWARF = 'https://planet-story.s3.amazonaws.com/Stars/Yellow/Old/yellow-old-dwarf.png'
         YELLOW_OLD_GIANT = 'https://planet-story.s3.amazonaws.com/Stars/Yellow/Old/yellow-old-giant.png'
         YELLOW_OLD_SUPER = 'https://planet-story.s3.amazonaws.com/Stars/Yellow/Old/yellow-old-super.png'
+
+        RED_MIDDLE_DWARF = 'https://planet-story.s3.amazonaws.com/Stars/Red/Middle/red-middle-dwarf.png'
+        RED_MIDDLE_GIANT = 'https://planet-story.s3.amazonaws.com/Stars/Red/Middle/red-middle-giant.png'
+        RED_MIDDLE_SUPER = 'https://planet-story.s3.amazonaws.com/Stars/Red/Middle/red-middle-super.png'
+        RED_OLD_DWARF = 'https://planet-story.s3.amazonaws.com/Stars/Red/Old/red-old-dwarf.png'
+        RED_OLD_GIANT = 'https://planet-story.s3.amazonaws.com/Stars/Red/Old/red-old-giant.png'
+        RED_OLD_SUPER = 'https://planet-story.s3.amazonaws.com/Stars/Red/Old/red-old-super.png'
+        RED_YOUNG_DWARF = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Young/red-young-dwarf.png'
+        RED_YOUNG_GIANT = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Young/red-young-giant.png'
+        RED_YOUNG_SUPER = 'https://planet-story.s3.amazonaws.com/Stars/Blue/Young/red-young-super.png'
