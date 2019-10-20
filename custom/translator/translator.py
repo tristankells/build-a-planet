@@ -61,13 +61,13 @@ class Translator:
                     'Of all the planets in our solar system apart from Earth, Mars is the one most likely to be hospitable to life. In 1986, NASA found what they thought may be fossils of microscopic living things in a rock recovered from Mars. '
                     'The sheer size of space makes it impossible to accurately predict just how many stars we have. Right now, scientists and astronomers use the number of stars within our galaxy, The Milky Way, to estimate. That number is between 200-400 billion stars and there are estimated to be billions of galaxies so the stars in space really are completely uncountable. '
                     'Discovered in 1705 by Edmond Halley, the famous comet was last seen in 1986 and is only seen once every 75 to 76 years.'
-                    'A FULL NASA SPACE SUIT COSTS $12,000,000.
+                    'A FULL NASA SPACE SUIT COSTS $12,000,000.'
                     'While the entire suit costs a cool $12m, 70% of that cost is for the backpack and control module.'
                     'Neutron stars are the densest and tiniest stars in the known universe and although they only have a radius of about 10 km (6 mi), they may have a mass of a few times that of the Sun. They can rotate at up to 60 times per second after they are born from a core-collapse supernova star explosion and have been known to spin as fast as 600-712 times per second because of their physics.'
-                    'THERE MAY BE A PLANET MADE OUT OF DIAMONDS.
+                    'THERE MAY BE A PLANET MADE OUT OF DIAMONDS.'
                     'As space facts go, this is pretty impressive. Research by Yale University scientists suggests that a rocky planet called 55 Cancri e  which has a radius twice Earth’s, and a mass eight times greater – may have a surface made up of graphite and diamond. It’s 40 light years away but visible to the naked eye in the constellation of Cancer. '
-                    'THE FOOTPRINTS ON THE MOON WILL BE THERE FOR 100 MILLION YEARS.
+                    'THE FOOTPRINTS ON THE MOON WILL BE THERE FOR 100 MILLION YEARS.'
                     'The Moon has no atmosphere, which means there is no wind to erode the surface and no water to wash the footprints away. This means the footprints of the Apollo astronauts, along with spacecraft prints, rover-prints and discarded material, will be there for millions of years. '
-                    'ONE DAY ON VENUS IS LONGER THAN ONE YEAR.
+                    'ONE DAY ON VENUS IS LONGER THAN ONE YEAR.'
                     'Venus has a slow axis rotation which takes 243 Earth days to complete its day. The orbit of Venus around the Sun is 225 Earth days, making a year on Venus 18 days less than a day on Venus.'
                 ]
