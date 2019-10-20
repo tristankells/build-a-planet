@@ -100,55 +100,37 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        print("YesLearnMoreIntent Can handler has been CALLED")
         return is_intent_name(Intents.YES)(handler_input) \
                and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        print("YesLearnMoreIntentHandler has been CALLED")
         planet_story.learn_about_solar_systems()
-
-        apl_datasource = _load_apl_document("./data/main.json")
-
-        apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_BRIGHTNESS
 
         handler_input.response_builder.speak(planet_story.speech_text)
         
         return handler_input.response_builder.response
 
 
-# class NoLearnMoreIntentHandler(AbstractRequestHandler):
-#     """
+class NoLearnMoreIntentHandler(AbstractRequestHandler):
+    """
 
-#     N O   -   L E A R N   M O R E
+    N O   -   L E A R N   M O R E
 
-#     """
+    """
 
-#     def can_handle(self, handler_input):
-#         # type: (HandlerInput) -> bool
-#         return is_intent_name(Intents.NO)(handler_input) \
-#                and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.NO)(handler_input) \
+               and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
 
-#     def handle(self, handler_input):
-#         # type: (HandlerInput) -> Response
-#         print("NoLearnMoreIntentHandler has been CALLED")
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.do_not_learn_about_solar_systems()
 
-#         planet_story.do_not_learn_about_solar_systems()
+        handler_input.response_builder.speak(planet_story.speech_text)
 
-#         apl_datasource = _load_apl_document("./data/main.json")
-
-#         apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_BRIGHTNESS
-
-#         handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-#             RenderDocumentDirective(
-#                 token="pagerToken",
-#                 document=_load_apl_document("./templates/main.json"),
-#                 datasources=apl_datasource
-#             )
-#         )
-
-#         return handler_input.response_builder.response
+        return handler_input.response_builder.response
 
 
 # region Star Handlers
@@ -162,7 +144,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
     """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return (is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) or is_intent_name(Intents.NO)(handler_input)) \
+        return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
                and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
 
     def handle(self, handler_input):
