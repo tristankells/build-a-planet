@@ -7,44 +7,45 @@ class Translator:
         launch = AUDIO_FORMAT.format("launch")
 
     class Solar_System:
-        planetary_system_yes = "Awesome, here’s what you need to know. A planetary system contains a star (like our sun) with a set of gravitationally bound objects in orbit around it (like the planets in our solar system).As the creator of the universe, your choices will determine what kind of planet you’ll build… will it be a new earth? An icy rock? A gaseous giant? Your planet story awaits..."
-        planetary_system_no = "Awesome, Let’s create your planetary system."
+        planetary_system_yes = AUDIO_FORMAT.format("planetary_system_yes")
+        planetary_system_no = AUDIO_FORMAT.format("planetary_system_no")
 
     class Star:
-        star_create = "Whould you like to create a star?"
-        star_brightness = "What is the brightness of your star? Blue or Yellow or Red?"
-        star_brightness_blue = "Blue stars are super hot. The temperature is between 7 to 30 million degrees celsius. These are the hottest stars in the known universe. An example of a blue star is Sirius, located in the Vega constellation."
-        star_brightness_yellow = "Yellow stars are hot. The temperature is between 5-6 million degrees celsius. These stars are fairly hot and bright. An example is our own sun."
-        star_brightness_red = "Red stars are Warm. The temperature is between 2-4 Million degrees celsius. These stars are colder than most and are far less brighter. An example of this is Betelgeuse in the Antares constellation."
-        star_brightness_other = "This is not a valid brightness. You have to choose between Blue or Yellow or Red."
+        star_create = AUDIO_FORMAT.format("star_create")
+        star_create_yes = AUDIO_FORMAT.format("star_create_yes")
+        star_create_no = AUDIO_FORMAT.format("star_create_no")
+        star_brightness = AUDIO_FORMAT.format("star_brightness")
+        star_brightness_blue = AUDIO_FORMAT.format("star_brightness_blue")
+        star_brightness_yellow = AUDIO_FORMAT.format("star_brightness_yellow")
+        star_brightness_red = AUDIO_FORMAT.format("star_brightness_red")
+        star_brightness_other = AUDIO_FORMAT.format("star_brightness_other")
 
-        star_size = "How large should your star be?  super giant, giant, or Dwarf?"
-        star_size_super_giant = "Supergiants are the biggest and the brightest among the stars. An example of supergiant star is  Rigel located on the constellation of Orion."
-        star_size_giant = "Giants stars have a greater radius and brightness compared to the dwarf stars. An example of giant star is VY Canis Majoris."
-        star_size_dwarf = "Dwarf stars has an average or low brightness and size compared to the other stars. An example of a dwarf star is Proxima Centauri, and our own sun."
-        star_size_other = "Sorry, that’s not a valid choice for star size, try again. Choose between super giant, giant or dwarf."
+        star_size = AUDIO_FORMAT.format("star_size")
+        star_size_super_giant = AUDIO_FORMAT.format("star_size_super_giant")
+        star_size_giant =  AUDIO_FORMAT.format("star_size_giant")
+        star_size_dwarf =  AUDIO_FORMAT.format("star_size_dwarf")
+        star_size_other =  AUDIO_FORMAT.format("star_size_other")
 
-        star_age = "What is the age of your star? Young or Middleaged or Old?"
-        star_age_young = "Your star was born not too long ago."     
-        star_age_middle = "Your star has been active for awhile."
-        star_age_old = "Your star is nearing the end of its life."
-        star_age_other = "The age of the planet is Invalid."
-        
+        star_age = AUDIO_FORMAT.format("star_age")
+        star_age_young = AUDIO_FORMAT.format("star_age_size")
+        star_age_middle = AUDIO_FORMAT.format("star_age_middle")
+        star_age_old = AUDIO_FORMAT.format("star_age_old")
+        star_age_other = AUDIO_FORMAT.format("star_age_other")
 
     class Planet:
-        planet_create = "Would you like to learn more about how to create planets?"
-        planet_create_yes = "Nice! Here’s what you need to know. A planet’s size will determine bla bla bla bla"
-        planet_create_no = "Ok, let’s get started!"
+        planet_create = AUDIO_FORMAT.format("planet_create")
+        planet_create_yes = AUDIO_FORMAT.format("planet_create_yes")
+        planet_create_no = AUDIO_FORMAT.format("planet_create_no")
 
-        planet_distance = "How far is the distance between your planet and the star? Very close, near or far"
-        planet_distance_neighbouring = "Your planet will be located very close to the star. Hmmm, it feels a bit too warm here"
-        planet_distance_near = "Your planet will be somewhat near the star"
-        planet_distance_far = "Your planet will very far from the star"
+        planet_distance = AUDIO_FORMAT.format("planet_distance")
+        planet_distance_neighbouring = AUDIO_FORMAT.format("planet_distance_neighbouring")
+        planet_distance_near = AUDIO_FORMAT.format("planet_distance_near")
+        planet_distance_far = AUDIO_FORMAT.format("planet_distance_far")
 
-        planet_size = "What size would you like your planet to be? Small, regular, or large?"
-        planet_size_large = "Your planet is gigantic, has very strong gravitational force and a very dense atmosphere."
-        planet_size_medium = "Your planet is medium sized, has normal gravitational force, and a thick atmosphere."
-        planet_size_small = "Your planet is tiny, has very weak gravitational force, and very thin atmosphere."
+        planet_size = AUDIO_FORMAT.format("planet_size")
+        planet_size_large = AUDIO_FORMAT.format("planet_size_large")
+        planet_size_medium = AUDIO_FORMAT.format("planet_size_medium")
+        planet_size_small = AUDIO_FORMAT.format("planet_size_small")
 
         planet_age = "What is the age of your age planet? Young, Middle-aged or Old?"
         planet_age_young = "Your planet was formed fairly recently and has volatile seismic activity"
