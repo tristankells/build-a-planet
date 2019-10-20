@@ -118,7 +118,6 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
                 datasources=apl_datasource
             )
         )
-
         return handler_input.response_builder.response
 
 
@@ -335,7 +334,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \
                 = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "medium":
-            planet_story.speech_text += Translator.Planet.planet_size_regular
+            planet_story.speech_text += Translator.Planet.planet_size_medium
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] \
                 = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] \

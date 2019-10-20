@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "build a planet",
+      "invocationName": "planet story",
       "intents": [
         {
           "name": "AMAZON.FallbackIntent",
@@ -24,11 +24,11 @@
           "samples": []
         },
         {
-          "name": "StarBrighnesstIntent",
+          "name": "StarBrightnessIntent",
           "slots": [
             {
               "name": "Brightness",
-              "type": "brightness"
+              "type": "Brightness"
             }
           ],
           "samples": [
@@ -42,10 +42,13 @@
           "slots": [
             {
               "name": "Age",
-              "type": "age"
+              "type": "Age"
             }
           ],
           "samples": [
+            "Planet age is {Age}",
+            "Build a {Age} star",
+            "Build a {Age} planet",
             "Build planet {Age} aged please",
             "Build star {Age} aged please",
             "Star age is {Age}",
@@ -57,7 +60,7 @@
           "slots": [
             {
               "name": "Distance",
-              "type": "distance"
+              "type": "Distance"
             }
           ],
           "samples": [
@@ -75,6 +78,7 @@
             }
           ],
           "samples": [
+            "can i have a {StarSize} star ",
             "{StarSize}",
             "can i have a {StarSize} star please ",
             "{StarSize} star",
@@ -90,11 +94,60 @@
             }
           ],
           "samples": [
+            "can i have a {PlanetSize} planet ",
             "{PlanetSize}",
             "can i have a {PlanetSize} planet please ",
             "{PlanetSize} planet",
             "i want a {PlanetSize} planet"
           ]
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.MoreIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateSettingsIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NextIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PageUpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PageDownIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PreviousIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollRightIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollDownIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollLeftIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollUpIntent",
+          "samples": []
         },
         {
           "name": "AMAZON.YesIntent",
@@ -107,11 +160,11 @@
       ],
       "types": [
         {
-          "name": "brightness",
+          "name": "Brightness",
           "values": [
             {
               "name": {
-                "value": "white"
+                "value": "yellow"
               }
             },
             {
@@ -147,11 +200,11 @@
           ]
         },
         {
-          "name": "age",
+          "name": "Age",
           "values": [
             {
               "name": {
-                "value": "middle"
+                "value": "middle-aged"
               }
             },
             {
@@ -167,39 +220,30 @@
           ]
         },
         {
-          "name": "distance",
+          "name": "Distance",
           "values": [
             {
               "name": {
-                "value": "neighbouring",
+                "value": "near"
+              }
+            },
+            {
+              "name": {
+                "value": "midway",
                 "synonyms": [
-                  "adjacent"
+                  "halfway"
                 ]
               }
             },
             {
               "name": {
-                "value": "near",
-                "synonyms": [
-                  "outlying",
-                  "nearby",
-                  "vicinity"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "far",
-                "synonyms": [
-                  "outskirts",
-                  "remote"
-                ]
+                "value": "far"
               }
             }
           ]
         },
         {
-          "name": "atmosphere",
+          "name": "Atmosphere",
           "values": [
             {
               "name": {
@@ -225,6 +269,9 @@
               "name": {
                 "value": "large",
                 "synonyms": [
+                  "biggest",
+                  "big",
+                  "massive",
                   "huge"
                 ]
               }
@@ -233,7 +280,8 @@
               "name": {
                 "value": "medium",
                 "synonyms": [
-                  "large enough",
+                  "mid-sized",
+                  "mid sized ",
                   "medium-sized"
                 ]
               }
@@ -242,6 +290,7 @@
               "name": {
                 "value": "small",
                 "synonyms": [
+                  "smallest",
                   "tiny",
                   "smaller"
                 ]
