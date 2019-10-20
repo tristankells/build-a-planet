@@ -12,8 +12,6 @@ class Translator:
 
     class Star:
         star_create = AUDIO_FORMAT.format("star_create")
-        star_create_yes = AUDIO_FORMAT.format("star_create_yes")
-        star_create_no = AUDIO_FORMAT.format("star_create_no")
         star_brightness = AUDIO_FORMAT.format("star_brightness")
         star_brightness_blue = AUDIO_FORMAT.format("star_brightness_blue")
         star_brightness_yellow = AUDIO_FORMAT.format("star_brightness_yellow")
@@ -33,19 +31,19 @@ class Translator:
         star_age_other = AUDIO_FORMAT.format("star_age_other")
 
     class Planet:
-        planet_create = AUDIO_FORMAT.format("planet_create")
-        planet_create_yes = AUDIO_FORMAT.format("planet_create_yes")
-        planet_create_no = AUDIO_FORMAT.format("planet_create_no")
+        planet_create = AUDIO_FORMAT.format("")
+        planet_create_yes = "Nice! Here’s what you need to know. A planet’s size will determine bla bla bla bla"
+        planet_create_no = "Ok, let’s get started!"
 
-        planet_distance = AUDIO_FORMAT.format("planet_distance")
-        planet_distance_neighbouring = AUDIO_FORMAT.format("planet_distance_neighbouring")
-        planet_distance_near = AUDIO_FORMAT.format("planet_distance_near")
-        planet_distance_far = AUDIO_FORMAT.format("planet_distance_far")
+        planet_distance = "How far is the distance between your planet and the star? Very close, near or far"
+        planet_distance_neighbouring = "Your planet will be located very close to the star. Hmmm, it feels a bit too warm here"
+        planet_distance_near = "Your planet will be somewhat near the star"
+        planet_distance_far = "Your planet will very far from the star"
 
-        planet_size = AUDIO_FORMAT.format("planet_size")
-        planet_size_large = AUDIO_FORMAT.format("planet_size_large")
-        planet_size_medium = AUDIO_FORMAT.format("planet_size_medium")
-        planet_size_small = AUDIO_FORMAT.format("planet_size_small")
+        planet_size = "What size would you like your planet to be? Small, regular, or large?"
+        planet_size_large = "Your planet is gigantic, has very strong gravitational force and a very dense atmosphere."
+        planet_size_medium = "Your planet is medium sized, has normal gravitational force, and a thick atmosphere."
+        planet_size_small = "Your planet is tiny, has very weak gravitational force, and very thin atmosphere."
 
         planet_age = "What is the age of your age planet? Young, Middle-aged or Old?"
         planet_age_young = "Your planet was formed fairly recently and has volatile seismic activity"
