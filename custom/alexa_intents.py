@@ -15,7 +15,7 @@ class Intents:
     NAVIGATE_HOME = 'AMAZON.NavigateHomeIntent'
 
     # Samples phrases : 'Build a {Brightness} star', '{Brightness}', 'I want to have {Brightness}  star'
-    STAR_BRIGHNESST = 'StarBrighnesstIntent'
+    STAR_BRIGHTNESS = 'StarBrightnessIntent'
 
     # Samples phrases : 'Build planet {Age} aged please', 'Build star {Age} aged please', 'Star age is {Age}', '{Age}'
     AGE = 'AgeIntent'

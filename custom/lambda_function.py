@@ -90,6 +90,69 @@ class LaunchRequestHandler(AbstractRequestHandler):
         )
         return handler_input.response_builder.response
 
+
+class YesLearnMoreIntentHandler(AbstractRequestHandler):
+    """
+
+    Y E S   -   L E A R N   M O R E
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.YES)(handler_input) \
+               and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.learn_about_solar_systems()
+
+        apl_datasource = _load_apl_document("./data/main.json")
+
+        apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_BRIGHTNESS
+
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=apl_datasource
+            )
+        )
+
+        return handler_input.response_builder.response
+
+
+class NoLearnMoreIntentHandler(AbstractRequestHandler):
+    """
+
+    N O   -   L E A R N   M O R E
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.NO)(handler_input) \
+               and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.do_not_learn_about_solar_systems()
+
+        apl_datasource = _load_apl_document("./data/main.json")
+
+        apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_BRIGHTNESS
+
+        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=apl_datasource
+            )
+        )
+
+        return handler_input.response_builder.response
+
+
 # region Star Handlers
 
 
@@ -218,7 +281,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF
         if star_age == "middle":
-            planet_story.speech_text += Translator.Star.star_age_middleaged
+            planet_story.speech_text += Translator.Star.star_age_middle
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
         if star_age == "old":
@@ -269,7 +332,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "medium":
-            planet_story.speech_text += Translator.Planet.planet_size_regular
+            planet_story.speech_text += Translator.Planet.planet_size_medium
             apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
             apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = 'https://planet-story.s3.amazonaws.com/stars-02.png'
         if planet_size == "small":
@@ -536,14 +599,16 @@ sb.add_request_handler(SessionEndedRequestHandler())
 # region Custom handlers
 
 # Star
-# sb.add_request_handler(StarAgeIntentHandler())
+
 sb.add_request_handler(StarBrightnessIntentHandler())
 sb.add_request_handler(StarSizeIntentHandler())
+sb.add_request_handler(StarAgeIntentHandler())
 
 # Planets
-# sb.add_request_handler(PlanetAtmosphereHandler())
+
 sb.add_request_handler(PlanetDistanceHandler())
 sb.add_request_handler(PlanetSizeHandler())
+sb.add_request_handler(PlanetAgeIntentHandler())
 
 # endregion
 
