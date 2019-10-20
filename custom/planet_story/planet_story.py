@@ -49,7 +49,7 @@ class PlanetStory:
         Called in the Launch handler
         :return:
         """
-        self.speech_text = Translator.Launch.launch + ' ' + Translator.Solar_System.planetary_system_create + ' '
+        self.speech_text = Translator.Launch.launch
 
     def set_star_brightness(self, brightness):
         """
