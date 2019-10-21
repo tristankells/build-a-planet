@@ -698,6 +698,46 @@ class NoReviewSolarSystem(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+class YesPlayAgainHandler(AbstractRequestHandler):
+    """
+
+    Y E S   -   P L A Y   A G A I N
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.YES)(handler_input) \
+               and planet_story.current_question == Question.PLAY_AGAIN
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.play_again()
+
+        handler_input.response_builder.speak(planet_story.speech_text)
+        return handler_input.response_builder.response
+
+
+class NoPlayAgainHandler(AbstractRequestHandler):
+    """
+
+    N O   -   P L A Y   A G A I N
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.NO)(handler_input) \
+               and planet_story.current_question == Question.PLAY_AGAIN
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.exit_skill()
+
+        handler_input.response_builder.speak(planet_story.speech_text)
+        return handler_input.response_builder.response
+
+
 class HelpIntentHandler(AbstractRequestHandler):
     """
 
@@ -872,6 +912,9 @@ sb.add_request_handler(NoLearnMoreIntentHandler())
 
 sb.add_request_handler(YesReviewSolarSystem())
 sb.add_request_handler(NoReviewSolarSystem())
+
+sb.add_request_handler(YesPlayAgainHandler())
+sb.add_request_handler(NoPlayAgainHandler())
 
 sb.add_global_request_interceptor(SetupRequestInterceptor())
 

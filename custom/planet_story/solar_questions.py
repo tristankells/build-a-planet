@@ -10,3 +10,4 @@ class Question:
         PLANET_AGE = 'planet_age'
 
     REVIEW = 'review'
+    PLAY_AGAIN = 'play_again'
