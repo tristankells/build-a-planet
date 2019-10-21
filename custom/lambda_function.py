@@ -790,7 +790,7 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
         speech_text = "Goodbye!"
 
         handler_input.response_builder.speak(speech_text).set_card(
-            SimpleCard("Hello World", speech_text))
+            SimpleCard("Hello World", speech_text)).set_should_end_session(True)
         return handler_input.response_builder.response
 
 
