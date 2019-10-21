@@ -1,5 +1,7 @@
 class Assets:
     class Pictures:
+        PLANET_STORY_TITLE = 'https://planet-story.s3.amazonaws.com/planet-story.png'
+
         RED_BRIGHTNESS = 'https://planet-story.s3.amazonaws.com/stars/red.png'
         BLUE_BRIGHTNESS = 'https://planet-story.s3.amazonaws.com/stars/blue.png'
         YELLOW_BRIGHTNESS = 'https://planet-story.s3.amazonaws.com/stars/yellow.png'
