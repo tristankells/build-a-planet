@@ -760,14 +760,13 @@ class HelpIntentHandler(AbstractRequestHandler):
                 Translator.Star.star_age_other
             ,
             Question.Planet.PLANET_DISTANCE:
-                Translator.Planet.planet_distance
+                Translator.Planet.planet_distance_other
             ,
             Question.Planet.PLANET_SIZE:
-                Translator.Planet.planet_size
+                Translator.Planet.planet_size_other
             ,
             Question.Planet.PLANET_AGE:
-                Translator.Planet.planet_age
-
+                Translator.Planet.planet_age_other
         }
 
         speech_text = property_question_dict.get(planet_story.current_question)
