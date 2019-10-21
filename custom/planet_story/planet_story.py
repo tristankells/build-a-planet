@@ -193,9 +193,9 @@ class PlanetStory:
         if self.planet.age == 'young':
             return """Your planet is still early stags in its evolution, and it's still forming. It's very likely that the surface is still full of molten rocks and not able to support liquid water."""
 
-
     def _set_default_session_variables(self):
         self.current_question = Question.Star.STAR_BRIGHTNESS
         self.planet = Planet()
         self.star = Star()
         self.is_planet_habitable = False
+        self.planet_story = ''
