@@ -8,3 +8,5 @@ class Question:
         PLANET_SIZE = 'planet_size'
         PLANET_DISTANCE = 'planet_distance'
         PLANET_AGE = 'planet_age'
+
+    REVIEW = 'review'

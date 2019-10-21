@@ -104,7 +104,7 @@ class PlanetStory:
         :return:
         """
         self.planet.age = age
-        self.current_question = Question.Star.STAR_BRIGHTNESS
+        self.current_question = Question.REVIEW
 
     def learn_about_solar_systems(self):
         self.speech_text = Translator.Solar_System.planetary_system_yes
@@ -114,6 +114,20 @@ class PlanetStory:
         self.speech_text = Translator.Solar_System.planetary_system_no
         self.speech_text += Translator.Star.star_brightness
 
+    def review_solar_system(self):
+        self.current_question = Question.Star.STAR_BRIGHTNESS
+
+        self.speech_text = Translator.Solar_System.planetary_system_yes
+
+        self.speech_text += Translator.Star.star_brightness
+
+    def do_not_review_solar_system(self):
+        self.speech_text = Translator.Solar_System.planetary_system_no
+
+        self.current_question = Question.Star.STAR_BRIGHTNESS
+
+        self.speech_text += Translator.Star.star_brightness
+
     def test_if_planet_habitable(self):
         """
         Called in the StarBrightnessIntentHandler handler
@@ -121,31 +135,30 @@ class PlanetStory:
         """
         if (self.star.brightness == 'red' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'large' and self.planet.age != 'young'):
             self.is_planet_habitable = True
-            self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on. Just be mindful that red star are prone to flares so your planet may be exposed to this from time to time."
+            self.speech_text += "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on. Just be mindful that red star are prone to flares so your planet may be exposed to this from time to time."
         elif (self.star.brightness == 'red' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'near' and self.planet.size == 'large' and self.planet.age != 'young'):
             self.is_planet_habitable = True
-            self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on. Just be mindful that red star are prone to flares so your planet may be exposed to this from time to time."
+            self.speech_text += "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on. Just be mindful that red star are prone to flares so your planet may be exposed to this from time to time."
         elif (self.star.brightness == 'red' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'medium' and self.planet.age != 'young'):
             self.is_planet_habitable = True
-            self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star. Just be mindful that red star are prone to flares so your planet may be exposed to this from time to time."
+            self.speech_text += "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star. Just be mindful that red star are prone to flares so your planet may be exposed to this from time to time."
         elif (self.star.brightness == 'red' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'near' and self.planet.size == 'medium' and self.planet.age != 'young'):
             self.is_planet_habitable = True
-            self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on."
+            self.speech_text += "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on."
         elif (self.star.brightness == 'yellow' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'large' and self.planet.age != 'young'):
             self.is_planet_habitable = True
-            self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on."
+            self.speech_text += "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on."
         elif (self.star.brightness == 'yellow' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'large' and self.planet.age != 'young'):
             self.is_planet_habitable = True
-            self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on."
+            self.speech_text += "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Large planets like this are called super earths and they have varying degrees of habitability depending on its atmospheric conditions, gravity, and so on."
         elif (self.star.brightness == 'yellow' and self.star.size == 'giant' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'medium' and self.planet.age != 'young'):
             self.is_planet_habitable = True
-            self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star."
+            self.speech_text += "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star."
         elif (self.star.brightness == 'yellow' and self.star.size == 'dwarf' and (self.star.age == 'middle-aged' or self.star.age == 'old') and self.planet.distance == 'midway' and self.planet.size == 'medium' and self.planet.age != 'young'):
             self.is_planet_habitable = True
-            self.speech_text = "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star."
+            self.speech_text += "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star."
         else:  # Planet is not habitable
             self.is_planet_habitable = False
-            self.speech_text = 'Your planet is not habitable'
 
     def _set_default_session_variables(self):
         self.current_question = Question.Star.STAR_BRIGHTNESS

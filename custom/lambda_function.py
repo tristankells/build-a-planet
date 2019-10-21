@@ -545,7 +545,6 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 datasources=apl_datasource
             )
         )
-
         return handler_input.response_builder.response
 
 
@@ -565,7 +564,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
         planet_age = str(
             handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
 
-        planet_story.set_star_age(planet_age)
+        planet_story.set_planet_age(planet_age)
 
         apl_datasource = _load_apl_document("./data/main.json")
 
@@ -621,7 +620,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_MEDIUM
             elif planet_story.planet.size == "small":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL    
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
         if planet_age == "middle-aged":
             planet_story.speech_text += Translator.Planet.planet_age_middleaged
         if planet_age == "old":
@@ -654,11 +653,49 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
                 datasources=apl_datasource
             )
         )
-
         return handler_input.response_builder.response
 
 
 # endregion
+
+class YesReviewSolarSystem(AbstractRequestHandler):
+    """
+
+        Y E S   -   R E V I E W
+
+        """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.YES)(handler_input) \
+               and planet_story.current_question == Question.REVIEW
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.review_solar_system()
+
+        handler_input.response_builder.speak(planet_story.speech_text)
+        return handler_input.response_builder.response
+
+
+class NoReviewSolarSystem(AbstractRequestHandler):
+    """
+
+    N O   -   R E V I E W
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.NO)(handler_input) \
+               and planet_story.current_question == Question.REVIEW
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.do_not_review_solar_system()
+
+        handler_input.response_builder.speak(planet_story.speech_text)
+        return handler_input.response_builder.response
 
 
 class HelpIntentHandler(AbstractRequestHandler):
@@ -771,7 +808,6 @@ class FallbackHandler(AbstractRequestHandler):
         speech_text += property_question_dict[planet_story.current_question]
 
         handler_input.response_builder.speak(speech_text)
-
         return handler_input.response_builder.response
 
 
@@ -791,6 +827,7 @@ class AllExceptionHandler(AbstractExceptionHandler):
         print('EXCEPTION: ' + str(exception))
 
         speech = "Sorry, I didn't get it. Can you please say it again!!"
+
         handler_input.response_builder.speak(speech).ask(speech)
         return handler_input.response_builder.response
 
@@ -832,6 +869,9 @@ sb.add_request_handler(PlanetAgeIntentHandler())
 
 sb.add_request_handler(YesLearnMoreIntentHandler())
 sb.add_request_handler(NoLearnMoreIntentHandler())
+
+sb.add_request_handler(YesReviewSolarSystem())
+sb.add_request_handler(NoReviewSolarSystem())
 
 sb.add_global_request_interceptor(SetupRequestInterceptor())
 
