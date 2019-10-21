@@ -750,24 +750,24 @@ class HelpIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         property_question_dict = {
-            Question.Star.STAR_BRIGHTNESS: {
+            Question.Star.STAR_BRIGHTNESS:
                 Translator.Star.star_brightness_other
-            },
-            Question.Star.STAR_SIZE: {
+            ,
+            Question.Star.STAR_SIZE:
                 Translator.Star.star_size_other
-            },
-            Question.Star.STAR_AGE: {
+            ,
+            Question.Star.STAR_AGE:
                 Translator.Star.star_age_other
-            },
-            Question.Planet.PLANET_DISTANCE: {
+            ,
+            Question.Planet.PLANET_DISTANCE:
                 Translator.Planet.planet_distance
-            },
-            Question.Planet.PLANET_SIZE: {
+            ,
+            Question.Planet.PLANET_SIZE:
                 Translator.Planet.planet_size
-            },
-            Question.Planet.PLANET_AGE: {
+            ,
+            Question.Planet.PLANET_AGE:
                 Translator.Planet.planet_age
-            }
+
         }
 
         speech_text = property_question_dict.get(planet_story.current_question)
