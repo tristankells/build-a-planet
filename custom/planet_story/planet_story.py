@@ -159,6 +159,33 @@ class PlanetStory:
             self.speech_text += "Perfect! The conditions in your planetary system is just right for your planet to be habitable. Your planet is the holy grail of habitable planets - it's about the same size as our earth and the right distance from your star."
         else:  # Planet is not habitable
             self.is_planet_habitable = False
+            self.speech_text += self.construct_not_habitable_text()
+
+    def construct_not_habitable_text(self):
+        if self.star.brightness == 'blue':
+            return """The blue star is simply too warm for any planet in your system! Blue stars tend to be volatile and eject large amounts of matter into space. They emit lethal radiation and is prone to extreme flares. A blue star that burns bright and dies young, only lasting a few million years. Planets around such a star would have only just formed (they may still have molten surfaces). Thus, your planet is uninhabitable."""
+
+        if self.star.brightness == 'yellow' and self.planet.distance == 'neighbouring':
+            return """Your planet is too close to its star and it's too hot. There is no sign of life on your fireball planet."""
+
+        if self.star.brightness == 'red' and self.star.size == 'supergiant' and self.planet.distance == 'neighbouring':
+            return """Your planet is too close to its star and it's too hot. There is no sign of life on your fireball planet."""
+
+        if self.star.size == 'supergiant':
+            return """Supergiant stars simply live too short a life for any planet to develop conditions for sustaining life! The star's lifespan will be just a few million years long and will die out long before life is able to evolve on your planet."""
+
+        if self.planet.age == 'young':
+            return """Your star is still in early stages in its evolution and thus is too volatile and unstable. Unfortunately the star need to be a bit more mature before it can sustain life on planets in its system."""
+
+        if self.planet.distance == 'far':
+            return """Your planet is too far from its host star, where light and energy struggles to reach. Even if there were water it would be completely frozen solid. There is no sign of life on your iceball planet. Everything is frozen."""
+
+        if self.planet.size == 'small':
+            return """Your planet is too small, and won't have enough gravity to be able to hold on to its atmosphere, which is essential for sustaining life. It's pretty much a barren rock."""
+
+        if self.planet.age == 'young':
+            return """Your planet is still early stags in its evolution, and it's still forming. It's very likely that the surface is still full of molten rocks and not able to support liquid water."""
+
 
     def _set_default_session_variables(self):
         self.current_question = Question.Star.STAR_BRIGHTNESS
