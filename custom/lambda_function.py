@@ -22,8 +22,7 @@ from assets import Assets
 # For APL
 import json
 from ask_sdk_model.interfaces.alexa.presentation.apl import (
-    RenderDocumentDirective, ExecuteCommandsDirective,
-    AutoPageCommand)
+    RenderDocumentDirective)
 
 # Const strings
 
@@ -750,25 +749,29 @@ class HelpIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text = "You can say hello to me!"
+        property_question_dict = {
+            Question.Star.STAR_BRIGHTNESS: {
+                Translator.Star.star_brightness_other
+            },
+            Question.Star.STAR_SIZE: {
+                Translator.Star.star_size_other
+            },
+            Question.Star.STAR_AGE: {
+                Translator.Star.star_age_other
+            },
+            Question.Planet.PLANET_DISTANCE: {
+                Translator.Planet.planet_distance
+            },
+            Question.Planet.PLANET_SIZE: {
+                Translator.Planet.planet_size
+            },
+            Question.Planet.PLANET_AGE: {
+                Translator.Planet.planet_age
+            }
+        }
 
-        handler_input.response_builder.speak(speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=_load_apl_document("./data/main.json")
-            )
-        ).add_directive(
-            ExecuteCommandsDirective(
-                token="pagerToken",
-                commands=[
-                    AutoPageCommand(
-                        component_id="pagerComponentId",
-                        duration=5000)
-                ]
-            )
-        )
-
+        speech_text = property_question_dict.get(planet_story.current_question)
+        handler_input.response_builder.speak(speech_text)
         return handler_input.response_builder.response
 
 
@@ -822,8 +825,6 @@ class FallbackHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        speech_text = "Fallback. "
-
         property_question_dict = {
             Question.Star.STAR_BRIGHTNESS: {
                 Translator.Star.star_brightness_other
@@ -845,7 +846,7 @@ class FallbackHandler(AbstractRequestHandler):
             }
         }
 
-        speech_text += property_question_dict[planet_story.current_question]
+        speech_text = property_question_dict[planet_story.current_question]
 
         handler_input.response_builder.speak(speech_text)
         return handler_input.response_builder.response
