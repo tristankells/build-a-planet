@@ -788,6 +788,26 @@ class HelpIntentHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+class CancelAndStopIntentHandler(AbstractRequestHandler):
+    """
+
+    C A N C E L   A N D    S T O P
+
+    """
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("AMAZON.CancelIntent")(handler_input) \
+               or is_intent_name("AMAZON.StopIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        speech_text = "Goodbye!"
+
+        handler_input.response_builder.speak(speech_text).set_card(
+            SimpleCard("User End Game", speech_text)).set_should_end_session(True)
+        return handler_input.response_builder.response
+
+
 class SessionEndedRequestHandler(AbstractRequestHandler):
     """
 
@@ -875,6 +895,7 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
 
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
+sb.add_request_handler(CancelAndStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Custom handlers
