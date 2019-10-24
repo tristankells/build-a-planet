@@ -433,7 +433,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "large":
             planet_story.speech_text += Translator.Planet.planet_size_large
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or\
+                    planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
             else:
@@ -442,7 +443,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "medium":
             planet_story.speech_text += Translator.Planet.planet_size_medium
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or\
+                    planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
             else:
@@ -451,7 +453,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "small":
             planet_story.speech_text += Translator.Planet.planet_size_small
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
+                    planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
             else:
@@ -493,16 +496,23 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         if planet_distance == "near":
             planet_story.speech_text += Translator.Planet.planet_distance_neighbouring
             if planet_story.star.brightness == "yellow":
-                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.size == "giant" or planet_story.star.age == "young":
+                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or\
+                        planet_story.star.size == "super" or planet_story.star.size == "giant" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
-                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.size == "giant"  or planet_story.star.age == "young":
+                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or \
+                        planet_story.star.size == "super" or planet_story.star.size == "giant" or\
+                        planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM   
-                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.size == "giant"  or planet_story.star.age == "young":
+                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or\
+                        planet_story.star.size == "super" or planet_story.star.size == "giant"  or \
+                        planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.size == "giant"  or planet_story.star.age == "young":
+            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or\
+                    planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
+                    planet_story.star.size == "giant"  or planet_story.star.age == "young":
                 if planet_story.planet.size == "large":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
@@ -569,16 +579,20 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         if planet_story.planet.distance == "near":
             if planet_story.star.brightness == "yellow":
-                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or \
+                        planet_story.star.size == "super" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
-                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or \
+                        planet_story.star.size == "super" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM   
-                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or \
+                        planet_story.star.size == "super" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or\
+                    planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
                 if planet_story.planet.size == "large":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
@@ -774,26 +788,6 @@ class HelpIntentHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
-class CancelAndStopIntentHandler(AbstractRequestHandler):
-    """
-
-    C A N C E L   A N D    S T O P
-
-    """
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name("AMAZON.CancelIntent")(handler_input) \
-               or is_intent_name("AMAZON.StopIntent")(handler_input)
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        speech_text = "Goodbye!"
-
-        handler_input.response_builder.speak(speech_text).set_card(
-            SimpleCard("Hello World", speech_text)).set_should_end_session(True)
-        return handler_input.response_builder.response
-
-
 class SessionEndedRequestHandler(AbstractRequestHandler):
     """
 
@@ -881,7 +875,6 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
 
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
-sb.add_request_handler(CancelAndStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Custom handlers
