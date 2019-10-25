@@ -78,6 +78,8 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     def process(self, handler_input):
         print("Request received: {}".format(
             handler_input.request_envelope.request))
+        print("Entire request envelope: {}".format(
+            handler_input.request_envelope))
         global planet_story
 
         session_attributes = handler_input.attributes_manager.session_attributes
