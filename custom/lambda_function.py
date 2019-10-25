@@ -97,14 +97,18 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.launch()
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=_load_apl_document("./data/main.json")
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=_load_apl_document("./data/main.json")
+                )
             )
-        )
-        return handler_input.response_builder.response
+            return handler_input.response_builder.response
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
+            return handler_input.response_builder.response
 
 
 class YesLearnMoreIntentHandler(AbstractRequestHandler):
