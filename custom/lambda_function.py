@@ -47,7 +47,7 @@ def _load_apl_document(file_path):
         return json.load(f)
 
 def check_apl(req):
-    profile = viewport.get_viewport_profile(req)
+    # profile = viewport.get_viewport_profile(req)
     if profile == 'HUB_LANDSCAPE_LARGE':
         return 'y'
     elif profile == 'HUB_LANDSCAPE_MEDIUM':
@@ -98,7 +98,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.launch()
 
-        if check_apl(handler_input.request_envelope.request) == 'y':
+        if check_apl(viewport.get_viewport_profile) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
