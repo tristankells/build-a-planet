@@ -46,19 +46,19 @@ def _load_apl_document(file_path):
     with open(file_path) as f:
         return json.load(f)
 
-def check_apl(viewport):
-    print('viewport:', viewport)
-    if viewport == 'HUB_LANDSCAPE_LARGE':
+def check_apl(req):
+    profile = viewport.get_viewport_profile(req)
+    if profile == 'HUB_LANDSCAPE_LARGE':
         return 'y'
-    elif viewport == 'HUB_LANDSCAPE_MEDIUM':
+    elif profile == 'HUB_LANDSCAPE_MEDIUM':
         return 'y'
-    elif viewport == 'HUB_LANDSCAPE_SMALL':
+    elif profile == 'HUB_LANDSCAPE_SMALL':
         return 'y'
-    elif viewport == 'HUB_ROUND_SMALL':
+    elif profile == 'HUB_ROUND_SMALL':
         return 'y'
-    elif viewport == 'TV_LANDSCAPE_XLARGE':
+    elif profile == 'TV_LANDSCAPE_XLARGE':
         return 'y'
-    elif viewport == 'MOBILE_LANDSCAPE_SMALL':
+    elif profile == 'MOBILE_LANDSCAPE_SMALL':
         return 'y'
     else: 
         return 'n'
@@ -98,7 +98,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.launch()
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
+        if check_apl(handler_input.request_envelope.request) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
@@ -193,7 +193,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         # Ask next question
         planet_story.speech_text += (' ' + Translator.Star.star_size)
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
+        if check_apl(handler_input.request_envelope.request) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
