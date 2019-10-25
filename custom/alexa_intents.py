@@ -70,3 +70,5 @@ class Intents:
 
     # Samples phrases : 
     NO = 'AMAZON.NoIntent'
+
+    REPEAT = 'AMAZON.RepeatIntent'

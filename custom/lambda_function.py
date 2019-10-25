@@ -99,6 +99,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         planet_story.launch()
+        planet_story.previous_speech_text = planet_story.speech_text
 
         if check_apl(viewport.get_viewport_profile) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
@@ -129,6 +130,7 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.learn_about_solar_systems()
 
+        planet_story.previous_speech_text = planet_story.speech_text
         handler_input.response_builder.speak(planet_story.speech_text)
 
         return handler_input.response_builder.response
@@ -194,6 +196,8 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         # Ask next question
         planet_story.speech_text += (' ' + Translator.Star.star_size)
+
+        planet_story.previous_speech_text = planet_story.speech_text
 
         if check_apl(handler_input.request_envelope.request) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
@@ -269,6 +273,8 @@ class StarSizeIntentHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_SUPER       
 
         planet_story.speech_text += (' ' + Translator.Star.star_age)
+
+        planet_story.previous_speech_text = planet_story.speech_text
 
         if check_apl(viewport.get_viewport_profile) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
@@ -424,6 +430,8 @@ class StarAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.speech_text += (' ' + Translator.Planet.planet_size)
 
+        planet_story.previous_speech_text = planet_story.speech_text
+
         if check_apl(viewport.get_viewport_profile) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
@@ -491,6 +499,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
         
         planet_story.speech_text += (' ' + Translator.Planet.planet_distance)
+
+        planet_story.previous_speech_text = planet_story.speech_text
 
         if check_apl(viewport.get_viewport_profile) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
@@ -578,6 +588,8 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 
         planet_story.speech_text += ' ' + Translator.Planet.planet_age
 
+        planet_story.previous_speech_text = planet_story.speech_text
+
         if check_apl(viewport.get_viewport_profile) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
@@ -597,7 +609,6 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
     P L A N E T  A G E
 
     """
-
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.AGE)(handler_input) and planet_story.current_question == Question.Planet.PLANET_AGE
@@ -693,6 +704,8 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.speech_text += (' ' + Translator.EndGame.game_end)
 
+        planet_story.previous_speech_text = planet_story.speech_text
+
         if check_apl(viewport.get_viewport_profile) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
@@ -714,7 +727,6 @@ class YesReviewSolarSystem(AbstractRequestHandler):
         Y E S   -   R E V I E W
 
         """
-
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -723,6 +735,7 @@ class YesReviewSolarSystem(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         planet_story.review_solar_system()
+        planet_story.previous_speech_text = planet_story.speech_text
 
         handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
@@ -734,7 +747,6 @@ class NoReviewSolarSystem(AbstractRequestHandler):
     N O   -   R E V I E W
 
     """
-
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.NO)(handler_input) \
@@ -743,6 +755,7 @@ class NoReviewSolarSystem(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         planet_story.do_not_review_solar_system()
+        planet_story.previous_speech_text = planet_story.speech_text
 
         handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
@@ -754,7 +767,6 @@ class YesPlayAgainHandler(AbstractRequestHandler):
     Y E S   -   P L A Y   A G A I N
 
     """
-
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -763,6 +775,7 @@ class YesPlayAgainHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         planet_story.play_again()
+        planet_story.previous_speech_text = planet_story.speech_text
 
         handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
@@ -774,7 +787,6 @@ class NoPlayAgainHandler(AbstractRequestHandler):
     N O   -   P L A Y   A G A I N
 
     """
-
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.NO)(handler_input) \
@@ -783,8 +795,9 @@ class NoPlayAgainHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         planet_story.exit_skill()
+        planet_story.previous_speech_text = planet_story.speech_text
 
-        handler_input.response_builder.speak(planet_story.speech_text)
+        handler_input.response_builder.speak(planet_story.speech_text).set_should_end_session(True)
         return handler_input.response_builder.response
 
 
@@ -796,38 +809,29 @@ class HelpIntentHandler(AbstractRequestHandler):
     """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name("AMAZON.HelpIntent")(handler_input)
+        return is_intent_name(Intents.HELP)(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         planet_story.help()
         return get_speak_response(handler_input)
 
-    # def handle(self, handler_input):
-    #     # type: (HandlerInput) -> Response
-    #     property_question_dict = {
-    #         Question.Star.STAR_BRIGHTNESS:
-    #             Translator.Star.star_brightness_other
-    #         ,
-    #         Question.Star.STAR_SIZE:
-    #             Translator.Star.star_size_other
-    #         ,
-    #         Question.Star.STAR_AGE:
-    #             Translator.Star.star_age_other
-    #         ,
-    #         Question.Planet.PLANET_DISTANCE:
-    #             Translator.Planet.planet_distance_other
-    #         ,
-    #         Question.Planet.PLANET_SIZE:
-    #             Translator.Planet.planet_size_other
-    #         ,
-    #         Question.Planet.PLANET_AGE:
-    #             Translator.Planet.planet_age_other
-    #     }
-    #
-    #     speech_text = property_question_dict.get(planet_story.current_question)
-    #     handler_input.response_builder.speak(speech_text)
-    #     return handler_input.response_builder.response
+
+class RepeatHandler(AbstractRequestHandler):
+    """
+
+    R E P E A T
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.REPEAT)(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.repeat()
+        return get_speak_response(handler_input)
 
 
 def get_speak_response(handler_input):
@@ -851,7 +855,7 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
         speech_text = "Goodbye!"
 
         handler_input.response_builder.speak(speech_text).set_card(
-            SimpleCard("User End Game", speech_text)).set_should_end_session(True)
+            SimpleCard("Goodbye!", speech_text)).set_should_end_session(True)
         return handler_input.response_builder.response
 
 
@@ -878,6 +882,11 @@ class FallbackHandler(AbstractRequestHandler):
     F A L L B A C K
 
     """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return True
+
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         property_question_dict = {
@@ -969,6 +978,8 @@ sb.add_request_handler(NoReviewSolarSystem())
 
 sb.add_request_handler(YesPlayAgainHandler())
 sb.add_request_handler(NoPlayAgainHandler())
+
+sb.add_request_handler(RepeatHandler())
 
 sb.add_global_request_interceptor(SetupRequestInterceptor())
 
