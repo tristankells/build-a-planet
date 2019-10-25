@@ -682,7 +682,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
         # else:
         #     # Don't change to earth
 
-        planet_story.speech_text += (' ' + Translator.End_Game.game_end)
+        planet_story.speech_text += (' ' + Translator.EndGame.game_end)
 
         if check_apl(viewport.get_viewport_profile) == 'y':
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
@@ -791,29 +791,39 @@ class HelpIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        property_question_dict = {
-            Question.Star.STAR_BRIGHTNESS:
-                Translator.Star.star_brightness_other
-            ,
-            Question.Star.STAR_SIZE:
-                Translator.Star.star_size_other
-            ,
-            Question.Star.STAR_AGE:
-                Translator.Star.star_age_other
-            ,
-            Question.Planet.PLANET_DISTANCE:
-                Translator.Planet.planet_distance_other
-            ,
-            Question.Planet.PLANET_SIZE:
-                Translator.Planet.planet_size_other
-            ,
-            Question.Planet.PLANET_AGE:
-                Translator.Planet.planet_age_other
-        }
+        planet_story.help()
+        return get_speak_response(handler_input)
 
-        speech_text = property_question_dict.get(planet_story.current_question)
-        handler_input.response_builder.speak(speech_text)
-        return handler_input.response_builder.response
+    # def handle(self, handler_input):
+    #     # type: (HandlerInput) -> Response
+    #     property_question_dict = {
+    #         Question.Star.STAR_BRIGHTNESS:
+    #             Translator.Star.star_brightness_other
+    #         ,
+    #         Question.Star.STAR_SIZE:
+    #             Translator.Star.star_size_other
+    #         ,
+    #         Question.Star.STAR_AGE:
+    #             Translator.Star.star_age_other
+    #         ,
+    #         Question.Planet.PLANET_DISTANCE:
+    #             Translator.Planet.planet_distance_other
+    #         ,
+    #         Question.Planet.PLANET_SIZE:
+    #             Translator.Planet.planet_size_other
+    #         ,
+    #         Question.Planet.PLANET_AGE:
+    #             Translator.Planet.planet_age_other
+    #     }
+    #
+    #     speech_text = property_question_dict.get(planet_story.current_question)
+    #     handler_input.response_builder.speak(speech_text)
+    #     return handler_input.response_builder.response
+
+
+def get_speak_response(handler_input):
+    handler_input.response_builder.speak(planet_story.speech_text)
+    return handler_input.response_builder.response
 
 
 class CancelAndStopIntentHandler(AbstractRequestHandler):

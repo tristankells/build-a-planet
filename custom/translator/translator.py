@@ -2,11 +2,33 @@ ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/'
 AUDIO_FORMAT = "<audio src='" + ROOT_URL + "{}.mp3' />"
 
 
+def kendra(speech_text):
+    """
+    Female American polly voice Kendra (en-US). For use when we don't have the audio. Slowed to 85% speed.
+    :return:
+    """
+    return f'<voice name="Kendra"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+
+
+def ivy(speech_text):
+    """
+    Female American polly voice Ivy (en-US). For use when we don't have the audio. Slowed to 85% speed.
+    :return:
+    """
+    return f'<voice name="Ivy"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+
+
 class Translator:
     class Launch:
         launch = AUDIO_FORMAT.format("launch")
 
-    class Solar_System:
+    help = kendra("To exit at any time, say") \
+           + ivy(' Exit. ') \
+           + kendra("If you would like to continue building your planet, you can say") \
+           + ivy(' Repeat ') \
+           + kendra("and have me remind you of the next step in building your planet.")
+
+    class SolarSystem:
         planetary_system_yes = AUDIO_FORMAT.format("planetary_system_yes")
         planetary_system_no = AUDIO_FORMAT.format("planetary_system_no")
 
@@ -55,7 +77,7 @@ class Translator:
         planet_age_old = AUDIO_FORMAT.format("planet_age_old")
         planet_age_other = AUDIO_FORMAT.format("planet_age_other")
 
-    class End_Game:
+    class EndGame:
         game_end = AUDIO_FORMAT.format("game_end")
         game_play_again = AUDIO_FORMAT.format("game_play_again")
         game_play_again_yes = AUDIO_FORMAT.format("game_play_again_yes")
