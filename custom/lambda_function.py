@@ -48,17 +48,17 @@ def _load_apl_document(file_path):
 
 def check_apl(req):
     # profile = viewport.get_viewport_profile(req)
-    if profile == 'HUB_LANDSCAPE_LARGE':
+    if req == 'HUB_LANDSCAPE_LARGE':
         return 'y'
-    elif profile == 'HUB_LANDSCAPE_MEDIUM':
+    elif req == 'HUB_LANDSCAPE_MEDIUM':
         return 'y'
-    elif profile == 'HUB_LANDSCAPE_SMALL':
+    elif req == 'HUB_LANDSCAPE_SMALL':
         return 'y'
-    elif profile == 'HUB_ROUND_SMALL':
+    elif req == 'HUB_ROUND_SMALL':
         return 'y'
-    elif profile == 'TV_LANDSCAPE_XLARGE':
+    elif req == 'TV_LANDSCAPE_XLARGE':
         return 'y'
-    elif profile == 'MOBILE_LANDSCAPE_SMALL':
+    elif req == 'MOBILE_LANDSCAPE_SMALL':
         return 'y'
     else: 
         return 'n'
