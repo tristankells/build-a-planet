@@ -217,3 +217,4 @@ class PlanetStory:
         self.star = Star()
         self.is_planet_habitable = False
         self.planet_story = ''
+        self.previous_speech_text = ''
