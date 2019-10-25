@@ -47,20 +47,21 @@ def _load_apl_document(file_path):
         return json.load(f)
 
 def check_apl(viewport):
-    if viewport == viewport.ViewportProfile.HUB_LANDSCAPE_LARGE:
-        return 'y'
-    elif viewport == viewport.ViewportProfile.HUB_LANDSCAPE_MEDIUM:
-        return 'y'
-    elif viewport == viewport.ViewportProfile.HUB_LANDSCAPE_SMALL:
-        return 'y'
-    elif viewport == viewport.ViewportProfile.HUB_ROUND_SMALL:
-        return 'y'
-    elif viewport == viewport.ViewportProfile.TV_LANDSCAPE_XLARGE:
-        return 'y'
-    elif viewport == viewport.ViewportProfile.MOBILE_LANDSCAPE_SMALL:
-        return 'y'
-    else: 
-        return 'n'
+    return 'y'
+    # if viewport == viewport.ViewportProfile.HUB_LANDSCAPE_LARGE:
+    #     return 'y'
+    # elif viewport == viewport.ViewportProfile.HUB_LANDSCAPE_MEDIUM:
+    #     return 'y'
+    # elif viewport == viewport.ViewportProfile.HUB_LANDSCAPE_SMALL:
+    #     return 'y'
+    # elif viewport == viewport.ViewportProfile.HUB_ROUND_SMALL:
+    #     return 'y'
+    # elif viewport == viewport.ViewportProfile.TV_LANDSCAPE_XLARGE:
+    #     return 'y'
+    # elif viewport == viewport.ViewportProfile.MOBILE_LANDSCAPE_SMALL:
+    #     return 'y'
+    # else: 
+    #     return 'n'
 
 # TODO: Fix rest of audio
 # TODO: Make clean ending
