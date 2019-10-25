@@ -46,21 +46,15 @@ def _load_apl_document(file_path):
     with open(file_path) as f:
         return json.load(f)
 
-def check_apl(viewport):
-    if viewport == 'HUB_LANDSCAPE_LARGE':
-        return 'y'
-    elif viewport == 'HUB_LANDSCAPE_MEDIUM':
-        return 'y'
-    elif viewport == 'HUB_LANDSCAPE_SMALL':
-        return 'y'
-    elif viewport == 'HUB_ROUND_SMALL':
-        return 'y'
-    elif viewport == 'TV_LANDSCAPE_XLARGE':
-        return 'y'
-    elif viewport == 'MOBILE_LANDSCAPE_SMALL':
-        return 'y'
-    else: 
-        return 'n'
+def check_apl(event):
+    tempresult = False
+    if 'context' in event:
+        if 'System' in event['context']:
+            if 'device' in event['context']['System']:
+                if 'supportedInterfaces' in event['context']['System']['device']:
+                    if 'Display' in event['context']['System']['device']['supportedInterfaces']:
+                        tempresult = True
+    return tempresult
 
 # TODO: Fix rest of audio
 # TODO: Make clean ending
@@ -97,7 +91,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.launch()
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
+        if check_apl(handler_input) == True:
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
