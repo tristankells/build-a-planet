@@ -47,7 +47,7 @@ def _load_apl_document(file_path):
         return json.load(f)
 
 def check_apl(viewport):
-    return 'y'
+    return 'n'
     # if viewport == viewport.ViewportProfile.HUB_LANDSCAPE_LARGE:
     #     return 'y'
     # elif viewport == viewport.ViewportProfile.HUB_LANDSCAPE_MEDIUM:
