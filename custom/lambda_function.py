@@ -711,7 +711,6 @@ class YesReviewSolarSystem(AbstractRequestHandler):
         Y E S   -   R E V I E W
 
         """
-
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -731,7 +730,6 @@ class NoReviewSolarSystem(AbstractRequestHandler):
     N O   -   R E V I E W
 
     """
-
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.NO)(handler_input) \
@@ -751,7 +749,6 @@ class YesPlayAgainHandler(AbstractRequestHandler):
     Y E S   -   P L A Y   A G A I N
 
     """
-
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -771,7 +768,6 @@ class NoPlayAgainHandler(AbstractRequestHandler):
     N O   -   P L A Y   A G A I N
 
     """
-
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.NO)(handler_input) \
@@ -793,38 +789,29 @@ class HelpIntentHandler(AbstractRequestHandler):
     """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name("AMAZON.HelpIntent")(handler_input)
+        return is_intent_name(Intents.HELP)(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         planet_story.help()
         return get_speak_response(handler_input)
 
-    # def handle(self, handler_input):
-    #     # type: (HandlerInput) -> Response
-    #     property_question_dict = {
-    #         Question.Star.STAR_BRIGHTNESS:
-    #             Translator.Star.star_brightness_other
-    #         ,
-    #         Question.Star.STAR_SIZE:
-    #             Translator.Star.star_size_other
-    #         ,
-    #         Question.Star.STAR_AGE:
-    #             Translator.Star.star_age_other
-    #         ,
-    #         Question.Planet.PLANET_DISTANCE:
-    #             Translator.Planet.planet_distance_other
-    #         ,
-    #         Question.Planet.PLANET_SIZE:
-    #             Translator.Planet.planet_size_other
-    #         ,
-    #         Question.Planet.PLANET_AGE:
-    #             Translator.Planet.planet_age_other
-    #     }
-    #
-    #     speech_text = property_question_dict.get(planet_story.current_question)
-    #     handler_input.response_builder.speak(speech_text)
-    #     return handler_input.response_builder.response
+
+class RepeatHandler(AbstractRequestHandler):
+    """
+
+    R E P E A T
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.REPEAT)(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.repeat()
+        return get_speak_response(handler_input)
 
 
 def get_speak_response(handler_input):
@@ -934,6 +921,8 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
     def process(self, handler_input, response):
         print("Response generated: {}".format(response))
 
+        planet_story.previous_speech_text = planet_story.speech_text
+
         handler_input.attributes_manager.session_attributes = planet_story.get_session_variables()
 
 
@@ -966,6 +955,8 @@ sb.add_request_handler(NoReviewSolarSystem())
 
 sb.add_request_handler(YesPlayAgainHandler())
 sb.add_request_handler(NoPlayAgainHandler())
+
+sb.add_request_handler(RepeatHandler())
 
 sb.add_global_request_interceptor(SetupRequestInterceptor())
 

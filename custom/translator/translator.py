@@ -18,14 +18,38 @@ def ivy(speech_text):
     return f'<voice name="Ivy"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
 
 
+def joanna(speech_text):
+    """
+    Female American polly voice Joanna (en-US). For use when we don't have the audio. Slowed to 85% speed.
+    :return:
+    """
+    return f'<voice name="Joanna"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+
+
+def kimberly(speech_text):
+    """
+    Female American polly voice Ivy (en-US). For use when we don't have the audio. Slowed to 85% speed.
+    :return:
+    """
+    return f'<voice name="Kimberly"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+
+
+def salli(speech_text):
+    """
+    Female American polly voice Ivy (en-US). For use when we don't have the audio. Slowed to 85% speed.
+    :return:
+    """
+    return f'<voice name="Salli"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+
+
 class Translator:
     class Launch:
         launch = AUDIO_FORMAT.format("launch")
 
     help = kendra("To exit at any time, say") \
-           + ivy(' Exit. ') \
+           + joanna(' Exit. ') \
            + kendra("If you would like to continue building your planet, you can say") \
-           + ivy(' Repeat ') \
+           + joanna(' Repeat ') \
            + kendra("and have me remind you of the next step in building your planet.")
 
     class SolarSystem:

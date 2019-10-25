@@ -14,8 +14,10 @@ STAR = 'star'
 PLANET = 'planet'
 AGE = 'age'
 PLANET_STORY = 'planet_story'
+PREVIOUS_SPEECH_TEXT = 'previous_speech_text'
 
 # TODO Removed the redudant tpyes in the questions
+
 
 class PlanetStory:
     current_question: str  # The question currently being asked
@@ -24,6 +26,7 @@ class PlanetStory:
     is_planet_habitable: bool
     planet_story: str
     speech_text: str  # The response given to the user
+    previous_speech_text: str
 
     def __init__(self, session_variables):
         if session_variables is None:
@@ -45,6 +48,9 @@ class PlanetStory:
             self.planet_story = session_variables[
                 PLANET_STORY] if PLANET_STORY in session_variables else ''
 
+            self.previous_speech_text = session_variables[
+                PREVIOUS_SPEECH_TEXT] if PREVIOUS_SPEECH_TEXT in session_variables else ''
+
             self.is_planet_habitable = False
 
             self.speech_text = ''
@@ -55,6 +61,7 @@ class PlanetStory:
             STAR: vars(self.star),
             PLANET: vars(self.planet),
             PLANET_STORY: self.planet_story,
+            PREVIOUS_SPEECH_TEXT: self.previous_speech_text,
         }
 
     def launch(self):
@@ -140,11 +147,11 @@ class PlanetStory:
     def help(self):
         self.speech_text = Translator.help
 
+    def repeat(self):
+        self.speech_text = self.previous_speech_text
+
     def exit_skill(self):
         self.speech_text = Translator.EndGame.game_play_again_no
-
-
-
 
     def test_if_planet_habitable(self):
         """
