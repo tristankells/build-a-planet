@@ -113,32 +113,35 @@ class PlanetStory:
         self.current_question = Question.REVIEW
 
     def learn_about_solar_systems(self):
-        self.speech_text = Translator.Solar_System.planetary_system_yes
+        self.speech_text = Translator.SolarSystem.planetary_system_yes
         self.speech_text += Translator.Star.star_brightness
 
     def do_not_learn_about_solar_systems(self):
-        self.speech_text = Translator.Solar_System.planetary_system_no
+        self.speech_text = Translator.SolarSystem.planetary_system_no
         self.speech_text += Translator.Star.star_brightness
 
     def review_solar_system(self):
         self.speech_text += self.planet_story
-        self.speech_text += Translator.End_Game.game_play_again
+        self.speech_text += Translator.EndGame.game_play_again
 
         self.current_question = Question.PLAY_AGAIN
 
     def do_not_review_solar_system(self):
-        self.speech_text = Translator.End_Game.game_play_again
+        self.speech_text = Translator.EndGame.game_play_again
 
         self.current_question = Question.PLAY_AGAIN
 
     def play_again(self):
-        self.speech_text = Translator.End_Game.game_play_again_yes
+        self.speech_text = Translator.EndGame.game_play_again_yes
         self.speech_text += Translator.Star.star_brightness
 
         self.current_question = Question.Star.STAR_BRIGHTNESS
 
+    def help(self):
+        self.speech_text = Translator.help
+
     def exit_skill(self):
-        self.speech_text = Translator.End_Game.game_play_again_no
+        self.speech_text = Translator.EndGame.game_play_again_no
 
 
 
