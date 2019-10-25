@@ -105,10 +105,9 @@ class LaunchRequestHandler(AbstractRequestHandler):
                     datasources=_load_apl_document("./data/main.json")
                 )
             )
-            return handler_input.response_builder.response
         else:
             handler_input.response_builder.speak(planet_story.speech_text)
-            return handler_input.response_builder.response
+        return handler_input.response_builder.response
 
 
 class YesLearnMoreIntentHandler(AbstractRequestHandler):
@@ -193,14 +192,16 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         # Ask next question
         planet_story.speech_text += (' ' + Translator.Star.star_size)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
-
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -266,14 +267,16 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
         planet_story.speech_text += (' ' + Translator.Star.star_age)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
-
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -418,14 +421,16 @@ class StarAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.speech_text += (' ' + Translator.Planet.planet_size)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
-
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -484,14 +489,16 @@ class PlanetSizeHandler(AbstractRequestHandler):
         
         planet_story.speech_text += (' ' + Translator.Planet.planet_distance)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
-
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -568,13 +575,16 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 
         planet_story.speech_text += ' ' + Translator.Planet.planet_age
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -680,13 +690,16 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.speech_text += (' ' + Translator.End_Game.game_end)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
