@@ -11,6 +11,7 @@ from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
 from translator.translator import Translator
+from ask_sdk_core.utils import viewport
 
 # Custom skill code
 from alexa_intents import Intents
@@ -44,6 +45,22 @@ def _load_apl_document(file_path):
     """Load the apl json document at the path into a dict object."""
     with open(file_path) as f:
         return json.load(f)
+
+def check_apl(viewport):
+    if viewport == 'HUB_LANDSCAPE_LARGE':
+        return 'y'
+    elif viewport == 'HUB_LANDSCAPE_MEDIUM':
+        return 'y'
+    elif viewport == 'HUB_LANDSCAPE_SMALL':
+        return 'y'
+    elif viewport == 'HUB_ROUND_SMALL':
+        return 'y'
+    elif viewport == 'TV_LANDSCAPE_XLARGE':
+        return 'y'
+    elif viewport == 'MOBILE_LANDSCAPE_SMALL':
+        return 'y'
+    else: 
+        return 'n'
 
 # TODO: Fix rest of audio
 # TODO: Make clean ending
@@ -80,13 +97,16 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.launch()
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=_load_apl_document("./data/main.json")
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=_load_apl_document("./data/main.json")
+                )
             )
-        )
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -172,14 +192,16 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         # Ask next question
         planet_story.speech_text += (' ' + Translator.Star.star_size)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
-
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -245,14 +267,16 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
         planet_story.speech_text += (' ' + Translator.Star.star_age)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
-
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -397,14 +421,16 @@ class StarAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.speech_text += (' ' + Translator.Planet.planet_size)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
-
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -433,7 +459,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "large":
             planet_story.speech_text += Translator.Planet.planet_size_large
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or\
+                    planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
             else:
@@ -442,7 +469,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "medium":
             planet_story.speech_text += Translator.Planet.planet_size_medium
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or\
+                    planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
             else:
@@ -451,7 +479,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "small":
             planet_story.speech_text += Translator.Planet.planet_size_small
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
+                    planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
             else:
@@ -460,14 +489,16 @@ class PlanetSizeHandler(AbstractRequestHandler):
         
         planet_story.speech_text += (' ' + Translator.Planet.planet_distance)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
-
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -493,16 +524,23 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         if planet_distance == "near":
             planet_story.speech_text += Translator.Planet.planet_distance_neighbouring
             if planet_story.star.brightness == "yellow":
-                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.size == "giant" or planet_story.star.age == "young":
+                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or\
+                        planet_story.star.size == "super" or planet_story.star.size == "giant" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
-                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.size == "giant"  or planet_story.star.age == "young":
+                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or \
+                        planet_story.star.size == "super" or planet_story.star.size == "giant" or\
+                        planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM   
-                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.size == "giant"  or planet_story.star.age == "young":
+                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or\
+                        planet_story.star.size == "super" or planet_story.star.size == "giant"  or \
+                        planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.size == "giant"  or planet_story.star.age == "young":
+            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or\
+                    planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
+                    planet_story.star.size == "giant"  or planet_story.star.age == "young":
                 if planet_story.planet.size == "large":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
@@ -537,13 +575,16 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 
         planet_story.speech_text += ' ' + Translator.Planet.planet_age
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -569,16 +610,20 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         if planet_story.planet.distance == "near":
             if planet_story.star.brightness == "yellow":
-                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or \
+                        planet_story.star.size == "super" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
-                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or \
+                        planet_story.star.size == "super" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM   
-                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or \
+                        planet_story.star.size == "super" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
+            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or\
+                    planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
                 if planet_story.planet.size == "large":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
@@ -645,13 +690,16 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.speech_text += (' ' + Translator.EndGame.game_end)
 
-        handler_input.response_builder.speak(planet_story.speech_text).add_directive(
-            RenderDocumentDirective(
-                token="pagerToken",
-                document=_load_apl_document("./templates/main.json"),
-                datasources=apl_datasource
+        if check_apl(viewport.get_viewport_profile) == 'y':
+            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=apl_datasource
+                )
             )
-        )
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
 
 
@@ -800,7 +848,7 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
         speech_text = "Goodbye!"
 
         handler_input.response_builder.speak(speech_text).set_card(
-            SimpleCard("Hello World", speech_text)).set_should_end_session(True)
+            SimpleCard("User End Game", speech_text)).set_should_end_session(True)
         return handler_input.response_builder.response
 
 
