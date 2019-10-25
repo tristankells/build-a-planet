@@ -79,7 +79,7 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
         print("Request received: {}".format(
             handler_input.request_envelope.request))
         print("Entire request envelope: {}".format(
-            viewport.getViewportProfile(handler_input.request_envelope)))
+            viewport.get_viewport_profile(handler_input.request_envelope)))
         global planet_story
 
         session_attributes = handler_input.attributes_manager.session_attributes
