@@ -931,6 +931,7 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
 
     def process(self, handler_input, response):
         print("Response generated: {}".format(response))
+        print("Viewport detected: {}".format(device.apl_support))
 
         handler_input.attributes_manager.session_attributes = planet_story.get_session_variables()
 
