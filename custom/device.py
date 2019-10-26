@@ -4,17 +4,17 @@ class Device:
     def __init__(self, viewport_profile):
         if viewport_profile == None:
             self._set_default_session_variables()
-        if viewport_profile == 'HUB_LANDSCAPE_LARGE':
+        if viewport_profile == 'ViewportProfile.HUB_LANDSCAPE_LARGE':
             self.apl_support = True
-        elif viewport_profile == 'HUB_LANDSCAPE_MEDIUM':
+        elif viewport_profile == 'ViewportProfile.HUB_LANDSCAPE_MEDIUM':
             self.apl_support = True
-        elif viewport_profile == 'HUB_LANDSCAPE_SMALL':
+        elif viewport_profile == 'ViewportProfile.HUB_LANDSCAPE_SMALL':
             self.apl_support = True
-        elif viewport_profile == 'HUB_ROUND_SMALL':
+        elif viewport_profile == 'ViewportProfile.HUB_ROUND_SMALL':
             self.apl_support = True
-        elif viewport_profile == 'TV_LANDSCAPE_XLARGE':
+        elif viewport_profile == 'ViewportProfile.TV_LANDSCAPE_XLARGE':
             self.apl_support = True
-        elif viewport_profile == 'MOBILE_LANDSCAPE_SMALL':
+        elif viewport_profile == 'ViewportProfile.MOBILE_LANDSCAPE_SMALL':
             self.apl_support = True
         else: 
             self.apl_support = False

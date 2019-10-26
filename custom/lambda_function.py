@@ -47,23 +47,6 @@ def _load_apl_document(file_path):
     with open(file_path) as f:
         return json.load(f)
 
-def check_apl(req):
-    # profile = viewport.get_viewport_profile(req)
-    if req == 'HUB_LANDSCAPE_LARGE':
-        return 'y'
-    elif req == 'HUB_LANDSCAPE_MEDIUM':
-        return 'y'
-    elif req == 'HUB_LANDSCAPE_SMALL':
-        return 'y'
-    elif req == 'HUB_ROUND_SMALL':
-        return 'y'
-    elif req == 'TV_LANDSCAPE_XLARGE':
-        return 'y'
-    elif req == 'MOBILE_LANDSCAPE_SMALL':
-        return 'y'
-    else: 
-        return 'n'
-
 # TODO: Fix rest of audio
 # TODO: Make clean ending
 # TODO: Add other properties for planet and star
