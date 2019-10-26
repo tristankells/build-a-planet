@@ -17,7 +17,7 @@ class Device:
         elif viewport_profile == 'ViewportProfile.MOBILE_LANDSCAPE_SMALL':
             self.apl_support = True
         else: 
-            self.apl_support = False
+            self.apl_support = True
 
     def _set_default_session_variables(self):
         self.viewport_profile = False
