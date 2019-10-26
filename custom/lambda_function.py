@@ -19,6 +19,7 @@ from intent_slots import Slots
 from planet_story.planet_story import PlanetStory
 from planet_story.solar_questions import Question
 from assets import Assets
+from device import Device
 
 # For APL
 import json
@@ -38,7 +39,7 @@ SKILL_TITLE = 'Build A Planet'
 
 sb = SkillBuilder()
 planet_story: PlanetStory
-
+device: Device
 
 def _load_apl_document(file_path):
     # type: (str) -> Dict[str, Any]
@@ -81,7 +82,9 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
         print("Entire request envelope: {}".format(
             viewport.get_viewport_profile(handler_input.request_envelope)))
         global planet_story
+        global device
 
+        device = Device(viewport.get_viewport_profile(handler_input.request_envelope))
         session_attributes = handler_input.attributes_manager.session_attributes
         planet_story = PlanetStory(session_attributes)
 
@@ -101,7 +104,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         planet_story.launch()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
+        if device.apl_support == True:
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
@@ -199,7 +202,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(handler_input.request_envelope.request) == 'y':
+        if device.apl_support == True:
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
@@ -276,7 +279,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
+        if device.apl_support == True:
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
@@ -432,7 +435,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
+        if device.apl_support == True:
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
@@ -502,7 +505,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
+        if device.apl_support == True:
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
@@ -590,7 +593,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
+        if device.apl_support == True:
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
@@ -706,7 +709,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
+        if device.apl_support == True:
             handler_input.response_builder.speak(planet_story.speech_text).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
