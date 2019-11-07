@@ -27,6 +27,7 @@ class PlanetStory:
     planet_story: str
     speech_text: str  # The response given to the user
     previous_speech_text: str
+    reprompt: str
 
     def __init__(self, session_variables):
         if session_variables is None:
@@ -54,6 +55,8 @@ class PlanetStory:
             self.is_planet_habitable = False
 
             self.speech_text = ''
+
+            self.reprompt = 'Please say again.'
 
     def get_session_variables(self):
         return {
