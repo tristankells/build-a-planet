@@ -100,6 +100,35 @@ class LaunchRequestHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+class WhatCanIBuyHandler(AbstractRequestHandler):
+    """
+
+    W H A T  C A N  I  B U Y
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.WHAT_CAN_IBUY)(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.what_can_i_buy()
+        planet_story.previous_speech_text = planet_story.speech_text
+
+        if device.apl_support:
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
+                RenderDocumentDirective(
+                    token="pagerToken",
+                    document=_load_apl_document("./templates/main.json"),
+                    datasources=_load_apl_document("./data/main.json")
+                )
+            )
+        else:
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
+        return handler_input.response_builder.response
+
+
 class YesLearnMoreIntentHandler(AbstractRequestHandler):
     """
 
@@ -156,7 +185,6 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
                and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
-
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response

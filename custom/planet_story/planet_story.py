@@ -156,6 +156,9 @@ class PlanetStory:
     def exit_skill(self):
         self.speech_text = Translator.EndGame.game_play_again_no
 
+    def what_can_i_buy(self):
+        self.speech_text = Translator.Store.what_can_i_buy
+
     def test_if_planet_habitable(self):
         """
         Called in the StarBrightnessIntentHandler handler

@@ -1,5 +1,6 @@
 ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/'
-AUDIO_FORMAT = "<audio src='" + ROOT_URL + "{}.mp3' />"
+AUDIO = "<audio src='" + ROOT_URL + "{}.mp3' />"
+
 
 
 def kendra(speech_text):
@@ -44,7 +45,7 @@ def salli(speech_text):
 
 class Translator:
     class Launch:
-        launch = AUDIO_FORMAT.format("launch")
+        launch = AUDIO.format("launch")
 
     help = kendra("To exit at any time, say") \
            + joanna(' Exit. ') \
@@ -52,63 +53,67 @@ class Translator:
            + joanna(' Repeat ') \
            + kendra("and have me remind you of the next step in building your planet.")
 
+    class Store:
+        what_can_i_buy = "If you would like to support the developers of planet story, you can unlock the alternative" \
+                         " space cowboy narrator. You will be able to toggle him on and off by saying toggle narrator."
+
     class SolarSystem:
-        planetary_system_yes = AUDIO_FORMAT.format("planetary_system_yes")
-        planetary_system_no = AUDIO_FORMAT.format("planetary_system_no")
+        planetary_system_yes = AUDIO.format("planetary_system_yes")
+        planetary_system_no = AUDIO.format("planetary_system_no")
 
     class Star:
-        star_create = AUDIO_FORMAT.format("star_create")
-        star_create_yes = AUDIO_FORMAT.format("star_create_yes")
-        star_create_no = AUDIO_FORMAT.format("star_create_no")
-        star_brightness = AUDIO_FORMAT.format("star_brightness")
-        star_brightness_blue = AUDIO_FORMAT.format("star_brightness_blue")
-        star_brightness_yellow = AUDIO_FORMAT.format("star_brightness_yellow")
-        star_brightness_red = AUDIO_FORMAT.format("star_brightness_red")
-        star_brightness_other = AUDIO_FORMAT.format("star_brightness_other")
+        star_create = AUDIO.format("star_create")
+        star_create_yes = AUDIO.format("star_create_yes")
+        star_create_no = AUDIO.format("star_create_no")
+        star_brightness = AUDIO.format("star_brightness")
+        star_brightness_blue = AUDIO.format("star_brightness_blue")
+        star_brightness_yellow = AUDIO.format("star_brightness_yellow")
+        star_brightness_red = AUDIO.format("star_brightness_red")
+        star_brightness_other = AUDIO.format("star_brightness_other")
 
-        star_size = AUDIO_FORMAT.format("star_size")
-        star_size_super_giant = AUDIO_FORMAT.format("star_size_super_giant")
-        star_size_giant = AUDIO_FORMAT.format("star_size_giant")
-        star_size_dwarf = AUDIO_FORMAT.format("star_size_dwarf")
-        star_size_other = AUDIO_FORMAT.format("star_size_other")
+        star_size = AUDIO.format("star_size")
+        star_size_super_giant = AUDIO.format("star_size_super_giant")
+        star_size_giant = AUDIO.format("star_size_giant")
+        star_size_dwarf = AUDIO.format("star_size_dwarf")
+        star_size_other = AUDIO.format("star_size_other")
 
-        star_age = AUDIO_FORMAT.format("star_age")
-        star_age_young = AUDIO_FORMAT.format("star_age_young")
-        star_age_middle = AUDIO_FORMAT.format("star_age_middle")
-        star_age_old = AUDIO_FORMAT.format("star_age_old")
-        star_age_other = AUDIO_FORMAT.format("star_age_other")
+        star_age = AUDIO.format("star_age")
+        star_age_young = AUDIO.format("star_age_young")
+        star_age_middle = AUDIO.format("star_age_middle")
+        star_age_old = AUDIO.format("star_age_old")
+        star_age_other = AUDIO.format("star_age_other")
 
     class Planet:
-        planet_create = AUDIO_FORMAT.format("planet_create")
-        planet_create_yes = AUDIO_FORMAT.format("planet_create_yes")
-        planet_create_no = AUDIO_FORMAT.format("planet_create_no")
+        planet_create = AUDIO.format("planet_create")
+        planet_create_yes = AUDIO.format("planet_create_yes")
+        planet_create_no = AUDIO.format("planet_create_no")
 
-        planet_distance = AUDIO_FORMAT.format("planet_distance")
-        planet_distance_neighbouring = AUDIO_FORMAT.format("planet_distance_neighbouring")
-        planet_distance_near = AUDIO_FORMAT.format("planet_distance_near")
-        planet_distance_far = AUDIO_FORMAT.format("planet_distance_far")
-        planet_distance_other = AUDIO_FORMAT.format("planet_distance_other")
+        planet_distance = AUDIO.format("planet_distance")
+        planet_distance_neighbouring = AUDIO.format("planet_distance_neighbouring")
+        planet_distance_near = AUDIO.format("planet_distance_near")
+        planet_distance_far = AUDIO.format("planet_distance_far")
+        planet_distance_other = AUDIO.format("planet_distance_other")
 
-        planet_size = AUDIO_FORMAT.format("planet_size")
-        planet_size_large = AUDIO_FORMAT.format("planet_size_large")
-        planet_size_medium = AUDIO_FORMAT.format("planet_size_medium")
-        planet_size_small = AUDIO_FORMAT.format("planet_size_small")
-        planet_size_other = AUDIO_FORMAT.format("planet_size_other")
+        planet_size = AUDIO.format("planet_size")
+        planet_size_large = AUDIO.format("planet_size_large")
+        planet_size_medium = AUDIO.format("planet_size_medium")
+        planet_size_small = AUDIO.format("planet_size_small")
+        planet_size_other = AUDIO.format("planet_size_other")
 
-        planet_age = AUDIO_FORMAT.format("planet_age")
-        planet_age_young = AUDIO_FORMAT.format("planet_age_young")
-        planet_age_middleaged = AUDIO_FORMAT.format("planet_age_middleaged")
-        planet_age_old = AUDIO_FORMAT.format("planet_age_old")
-        planet_age_other = AUDIO_FORMAT.format("planet_age_other")
+        planet_age = AUDIO.format("planet_age")
+        planet_age_young = AUDIO.format("planet_age_young")
+        planet_age_middleaged = AUDIO.format("planet_age_middleaged")
+        planet_age_old = AUDIO.format("planet_age_old")
+        planet_age_other = AUDIO.format("planet_age_other")
 
     class EndGame:
-        game_end = AUDIO_FORMAT.format("game_end")
-        game_play_again = AUDIO_FORMAT.format("game_play_again")
-        game_play_again_yes = AUDIO_FORMAT.format("game_play_again_yes")
-        game_play_again_no = AUDIO_FORMAT.format("game_play_again_no")
+        game_end = AUDIO.format("game_end")
+        game_play_again = AUDIO.format("game_play_again")
+        game_play_again_yes = AUDIO.format("game_play_again_yes")
+        game_play_again_no = AUDIO.format("game_play_again_no")
 
     class Facts:
-        fact_create = AUDIO_FORMAT.format("fact_create")
+        fact_create = AUDIO.format("fact_create")
         facts = [
             'There is no atmosphere in space, which means that sound has no medium or way to travel to be heard. Astronauts use radios to stay in communication while in space, since radio waves can still be sent and received.'
             'Venus is the hottest planet in the solar system and has an average surface temperature of around 450° C. Interestingly, Venus is not the closest planet to the Sun – Mercury is closer but because Mercury has no atmosphere to regulate temperature it has a very large temperature fluctuation.'
