@@ -2,7 +2,6 @@ ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/'
 AUDIO = "<audio src='" + ROOT_URL + "{}.mp3' />"
 
 
-
 def kendra(speech_text):
     """
     Female American polly voice Kendra (en-US). For use when we don't have the audio. Slowed to 85% speed.
@@ -52,6 +51,11 @@ class Translator:
            + kendra("If you would like to continue building your planet, you can say") \
            + joanna(' Repeat ') \
            + kendra("and have me remind you of the next step in building your planet.")
+
+    class ToggleVoice:
+        cowboy = 'You have activated the space cowboy narrator.'
+        default = 'You have activated the default narrator.'
+        cowboy_locked = 'You have not unlocked the cowboy narrator.'
 
     class Store:
         what_can_i_buy = "If you would like to support the developers of planet story, you can unlock the alternative" \

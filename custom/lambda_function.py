@@ -140,7 +140,7 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
-               and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
+               and planet_story.current_question == Question.Star.BRIGHTNESS
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -162,7 +162,7 @@ class NoLearnMoreIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.NO)(handler_input) \
-               and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
+               and planet_story.current_question == Question.Star.BRIGHTNESS
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -185,7 +185,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
-               and planet_story.current_question == Question.Star.STAR_BRIGHTNESS
+               and planet_story.current_question == Question.Star.BRIGHTNESS
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -235,8 +235,8 @@ class StarSizeIntentHandler(AbstractRequestHandler):
     """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.STAR_SIZE)(handler_input) and planet_story.current_question ==\
-               Question.Star.STAR_SIZE
+        return is_intent_name(Intents.STAR_SIZE)(handler_input) and planet_story.current_question == \
+               Question.Star.SIZE
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -313,7 +313,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.AGE)(
-            handler_input) and planet_story.current_question == Question.Star.STAR_AGE
+            handler_input) and planet_story.current_question == Question.Star.AGE
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -473,7 +473,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
     """
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_SIZE)(handler_input) \
-               and planet_story.current_question == Question.Planet.PLANET_SIZE
+               and planet_story.current_question == Question.Planet.SIZE
 
     def handle(self, handler_input):
         planet_size = str(
@@ -538,7 +538,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
     """
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
-               and planet_story.current_question == Question.Planet.PLANET_DISTANCE
+               and planet_story.current_question == Question.Planet.DISTANCE
 
     def handle(self, handler_input):
 
@@ -626,7 +626,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
     """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.AGE)(handler_input) and planet_story.current_question == Question.Planet.PLANET_AGE
+        return is_intent_name(Intents.AGE)(handler_input) and planet_story.current_question == Question.Planet.AGE
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -775,14 +775,14 @@ class NoReviewSolarSystem(AbstractRequestHandler):
         handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
+
+class PurchaseHandler(AbstractRequestHandler):
     """
 
     P U R C H A S E
 
     """
 
-
-class PurchaseHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -857,7 +857,7 @@ class HelpIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         planet_story.help()
-        return get_speak_response(handler_input)
+        return get_speak_ask_response(handler_input)
 
 
 class RepeatHandler(AbstractRequestHandler):
@@ -874,10 +874,10 @@ class RepeatHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         planet_story.repeat()
-        return get_speak_response(handler_input)
+        return get_speak_ask_response(handler_input)
 
 
-def get_speak_response(handler_input):
+def get_speak_ask_response(handler_input):
     handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
     return handler_input.response_builder.response
 
@@ -890,8 +890,8 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
     """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name("AMAZON.CancelIntent")(handler_input) \
-               or is_intent_name("AMAZON.StopIntent")(handler_input)
+        return is_intent_name(Intents.CANCEL)(handler_input) \
+               or is_intent_name(Intents.STOP)(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -900,6 +900,24 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard("Goodbye!", speech_text)).set_should_end_session(True)
         return handler_input.response_builder.response
+
+
+class ToggleVoiceHandler(AbstractRequestHandler):
+    """
+
+    T O G G L E   N A R R A T O R
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.TOGGLE_VOICE)(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.toggle_voice()
+
+        return get_speak_ask_response(handler_input)
 
 
 class SessionEndedRequestHandler(AbstractRequestHandler):
@@ -933,22 +951,22 @@ class FallbackHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         property_question_dict = {
-            Question.Star.STAR_BRIGHTNESS:
+            Question.Star.BRIGHTNESS:
                 Translator.Star.star_brightness_other
             ,
-            Question.Star.STAR_SIZE:
+            Question.Star.SIZE:
                 Translator.Star.star_size_other
             ,
-            Question.Star.STAR_AGE:
+            Question.Star.AGE:
                 Translator.Star.star_age_other
             ,
-            Question.Planet.PLANET_DISTANCE:
+            Question.Planet.DISTANCE:
                 Translator.Planet.planet_distance_other
             ,
-            Question.Planet.PLANET_SIZE:
+            Question.Planet.SIZE:
                 Translator.Planet.planet_size_other
             ,
-            Question.Planet.PLANET_AGE:
+            Question.Planet.AGE:
                 Translator.Planet.planet_age_other
         }
 
@@ -1001,9 +1019,7 @@ sb.add_request_handler(SessionEndedRequestHandler())
 # region Store handlers
 sb.add_request_handler(WhatCanIBuyHandler())
 sb.add_request_handler(PurchaseHandler())
-
-
-
+sb.add_request_handler(ToggleVoiceHandler())
 
 # endregion
 

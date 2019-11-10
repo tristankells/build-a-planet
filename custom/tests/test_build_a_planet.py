@@ -7,7 +7,7 @@ class IntegrationTests(unittest.TestCase):
     def test__constructor_take_none(self):
         planet_story = PlanetStory(None)
 
-        self.assertEqual(planet_story.current_question, Question.Star.STAR_BRIGHTNESS,
+        self.assertEqual(planet_story.current_question, Question.Star.BRIGHTNESS,
                          'Next question should be star brightness')
 
         self.assertEqual(planet_story.star.brightness, '', 'Sun should be an empty dictionary')
@@ -19,7 +19,7 @@ class IntegrationTests(unittest.TestCase):
     def test__constructor_take_empty_session_variables(self):
         planet_story = PlanetStory({})
 
-        self.assertEqual(planet_story.current_question, Question.Star.STAR_BRIGHTNESS,
+        self.assertEqual(planet_story.current_question, Question.Star.BRIGHTNESS,
                          'Next question should be star brightness')
 
         self.assertEqual(planet_story.star.brightness, '', 'Sun should be an empty dictionary')
@@ -35,7 +35,7 @@ class IntegrationTests(unittest.TestCase):
         sun = session_variables['star']
         planet = session_variables['planet']
 
-        self.assertEqual(question, Question.Star.STAR_BRIGHTNESS,
+        self.assertEqual(question, Question.Star.BRIGHTNESS,
                          'Next question should be star brightness')
 
         self.assertEqual(sun, {'brightness': '', 'size': '', 'age': ''}, 'Should return valid sun as dictionary')
@@ -60,7 +60,7 @@ class IntegrationTests(unittest.TestCase):
         sun = session_variables['star']
         planet = session_variables['planet']
 
-        self.assertEqual(question, Question.Star.STAR_BRIGHTNESS,
+        self.assertEqual(question, Question.Star.BRIGHTNESS,
                          'Next question should be star brightness')
 
         self.assertEqual(sun, {'brightness': 'red', 'size': 'giant', 'age': 'old'},

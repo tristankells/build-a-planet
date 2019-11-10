@@ -6,6 +6,7 @@ from translator.translator import Translator
 
 from planet_story.planet import Planet
 from planet_story.star import Star
+from planet_story.narrator import Narrator
 
 
 # constants
@@ -15,6 +16,8 @@ PLANET = 'planet'
 AGE = 'age'
 PLANET_STORY = 'planet_story'
 PREVIOUS_SPEECH_TEXT = 'previous_speech_text'
+NARRATOR = 'narrator'
+COWBOY_UNLOCKED = 'cowboy_unlocked'
 
 # TODO Removed the redudant tpyes in the questions
 
@@ -28,13 +31,15 @@ class PlanetStory:
     speech_text: str  # The response given to the user
     previous_speech_text: str
     reprompt: str
+    narrator: str
+    cowboy_unlocked: bool
 
     def __init__(self, session_variables):
         if session_variables is None:
             self._set_default_session_variables()
         else:
             self.current_question = session_variables[
-                CURRENT_QUESTION] if CURRENT_QUESTION in session_variables else Question.Star.STAR_BRIGHTNESS
+                CURRENT_QUESTION] if CURRENT_QUESTION in session_variables else Question.Star.BRIGHTNESS
 
             star_brightness = session_variables[STAR][Star.BRIGHTNESS] if STAR in session_variables else ''
             star_size = session_variables[STAR][Star.SIZE] if STAR in session_variables else ''
@@ -52,6 +57,12 @@ class PlanetStory:
             self.previous_speech_text = session_variables[
                 PREVIOUS_SPEECH_TEXT] if PREVIOUS_SPEECH_TEXT in session_variables else ''
 
+            self.narrator = session_variables[
+                NARRATOR] if NARRATOR in session_variables else Narrator.default
+
+            self.cowboy_unlocked = session_variables[
+                COWBOY_UNLOCKED] if COWBOY_UNLOCKED in session_variables else False
+
             self.is_planet_habitable = False
 
             self.speech_text = ''
@@ -65,6 +76,8 @@ class PlanetStory:
             PLANET: vars(self.planet),
             PLANET_STORY: self.planet_story,
             PREVIOUS_SPEECH_TEXT: self.previous_speech_text,
+            NARRATOR: self.narrator,
+            COWBOY_UNLOCKED: self.cowboy_unlocked
         }
 
     def launch(self):
@@ -80,7 +93,7 @@ class PlanetStory:
         :return:
         """
         self.star.brightness = brightness
-        self.current_question = Question.Star.STAR_SIZE
+        self.current_question = Question.Star.SIZE
 
     def set_star_size(self, size):
         """
@@ -88,7 +101,7 @@ class PlanetStory:
         :return:
         """
         self.star.size = size
-        self.current_question = Question.Star.STAR_AGE
+        self.current_question = Question.Star.AGE
 
     def set_star_age(self, age):
         """
@@ -96,7 +109,7 @@ class PlanetStory:
         :return:
         """
         self.star.age = age
-        self.current_question = Question.Planet.PLANET_SIZE
+        self.current_question = Question.Planet.SIZE
 
     def set_planet_size(self, size):
         """
@@ -104,7 +117,7 @@ class PlanetStory:
         :return:
         """
         self.planet.size = size
-        self.current_question = Question.Planet.PLANET_DISTANCE
+        self.current_question = Question.Planet.DISTANCE
 
     def set_planet_distance(self, distance):
         """
@@ -112,7 +125,7 @@ class PlanetStory:
         :return:
         """
         self.planet.distance = distance
-        self.current_question = Question.Planet.PLANET_AGE
+        self.current_question = Question.Planet.AGE
 
     def set_planet_age(self, age):
         """
@@ -149,7 +162,7 @@ class PlanetStory:
         self.speech_text = Translator.EndGame.game_play_again_yes
         self.speech_text += Translator.Star.star_brightness
 
-        self.current_question = Question.Star.STAR_BRIGHTNESS
+        self.current_question = Question.Star.BRIGHTNESS
 
     def help(self):
         self.speech_text = Translator.help
@@ -162,6 +175,21 @@ class PlanetStory:
 
     def what_can_i_buy(self):
         self.speech_text = Translator.Store.what_can_i_buy
+        # The below line is for testing only
+        self.cowboy_unlocked = True
+
+    def toggle_voice(self):
+        if self.narrator == Narrator.default:
+            if self.cowboy_unlocked:
+                self.narrator = Narrator.cowboy
+                self.speech_text = Translator.ToggleVoice.cowboy
+            else:
+                self.speech_text = Translator.ToggleVoice.cowboy_locked
+
+        elif self.narrator == Narrator.cowboy:
+            self.narrator = Narrator.default
+            self.speech_text = Translator.ToggleVoice.default
+
 
     def test_if_planet_habitable(self):
         """
@@ -222,9 +250,11 @@ class PlanetStory:
             return """Your planet is still early stags in its evolution, and it's still forming. It's very likely that the surface is still full of molten rocks and not able to support liquid water."""
 
     def _set_default_session_variables(self):
-        self.current_question = Question.Star.STAR_BRIGHTNESS
+        self.current_question = Question.Star.BRIGHTNESS
         self.planet = Planet()
         self.star = Star()
         self.is_planet_habitable = False
         self.planet_story = ''
         self.previous_speech_text = ''
+        self.narrator = Narrator.default
+        self.cowboy_unlocked = False
