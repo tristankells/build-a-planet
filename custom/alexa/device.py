@@ -1,5 +1,6 @@
 class Device:
     apl_support: bool
+    viewport_profile: bool
 
     def __init__(self, viewport_profile):
         if viewport_profile is None:
