@@ -76,7 +76,7 @@ def get_speak_ask_response(handler_input):
     return handler_input.response_builder.response
 
 
-def get_apl_response(handler_input, apl_datasource):
+def get_apl_response(handler_input, datasource):
     handler_input.response_builder.speak(
         planet_story.speech_text
     ).ask(
@@ -85,7 +85,7 @@ def get_apl_response(handler_input, apl_datasource):
         RenderDocumentDirective(
             token="pagerToken",
             document=_load_apl_document("./templates/main.json"),
-            datasources=_load_apl_document(apl_datasource)
+            datasources=_load_apl_document(datasource)
         )
     )
     return handler_input.response_builder.response
@@ -141,16 +141,9 @@ class LaunchRequestHandler(AbstractRequestHandler):
         #         Store.cowbodeMode = 'NO'
 
         if device.apl_support:
-            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
-                RenderDocumentDirective(
-                    token="pagerToken",
-                    document=_load_apl_document("./templates/main.json"),
-                    datasources=_load_apl_document("./data/main.json")
-                )
-            )
+            return get_apl_response(handler_input, datasource='./data/main.json')
         else:
-            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
-        return handler_input.response_builder.response
+            return get_speak_ask_response(handler_input)
 
 
 class WhatCanIBuyHandler(AbstractRequestHandler):
@@ -170,7 +163,7 @@ class WhatCanIBuyHandler(AbstractRequestHandler):
         planet_story.previous_speech_text = planet_story.speech_text
 
         if device.apl_support:
-            return get_apl_response(handler_input, apl_datasource='./data/main.json')
+            return get_apl_response(handler_input, datasource='./data/main.json')
         else:
             return get_speak_ask_response(handler_input)
 
@@ -256,14 +249,8 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if device.apl_support == True:
-            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
-                RenderDocumentDirective(
-                    token="pagerToken",
-                    document=_load_apl_document("./templates/main.json"),
-                    datasources=apl_datasource
-                )
-            )
+        if device.apl_support:
+            return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
 
@@ -332,14 +319,8 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if device.apl_support == True:
-            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
-                RenderDocumentDirective(
-                    token="pagerToken",
-                    document=_load_apl_document("./templates/main.json"),
-                    datasources=apl_datasource
-                )
-            )
+        if device.apl_support:
+            return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
 
@@ -487,14 +468,8 @@ class StarAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if device.apl_support == True:
-            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
-                RenderDocumentDirective(
-                    token="pagerToken",
-                    document=_load_apl_document("./templates/main.json"),
-                    datasources=apl_datasource
-                )
-            )
+        if device.apl_support:
+            return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
 
@@ -556,14 +531,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if device.apl_support == True:
-            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
-                RenderDocumentDirective(
-                    token="pagerToken",
-                    document=_load_apl_document("./templates/main.json"),
-                    datasources=apl_datasource
-                )
-            )
+        if device.apl_support:
+            return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
 
@@ -643,14 +612,8 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if device.apl_support == True:
-            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
-                RenderDocumentDirective(
-                    token="pagerToken",
-                    document=_load_apl_document("./templates/main.json"),
-                    datasources=apl_datasource
-                )
-            )
+        if device.apl_support:
+            return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
 
@@ -758,14 +721,8 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if device.apl_support == True:
-            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
-                RenderDocumentDirective(
-                    token="pagerToken",
-                    document=_load_apl_document("./templates/main.json"),
-                    datasources=apl_datasource
-                )
-            )
+        if device.apl_support:
+            return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
 
@@ -1033,9 +990,9 @@ class FallbackHandler(AbstractRequestHandler):
                 DefaultTranslator.Planet.planet_age_other
         }
 
-        speech_text = property_question_dict.get(planet_story.current_question)
-        handler_input.response_builder.speak(speech_text).ask(planet_story.reprompt)
-        return handler_input.response_builder.response
+        planet_story.speech_text = property_question_dict.get(planet_story.current_question)
+
+        return get_speak_ask_response(handler_input)
 
 
 class AllExceptionHandler(AbstractExceptionHandler):
@@ -1053,10 +1010,9 @@ class AllExceptionHandler(AbstractExceptionHandler):
         # Log the exception in CloudWatch Logs
         print('EXCEPTION: ' + str(exception))
 
-        speech = "Sorry, I didn't get it. Can you please say it again!!"
+        planet_story.speech_text = "Sorry, I didn't get it. Can you please say it again!!"
 
-        handler_input.response_builder.speak(speech).ask(speech)
-        return handler_input.response_builder.response
+        return get_speak_ask_response(handler_input)
 
 
 class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
