@@ -759,9 +759,17 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        planet_story.do_not_review_solar_system()
-        # ask if they want to purchase...
-        return handler_input.response_builder.response
+        return handler_input.response_builder.add_directive(
+                        SendRequestDirective(
+                            name="Upsell",
+                            payload={
+                                "InSkillProduct": {
+                                    "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080',
+                                },
+                                "upsellMessage": 'do you want to purchase test...',
+                            },
+                            token="correlationToken")
+                    ).response
 
 
 
