@@ -995,6 +995,11 @@ sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelAndStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 
+# region Store handlers
+sb.add_request_handler(WhatCanIBuyHandler())
+
+# endregion
+
 # region Custom handlers
 
 # Star
