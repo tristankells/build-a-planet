@@ -76,6 +76,21 @@ def get_speak_ask_response(handler_input):
     return handler_input.response_builder.response
 
 
+def get_apl_response(handler_input, apl_datasource):
+    handler_input.response_builder.speak(
+        planet_story.speech_text
+    ).ask(
+        planet_story.reprompt
+    ).add_directive(
+        RenderDocumentDirective(
+            token="pagerToken",
+            document=_load_apl_document("./templates/main.json"),
+            datasources=_load_apl_document(apl_datasource)
+        )
+    )
+    return handler_input.response_builder.response
+
+
 # TODO: Fix rest of audio
 # TODO: Make clean ending
 # TODO: Add other properties for planet and star
@@ -158,22 +173,6 @@ class WhatCanIBuyHandler(AbstractRequestHandler):
             return get_apl_response(handler_input, apl_datasource='./data/main.json')
         else:
             return get_speak_ask_response(handler_input)
-
-
-def get_apl_response(handler_input, apl_datasource):
-    return handler_input.response_builder.speak(
-        planet_story.speech_text
-    ).ask(
-        planet_story.reprompt
-    ).add_directive(
-        RenderDocumentDirective(
-            token="pagerToken",
-            document=_load_apl_document("./templates/main.json"),
-            datasources=_load_apl_document(apl_datasource)
-        )
-    )
-
-
 
 
 class YesLearnMoreIntentHandler(AbstractRequestHandler):
