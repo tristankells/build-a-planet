@@ -71,6 +71,11 @@ def in_skill_product_response(handler_input):
     return ms.get_in_skill_products(locale)
 
 
+def get_speak_ask_response(handler_input):
+    handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
+    return handler_input.response_builder.response
+
+
 # TODO: Fix rest of audio
 # TODO: Make clean ending
 # TODO: Add other properties for planet and star
@@ -158,7 +163,7 @@ class WhatCanIBuyHandler(AbstractRequestHandler):
                 )
             )
         else:
-            return get_speak_ask_response()
+            return get_speak_ask_response(handler_input)
 
 
 
@@ -180,7 +185,7 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        return get_speak_ask_response()
+        return get_speak_ask_response(handler_input)
 
 
 class NoLearnMoreIntentHandler(AbstractRequestHandler):
@@ -199,7 +204,7 @@ class NoLearnMoreIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.do_not_learn_about_solar_systems()
 
-        return get_speak_ask_response()
+        return get_speak_ask_response(handler_input)
 
 
 # region Star Handlers
@@ -252,7 +257,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
                 )
             )
         else:
-            return get_speak_ask_response()
+            return get_speak_ask_response(handler_input)
 
 
 class StarSizeIntentHandler(AbstractRequestHandler):
@@ -328,7 +333,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
                 )
             )
         else:
-            return get_speak_ask_response()
+            return get_speak_ask_response(handler_input)
 
 
 class StarAgeIntentHandler(AbstractRequestHandler):
@@ -483,7 +488,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 )
             )
         else:
-            return get_speak_ask_response()
+            return get_speak_ask_response(handler_input)
 
 
 # endregion
@@ -552,7 +557,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
                 )
             )
         else:
-            return get_speak_ask_response()
+            return get_speak_ask_response(handler_input)
 
 
 class PlanetDistanceHandler(AbstractRequestHandler):
@@ -639,7 +644,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 )
             )
         else:
-            return get_speak_ask_response()
+            return get_speak_ask_response(handler_input)
 
 
 class PlanetAgeIntentHandler(AbstractRequestHandler):
@@ -754,7 +759,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
                 )
             )
         else:
-            return get_speak_ask_response()
+            return get_speak_ask_response(handler_input)
 
 
 # endregion
@@ -775,7 +780,7 @@ class YesReviewSolarSystem(AbstractRequestHandler):
         planet_story.review_solar_system()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        return get_speak_ask_response()
+        return get_speak_ask_response(handler_input)
 
 
 class NoReviewSolarSystem(AbstractRequestHandler):
@@ -794,7 +799,7 @@ class NoReviewSolarSystem(AbstractRequestHandler):
         planet_story.do_not_review_solar_system()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        return get_speak_ask_response()
+        return get_speak_ask_response(handler_input)
 
 
 class PurchaseHandler(AbstractRequestHandler):
@@ -876,7 +881,7 @@ class YesPlayAgainHandler(AbstractRequestHandler):
         planet_story.play_again()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        return get_speak_ask_response()
+        return get_speak_ask_response(handler_input)
 
 
 class NoPlayAgainHandler(AbstractRequestHandler):
@@ -895,7 +900,7 @@ class NoPlayAgainHandler(AbstractRequestHandler):
         planet_story.exit_skill()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        return get_speak_ask_response()
+        return get_speak_ask_response(handler_input)
 
 
 class HelpIntentHandler(AbstractRequestHandler):
@@ -930,11 +935,6 @@ class RepeatHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.repeat()
         return get_speak_ask_response(handler_input)
-
-
-def get_speak_ask_response(handler_input):
-    handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
-    return handler_input.response_builder.response
 
 
 class CancelAndStopIntentHandler(AbstractRequestHandler):

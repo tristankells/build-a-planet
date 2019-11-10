@@ -32,6 +32,7 @@ class PlanetStory:
     previous_speech_text: str
     reprompt: str
     narrator: str
+    translator: Translator
     cowboy_unlocked: bool
 
     def __init__(self, session_variables):
