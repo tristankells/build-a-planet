@@ -738,9 +738,9 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 class YesReviewSolarSystem(AbstractRequestHandler):
     """
 
-        Y E S   -   R E V I E W
+    Y E S   -   R E V I E W
 
-        """
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -773,6 +773,32 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
+
+    """
+
+    P U R C H A S E
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.YES)(handler_input) \
+               and planet_story.current_question == Question.PURCHASE
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        return handler_input.response_builder.add_directive(
+                        SendRequestDirective(
+                            name="Upsell",
+                            payload={
+                                "InSkillProduct": {
+                                    "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080',
+                                },
+                                "upsellMessage": 'do you want to purchase test...',
+                            },
+                            token="correlationToken")
+                    ).response
+
 
 
 class YesPlayAgainHandler(AbstractRequestHandler):
