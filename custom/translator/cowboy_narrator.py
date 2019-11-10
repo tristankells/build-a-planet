@@ -42,7 +42,7 @@ def salli(speech_text):
     return f'<voice name="Salli"><lang xml:lang="en-US">{speech_text}</lang></voice>'
 
 
-class Translator:
+class CowboyTranslator:
     class Launch:
         launch = AUDIO.format("launch")
 

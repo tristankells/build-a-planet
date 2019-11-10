@@ -1,6 +1,8 @@
 from planet_story.solar_questions import Question
 
-from translator.translator import Translator
+from translator.default_narrator import DefaultTranslator
+from translator.cowboy_narrator import CowboyTranslator
+
 
 # Custom skill code
 
@@ -32,8 +34,8 @@ class PlanetStory:
     previous_speech_text: str
     reprompt: str
     narrator: str
-    translator: Translator
     cowboy_unlocked: bool
+    translator: DefaultTranslator or CowboyTranslator
 
     def __init__(self, session_variables):
         if session_variables is None:
@@ -70,6 +72,11 @@ class PlanetStory:
 
             self.reprompt = 'Please say again.'
 
+        if self.narrator == Narrator.cowboy:
+            self.translator = CowboyTranslator
+        else:
+            self.translator = DefaultTranslator
+
     def get_session_variables(self):
         return {
             CURRENT_QUESTION: self.current_question,
@@ -86,7 +93,7 @@ class PlanetStory:
         Called in the Launch handler
         :return:
         """
-        self.speech_text = Translator.Launch.launch
+        self.speech_text = self.translator.Launch.launch
 
     def set_star_brightness(self, brightness):
         """
@@ -137,45 +144,45 @@ class PlanetStory:
         self.current_question = Question.REVIEW
 
     def learn_about_solar_systems(self):
-        self.speech_text = Translator.SolarSystem.planetary_system_yes
-        self.speech_text += Translator.Star.star_brightness
+        self.speech_text = self.translator.SolarSystem.planetary_system_yes
+        self.speech_text += self.translator.Star.star_brightness
 
     def do_not_learn_about_solar_systems(self):
-        self.speech_text = Translator.SolarSystem.planetary_system_no
-        self.speech_text += Translator.Star.star_brightness
+        self.speech_text = self.translator.SolarSystem.planetary_system_no
+        self.speech_text += self.translator.Star.star_brightness
 
     def review_solar_system(self):
         self.speech_text += self.planet_story
-        self.speech_text += Translator.Purchase.purchase_request
+        self.speech_text += self.translator.Purchase.purchase_request
         # self.speech_text += Translator.EndGame.game_play_again
 
         # self.current_question = Question.PLAY_AGAIN
         self.current_question = Question.PURCHASE
 
     def do_not_review_solar_system(self):
-        self.speech_text += Translator.Purchase.purchase_request
-        self.speech_text = Translator.EndGame.game_play_again
+        self.speech_text += self.translator.Purchase.purchase_request
+        self.speech_text = self.translator.EndGame.game_play_again
 
         # self.current_question = Question.PLAY_AGAIN
         self.current_question = Question.PURCHASE
 
     def play_again(self):
-        self.speech_text = Translator.EndGame.game_play_again_yes
-        self.speech_text += Translator.Star.star_brightness
+        self.speech_text = self.translator.EndGame.game_play_again_yes
+        self.speech_text += self.translator.Star.star_brightness
 
         self.current_question = Question.Star.BRIGHTNESS
 
     def help(self):
-        self.speech_text = Translator.help
+        self.speech_text = self.translator.help
 
     def repeat(self):
         self.speech_text = self.previous_speech_text
 
     def exit_skill(self):
-        self.speech_text = Translator.EndGame.game_play_again_no
+        self.speech_text = self.translator.EndGame.game_play_again_no
 
     def what_can_i_buy(self):
-        self.speech_text = Translator.Store.what_can_i_buy
+        self.speech_text = self.translator.Store.what_can_i_buy
         # The below line is for testing only
         self.cowboy_unlocked = True
 
@@ -183,13 +190,13 @@ class PlanetStory:
         if self.narrator == Narrator.default:
             if self.cowboy_unlocked:
                 self.narrator = Narrator.cowboy
-                self.speech_text = Translator.ToggleVoice.cowboy
+                self.speech_text = self.translator.ToggleVoice.cowboy
             else:
-                self.speech_text = Translator.ToggleVoice.cowboy_locked
+                self.speech_text = self.translator.ToggleVoice.cowboy_locked
 
         elif self.narrator == Narrator.cowboy:
             self.narrator = Narrator.default
-            self.speech_text = Translator.ToggleVoice.default
+            self.speech_text = self.translator.ToggleVoice.default
 
 
     def test_if_planet_habitable(self):
