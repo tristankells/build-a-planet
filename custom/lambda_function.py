@@ -19,6 +19,7 @@ from intent_slots import Slots
 from planet_story.planet_story import PlanetStory
 from planet_story.solar_questions import Question
 from assets import Assets
+from device import Device
 
 # For APL
 import json
@@ -38,30 +39,13 @@ SKILL_TITLE = 'Build A Planet'
 
 sb = SkillBuilder()
 planet_story: PlanetStory
-
+device: Device
 
 def _load_apl_document(file_path):
     # type: (str) -> Dict[str, Any]
     """Load the apl json document at the path into a dict object."""
     with open(file_path) as f:
         return json.load(f)
-
-def check_apl(req):
-    # profile = viewport.get_viewport_profile(req)
-    if req == 'HUB_LANDSCAPE_LARGE':
-        return 'y'
-    elif req == 'HUB_LANDSCAPE_MEDIUM':
-        return 'y'
-    elif req == 'HUB_LANDSCAPE_SMALL':
-        return 'y'
-    elif req == 'HUB_ROUND_SMALL':
-        return 'y'
-    elif req == 'TV_LANDSCAPE_XLARGE':
-        return 'y'
-    elif req == 'MOBILE_LANDSCAPE_SMALL':
-        return 'y'
-    else: 
-        return 'n'
 
 # TODO: Fix rest of audio
 # TODO: Make clean ending
@@ -78,8 +62,12 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     def process(self, handler_input):
         print("Request received: {}".format(
             handler_input.request_envelope.request))
+        print("Entire request envelope: {}".format(
+            viewport.get_viewport_profile(handler_input.request_envelope)))
         global planet_story
+        global device
 
+        device = Device(viewport.get_viewport_profile(handler_input.request_envelope))
         session_attributes = handler_input.attributes_manager.session_attributes
         planet_story = PlanetStory(session_attributes)
 
@@ -99,8 +87,8 @@ class LaunchRequestHandler(AbstractRequestHandler):
         planet_story.launch()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
-            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+        if device.apl_support == True:
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
                     document=_load_apl_document("./templates/main.json"),
@@ -108,7 +96,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
                 )
             )
         else:
-            handler_input.response_builder.speak(planet_story.speech_text)
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -129,7 +117,7 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
         planet_story.learn_about_solar_systems()
 
         planet_story.previous_speech_text = planet_story.speech_text
-        handler_input.response_builder.speak(planet_story.speech_text)
+        handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
 
         return handler_input.response_builder.response
 
@@ -150,7 +138,7 @@ class NoLearnMoreIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.do_not_learn_about_solar_systems()
 
-        handler_input.response_builder.speak(planet_story.speech_text)
+        handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
 
         return handler_input.response_builder.response
 
@@ -197,8 +185,8 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(handler_input.request_envelope.request) == 'y':
-            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+        if device.apl_support == True:
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
                     document=_load_apl_document("./templates/main.json"),
@@ -206,7 +194,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
                 )
             )
         else:
-            handler_input.response_builder.speak(planet_story.speech_text)
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -274,8 +262,8 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
-            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+        if device.apl_support == True:
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
                     document=_load_apl_document("./templates/main.json"),
@@ -283,7 +271,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
                 )
             )
         else:
-            handler_input.response_builder.speak(planet_story.speech_text)
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -430,8 +418,8 @@ class StarAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
-            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+        if device.apl_support == True:
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
                     document=_load_apl_document("./templates/main.json"),
@@ -439,7 +427,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 )
             )
         else:
-            handler_input.response_builder.speak(planet_story.speech_text)
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -500,8 +488,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
-            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+        if device.apl_support == True:
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
                     document=_load_apl_document("./templates/main.json"),
@@ -509,7 +497,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
                 )
             )
         else:
-            handler_input.response_builder.speak(planet_story.speech_text)
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -588,8 +576,8 @@ class PlanetDistanceHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
-            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+        if device.apl_support == True:
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
                     document=_load_apl_document("./templates/main.json"),
@@ -597,7 +585,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 )
             )
         else:
-            handler_input.response_builder.speak(planet_story.speech_text)
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -704,8 +692,8 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if check_apl(viewport.get_viewport_profile) == 'y':
-            handler_input.response_builder.speak(planet_story.speech_text).add_directive(
+        if device.apl_support == True:
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",
                     document=_load_apl_document("./templates/main.json"),
@@ -713,7 +701,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
                 )
             )
         else:
-            handler_input.response_builder.speak(planet_story.speech_text)
+            handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -735,7 +723,7 @@ class YesReviewSolarSystem(AbstractRequestHandler):
         planet_story.review_solar_system()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        handler_input.response_builder.speak(planet_story.speech_text)
+        handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -755,7 +743,7 @@ class NoReviewSolarSystem(AbstractRequestHandler):
         planet_story.do_not_review_solar_system()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        handler_input.response_builder.speak(planet_story.speech_text)
+        handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -775,7 +763,7 @@ class YesPlayAgainHandler(AbstractRequestHandler):
         planet_story.play_again()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        handler_input.response_builder.speak(planet_story.speech_text)
+        handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -833,7 +821,7 @@ class RepeatHandler(AbstractRequestHandler):
 
 
 def get_speak_response(handler_input):
-    handler_input.response_builder.speak(planet_story.speech_text)
+    handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
     return handler_input.response_builder.response
 
 
@@ -908,7 +896,7 @@ class FallbackHandler(AbstractRequestHandler):
         }
 
         speech_text = property_question_dict.get(planet_story.current_question)
-        handler_input.response_builder.speak(speech_text)
+        handler_input.response_builder.speak(speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
 
@@ -943,6 +931,7 @@ class SaveSessionAttributesResponseInterceptor(AbstractResponseInterceptor):
 
     def process(self, handler_input, response):
         print("Response generated: {}".format(response))
+        print("Viewport detected: {}".format(device.apl_support))
 
         handler_input.attributes_manager.session_attributes = planet_story.get_session_variables()
 
