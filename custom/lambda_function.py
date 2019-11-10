@@ -23,7 +23,7 @@ from alexa.assets import Assets
 from alexa.device import Device
 
 # Purchasing
-from ask_sdk_model.services.monetization import EntitledState, PurchasableState, InSkillProductsResponse, Error, InSkillProduct
+from ask_sdk_model.services.monetization import EntitledState, InSkillProductsResponse, Error, InSkillProduct
 from ask_sdk_model.interfaces.monetization.v1 import PurchaseResult
 from planet_story.store import Store
 
@@ -55,15 +55,17 @@ def _load_apl_document(file_path):
 
 def get_all_entitled_products(in_skill_product_list):
     """Get list of in-skill products in ENTITLED state."""
-    # type: (List[InSkillProduct]) -> List[InSkillProduct]
     entitled_product_list = [
         l for l in in_skill_product_list if (
                 l.entitled == EntitledState.ENTITLED)]
     return entitled_product_list
 
 def in_skill_product_response(handler_input):
-    """Get the In-skill product response from monetization service."""
-    # type: (HandlerInput) -> Union[InSkillProductsResponse, Error]
+    """
+
+    Get the In-skill product response from monetization service.
+
+    """
     locale = handler_input.request_envelope.request.locale
     ms = handler_input.service_client_factory.get_monetization_service()
     return ms.get_in_skill_products(locale)
@@ -846,6 +848,8 @@ class UpsellResponseHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        all_facts = ""
+
         if handler_input.request_envelope.request.status.code == "200":
             if handler_input.request_envelope.request.payload.get("purchaseResult") == PurchaseResult.DECLINED.value:
                 speech = ("Ok. Here's a random fact: {} {}".format(
@@ -857,6 +861,14 @@ class UpsellResponseHandler(AbstractRequestHandler):
         else:
             return handler_input.response_builder.speak(
                 "There was an error handling your Upsell request. Please try again or contact us for help.").response
+
+
+def get_random_from_list(all_facts):
+    raise NotImplementedError
+
+
+def get_random_yes_no_question():
+    raise NotImplementedError
 
 
 class YesPlayAgainHandler(AbstractRequestHandler):
