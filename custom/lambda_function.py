@@ -114,8 +114,9 @@ class LaunchRequestHandler(AbstractRequestHandler):
         if isinstance(in_skill_response, InSkillProductsResponse):
             entitled_prods = get_all_entitled_products(in_skill_response.in_skill_products)
             if entitled_prods:
-
-
+                Store.cowboyMode = 'PURCHASED'
+            else:
+                Store.cowbodeMode = 'NO'
 
         if device.apl_support:
             handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
