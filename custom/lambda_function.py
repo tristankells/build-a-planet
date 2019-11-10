@@ -1,5 +1,5 @@
 # Generic ASK SDK imports
-from typing import Dict, Any
+from typing import Dict, Any, Union, List
 
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
@@ -21,6 +21,11 @@ from planet_story.planet_story import PlanetStory
 from planet_story.solar_questions import Question
 from alexa.assets import Assets
 from alexa.device import Device
+
+# Purchasing
+from ask_sdk_model.services.monetization import EntitledState, PurchasableState, InSkillProductsResponse, Error, InSkillProduct
+from ask_sdk_model.interfaces.monetization.v1 import PurchaseResult
+from planet_story.store import Store
 
 # For APL
 import json
@@ -47,6 +52,22 @@ def _load_apl_document(file_path):
     """Load the apl json document at the path into a dict object."""
     with open(file_path) as f:
         return json.load(f)
+
+def get_all_entitled_products(in_skill_product_list):
+    """Get list of in-skill products in ENTITLED state."""
+    # type: (List[InSkillProduct]) -> List[InSkillProduct]
+    entitled_product_list = [
+        l for l in in_skill_product_list if (
+                l.entitled == EntitledState.ENTITLED)]
+    return entitled_product_list
+
+def in_skill_product_response(handler_input):
+    """Get the In-skill product response from monetization service."""
+    # type: (HandlerInput) -> Union[InSkillProductsResponse, Error]
+    locale = handler_input.request_envelope.request.locale
+    ms = handler_input.service_client_factory.get_monetization_service()
+    return ms.get_in_skill_products(locale)
+
 
 # TODO: Fix rest of audio
 # TODO: Make clean ending
@@ -87,6 +108,14 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         planet_story.launch()
         planet_story.previous_speech_text = planet_story.speech_text
+
+        # Cowboy mode check
+        in_skill_response = in_skill_product_response(handler_input)
+        if isinstance(in_skill_response, InSkillProductsResponse):
+            entitled_prods = get_all_entitled_products(in_skill_response.in_skill_products)
+            if entitled_prods:
+
+
 
         if device.apl_support:
             handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
@@ -775,17 +804,16 @@ class NoReviewSolarSystem(AbstractRequestHandler):
         handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
         return handler_input.response_builder.response
 
+class PurchaseHandler(AbstractRequestHandler):
     """
 
     P U R C H A S E
 
     """
-
-
-class PurchaseHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
+               or is_intent_name(Intents.NO)(handler_input) \
                and planet_story.current_question == Question.PURCHASE
 
     def handle(self, handler_input):
@@ -802,6 +830,31 @@ class PurchaseHandler(AbstractRequestHandler):
                             token="correlationToken")
                     ).response
 
+
+class UpsellResponseHandler(AbstractRequestHandler):
+    """
+
+    UPSELL RESPONSE
+
+    """    
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return (is_request_type("Connections.Response")(handler_input) and
+                handler_input.request_envelope.request.name == "Upsell")
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        if handler_input.request_envelope.request.status.code == "200":
+            if handler_input.request_envelope.request.payload.get("purchaseResult") == PurchaseResult.DECLINED.value:
+                speech = ("Ok. Here's a random fact: {} {}".format(
+                    get_random_from_list(all_facts),
+                    get_random_yes_no_question()))
+                reprompt = get_random_yes_no_question()
+                return handler_input.response_builder.speak(speech).ask(
+                    reprompt).response
+        else:
+            return handler_input.response_builder.speak(
+                "There was an error handling your Upsell request. Please try again or contact us for help.").response
 
 
 class YesPlayAgainHandler(AbstractRequestHandler):
@@ -1001,8 +1054,7 @@ sb.add_request_handler(SessionEndedRequestHandler())
 # region Store handlers
 sb.add_request_handler(WhatCanIBuyHandler())
 sb.add_request_handler(PurchaseHandler())
-
-
+sb.add_request_handler(UpsellResponseHandler())
 
 
 # endregion
