@@ -6,6 +6,7 @@ from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model import Response
+from ask_sdk_model.interfaces.connections import SendRequestDirective
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
@@ -780,6 +781,8 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
     """
 
+
+class PurchaseHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -997,6 +1000,10 @@ sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Store handlers
 sb.add_request_handler(WhatCanIBuyHandler())
+sb.add_request_handler(PurchaseHandler())
+
+
+
 
 # endregion
 
