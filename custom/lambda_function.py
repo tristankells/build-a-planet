@@ -14,12 +14,12 @@ from translator.translator import Translator
 from ask_sdk_core.utils import viewport
 
 # Custom skill code
-from alexa_intents import Intents
-from intent_slots import Slots
+from alexa.intents import Intents
+from alexa.intent_slots import Slots
 from planet_story.planet_story import PlanetStory
 from planet_story.solar_questions import Question
-from assets import Assets
-from device import Device
+from alexa.assets import Assets
+from alexa.device import Device
 
 # For APL
 import json
@@ -87,7 +87,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         planet_story.launch()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if device.apl_support == True:
+        if device.apl_support:
             handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt).add_directive(
                 RenderDocumentDirective(
                     token="pagerToken",

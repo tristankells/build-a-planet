@@ -1,6 +1,0 @@
-from alexa_tools.json_intent_to_constant import generate_alexa_intents_from_alexa_json
-from alexa_tools.json_slot_values_to_list import generate_slot_list_from_alexa_json
-
-generate_alexa_intents_from_alexa_json()
-
-generate_slot_list_from_alexa_json()
