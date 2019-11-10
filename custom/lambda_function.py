@@ -21,6 +21,7 @@ from planet_story.planet_story import PlanetStory
 from planet_story.solar_questions import Question
 from alexa.assets import Assets
 from alexa.device import Device
+from logger import Logger
 
 # Purchasing
 from ask_sdk_model.services.monetization import EntitledState, InSkillProductsResponse, Error, InSkillProduct
@@ -128,6 +129,8 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'LaunchRequestHandler handle() called.')
+
         planet_story.launch()
         planet_story.previous_speech_text = planet_story.speech_text
 
@@ -159,6 +162,8 @@ class WhatCanIBuyHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'WhatCanIBuyHandler handle() called.')
+
         planet_story.what_can_i_buy()
         planet_story.previous_speech_text = planet_story.speech_text
 
@@ -182,6 +187,8 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'YesLearnMoreIntentHandler handle() called.')
+
         planet_story.learn_about_solar_systems()
 
         planet_story.previous_speech_text = planet_story.speech_text
@@ -203,6 +210,8 @@ class NoLearnMoreIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'NoLearnMoreIntentHandler handle() called.')
+
         planet_story.do_not_learn_about_solar_systems()
 
         return get_speak_ask_response(handler_input)
@@ -224,6 +233,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'StarBrightnessIntentHandler handle() called.')
 
         star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
 
@@ -268,6 +278,8 @@ class StarSizeIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'StarSizeIntentHandler handle() called.')
+
         star_size = str(
             handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
 
@@ -338,6 +350,8 @@ class StarAgeIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'StarAgeIntentHandler handle() called.')
+
         star_age = str(
             handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
 
@@ -490,6 +504,8 @@ class PlanetSizeHandler(AbstractRequestHandler):
                and planet_story.current_question == Question.Planet.SIZE
 
     def handle(self, handler_input):
+        Logger.info(f'PlanetSizeHandler handle() called.')
+
         planet_size = str(
             handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
 
@@ -548,6 +564,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                and planet_story.current_question == Question.Planet.DISTANCE
 
     def handle(self, handler_input):
+        Logger.info(f'PlanetDistanceHandler handle() called.')
 
         planet_distance = str(
             handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
@@ -630,6 +647,8 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'PlanetAgeIntentHandler handle() called.')
+
         planet_age = str(
             handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
 
@@ -742,6 +761,8 @@ class YesReviewSolarSystem(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'YesReviewSolarSystem handle() called.')
+
         planet_story.review_solar_system()
         planet_story.previous_speech_text = planet_story.speech_text
 
@@ -761,6 +782,8 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'NoReviewSolarSystem handle() called.')
+
         planet_story.do_not_review_solar_system()
         planet_story.previous_speech_text = planet_story.speech_text
 
@@ -781,6 +804,8 @@ class PurchaseHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'PurchaseHandler handle() called.')
+
         return handler_input.response_builder.add_directive(
                         SendRequestDirective(
                             name="Upsell",
@@ -807,6 +832,8 @@ class UpsellResponseHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'UpsellResponseHandler handle() called.')
+
         all_facts = ""
 
         if handler_input.request_envelope.request.status.code == "200":
@@ -843,6 +870,8 @@ class YesPlayAgainHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'YesPlayAgainHandler handle() called.')
+
         planet_story.play_again()
         planet_story.previous_speech_text = planet_story.speech_text
 
@@ -862,6 +891,8 @@ class NoPlayAgainHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'NoPlayAgainHandler handle() called.')
+
         planet_story.exit_skill()
         planet_story.previous_speech_text = planet_story.speech_text
 
@@ -880,6 +911,8 @@ class HelpIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'HelpIntentHandler handle() called.')
+
         planet_story.help()
 
         return get_speak_ask_response(handler_input)
@@ -898,6 +931,8 @@ class RepeatHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'RepeatHandler handle() called.')
+
         planet_story.repeat()
         return get_speak_ask_response(handler_input)
 
@@ -915,6 +950,8 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'CancelAndStopIntentHandler handle() called.')
+
         speech_text = "Goodbye!"
 
         handler_input.response_builder.speak(speech_text).set_card(
@@ -935,6 +972,8 @@ class ToggleVoiceHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'ToggleVoiceHandler handle() called.')
+
         planet_story.toggle_voice()
 
         return get_speak_ask_response(handler_input)
@@ -952,7 +991,7 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        # any cleanup logic goes here
+        Logger.info(f'SessionEndedRequestHandler handle() called.')
 
         return handler_input.response_builder.response
 
@@ -970,6 +1009,8 @@ class FallbackHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'FallbackHandler handle() called.')
+
         property_question_dict = {
             Question.Star.BRIGHTNESS:
                 DefaultTranslator.Star.star_brightness_other
