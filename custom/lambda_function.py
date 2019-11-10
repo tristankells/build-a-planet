@@ -710,9 +710,9 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 class YesReviewSolarSystem(AbstractRequestHandler):
     """
 
-        Y E S   -   R E V I E W
+    Y E S   -   R E V I E W
 
-        """
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -745,6 +745,24 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         handler_input.response_builder.speak(planet_story.speech_text)
         return handler_input.response_builder.response
+
+    """
+
+    P U R C H A S E
+
+    """
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.YES)(handler_input) \
+               and planet_story.current_question == Question.PURCHASE
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        planet_story.do_not_review_solar_system()
+        # ask if they want to purchase...
+        return handler_input.response_builder.response
+
 
 
 class YesPlayAgainHandler(AbstractRequestHandler):

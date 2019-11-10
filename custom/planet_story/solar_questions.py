@@ -11,3 +11,4 @@ class Question:
 
     REVIEW = 'review'
     PLAY_AGAIN = 'play_again'
+    PURCHASE = 'purchase'
