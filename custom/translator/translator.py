@@ -7,7 +7,7 @@ def kendra(speech_text):
     Female American polly voice Kendra (en-US). For use when we don't have the audio. Slowed to 85% speed.
     :return:
     """
-    return f'<voice name="Kendra"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+    return f'<voice name="Kendra"><lang xml:lang="en-US">{speech_text}</lang></voice>'
 
 
 def ivy(speech_text):
@@ -15,7 +15,7 @@ def ivy(speech_text):
     Female American polly voice Ivy (en-US). For use when we don't have the audio. Slowed to 85% speed.
     :return:
     """
-    return f'<voice name="Ivy"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+    return f'<voice name="Ivy"><lang xml:lang="en-US">{speech_text}</lang></voice>'
 
 
 def joanna(speech_text):
@@ -23,7 +23,7 @@ def joanna(speech_text):
     Female American polly voice Joanna (en-US). For use when we don't have the audio. Slowed to 85% speed.
     :return:
     """
-    return f'<voice name="Joanna"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+    return f'<voice name="Joanna"><lang xml:lang="en-US">{speech_text}</lang></voice>'
 
 
 def kimberly(speech_text):
@@ -31,7 +31,7 @@ def kimberly(speech_text):
     Female American polly voice Ivy (en-US). For use when we don't have the audio. Slowed to 85% speed.
     :return:
     """
-    return f'<voice name="Kimberly"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+    return f'<voice name="Kimberly"><lang xml:lang="en-US">{speech_text}</lang></voice>'
 
 
 def salli(speech_text):
@@ -39,7 +39,7 @@ def salli(speech_text):
     Female American polly voice Ivy (en-US). For use when we don't have the audio. Slowed to 85% speed.
     :return:
     """
-    return f'<voice name="Salli"><lang xml:lang="en-US"><prosody rate="85%">{speech_text}</prosody></lang></voice>'
+    return f'<voice name="Salli"><lang xml:lang="en-US">{speech_text}</lang></voice>'
 
 
 class Translator:
