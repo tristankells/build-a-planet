@@ -81,7 +81,7 @@ def get_speak_ask_response(handler_input):
 
 
 def get_apl_response(handler_input, datasource):
-    if datasource is str:
+    if isinstance(datasource, str):
         handler_input.response_builder.speak(
             planet_story.speech_text
         ).ask(
