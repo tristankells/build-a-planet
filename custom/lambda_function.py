@@ -81,17 +81,30 @@ def get_speak_ask_response(handler_input):
 
 
 def get_apl_response(handler_input, datasource):
-    handler_input.response_builder.speak(
-        planet_story.speech_text
-    ).ask(
-        planet_story.reprompt
-    ).add_directive(
-        RenderDocumentDirective(
-            token="pagerToken",
-            document=_load_apl_document("./templates/main.json"),
-            datasources=_load_apl_document(datasource)
+    if datasource is str:
+        handler_input.response_builder.speak(
+            planet_story.speech_text
+        ).ask(
+            planet_story.reprompt
+        ).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=_load_apl_document(datasource)
+            )
         )
-    )
+    else:
+        handler_input.response_builder.speak(
+            planet_story.speech_text
+        ).ask(
+            planet_story.reprompt
+        ).add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=_load_apl_document("./templates/main.json"),
+                datasources=datasource
+            )
+        )
     return handler_input.response_builder.response
 
 
