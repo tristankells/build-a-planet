@@ -853,6 +853,8 @@ class StoreHandler(AbstractRequestHandler):
                            if l.entitled == EntitledState.NOT_ENTITLED and
                            l.purchasable == PurchasableState.PURCHASABLE]
 
+            Logger.info(in_skill_response.in_skill_products)
+            
             if purchasable:
                 speech = ("Products available for purchase at this time are {}.  "
                           "To learn more about a product, say 'Tell me more "
@@ -860,11 +862,7 @@ class StoreHandler(AbstractRequestHandler):
                           "to buy say 'Buy' followed by the product name. So what "
                           "can I help you with?").format(get_product_list(purchasable))
             else:
-                speech = ("There are no more products to buy. To hear a "
-                          "random fact, you could say, 'Tell me a fact', or "
-                          "you can ask for a specific category you have "
-                          "purchased, for example, say 'Tell me a science "
-                          "fact'. So what can I help you with?")
+                speech = ("There are no more products to buy.")
             reprompt = "I didn't catch that. What can I help you with?"
             return handler_input.response_builder.speak(speech).ask(reprompt).response
 
