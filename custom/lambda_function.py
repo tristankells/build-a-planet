@@ -848,13 +848,12 @@ class StoreHandler(AbstractRequestHandler):
 
         # Inform the user about what products are available for purchase
         in_skill_response = in_skill_product_response(handler_input)
+        Logger.info(in_skill_response)
         if in_skill_response:
             purchasable = [l for l in in_skill_response.in_skill_products
                            if l.entitled == EntitledState.NOT_ENTITLED and
                            l.purchasable == PurchasableState.PURCHASABLE]
 
-            Logger.info(in_skill_response.in_skill_products)
-            
             if purchasable:
                 speech = ("Products available for purchase at this time are {}.  "
                           "To learn more about a product, say 'Tell me more "
@@ -875,20 +874,7 @@ class BuyHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-   
-        # # Inform the user about what products are available for purchase
-        # in_skill_response = in_skill_product_response(handler_input)
-        # if in_skill_response:
-        #     product_category = get_resolved_value(handler_input.request_envelope.request, "productCategory")
 
-        #     # No entity resolution match
-        #     if product_category is None:
-        #         product_category = "all_access"
-        #     else:
-        #         product_category += "_pack"
-
-            # product = [l for l in in_skill_response.in_skill_products
-            #            if l.reference_name == product_category]
             return handler_input.response_builder.add_directive(
                 SendRequestDirective(
                     name="Buy",
