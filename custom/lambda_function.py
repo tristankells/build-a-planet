@@ -160,10 +160,12 @@ class LaunchRequestHandler(AbstractRequestHandler):
         planet_story.launch()
         planet_story.previous_speech_text = planet_story.speech_text
 
+        # Check purchased products
         in_skill_response = in_skill_product_response(handler_input)
         if isinstance(in_skill_response, InSkillProductsResponse):
             entitled_prods = get_all_entitled_products(in_skill_response.in_skill_products)
-            Logger.info(entitled_prods)
+            if entitled_prods:
+                planet_story.cowboy_unlocked = True
 
         if device.apl_support:
             return get_apl_response(handler_input, datasource='./data/main.json')
