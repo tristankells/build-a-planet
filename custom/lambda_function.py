@@ -71,10 +71,7 @@ def get_all_entitled_products(in_skill_product_list):
 def in_skill_product_response(handler_input):
     """Get the In-skill product response from monetization service."""
     locale = handler_input.request_envelope.request.locale
-    Logger.info(f'in_skill_product_response() called')
-    Logger.info(locale)
     ms = handler_input.service_client_factory.get_monetization_service()
-    Logger.info(ms.get_in_skill_products(locale))
     return ms.get_in_skill_products(locale)
 
 def get_product_list(entitled_products_list):
@@ -162,6 +159,11 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
         planet_story.launch()
         planet_story.previous_speech_text = planet_story.speech_text
+
+        in_skill_response = in_skill_product_response(handler_input)
+        if isinstance(in_skill_response, InSkillProductsResponse):
+            entitled_prods = get_all_entitled_products(in_skill_response.in_skill_products)
+            Logger.info(entitled_prods)
 
         if device.apl_support:
             return get_apl_response(handler_input, datasource='./data/main.json')
