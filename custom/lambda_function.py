@@ -164,6 +164,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         in_skill_response = in_skill_product_response(handler_input)
         if isinstance(in_skill_response, InSkillProductsResponse):
             entitled_prods = get_all_entitled_products(in_skill_response.in_skill_products)
+            # if spacecowboy in entitled_prods
             if entitled_prods:
                 planet_story.cowboy_unlocked = True
 
@@ -838,41 +839,39 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         return get_speak_ask_response(handler_input)
 
-class StoreHandler(AbstractRequestHandler):
-    """
+# class StoreHandler(AbstractRequestHandler):
+#     """
 
-    S T O R E
+#     S T O R E
 
-    """
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.YES)(handler_input) \
-               and planet_story.current_question == Question.PURCHASE
+#     """
+#     def can_handle(self, handler_input):
+#         # type: (HandlerInput) -> bool
+#         return is_intent_name(Intents.YES)(handler_input) \
+#                and planet_story.current_question == Question.PURCHASE
 
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        Logger.info(f'StoreHandler handle() called.')
+#     def handle(self, handler_input):
+#         # type: (HandlerInput) -> Response
+#         Logger.info(f'StoreHandler handle() called.')
 
-        # Inform the user about what products are available for purchase
-        in_skill_response = in_skill_product_response(handler_input)
-        Logger.info(in_skill_response)
-        if in_skill_response:
-            purchasable = [l for l in in_skill_response.in_skill_products
-                           if l.entitled == EntitledState.NOT_ENTITLED and
-                           l.purchasable == PurchasableState.PURCHASABLE]
+#         # Inform the user about what products are available for purchase
+#         in_skill_response = in_skill_product_response(handler_input)
+#         Logger.info(in_skill_response)
+#         if in_skill_response:
+#             purchasable = [l for l in in_skill_response.in_skill_products
+#                            if l.entitled == EntitledState.NOT_ENTITLED and
+#                            l.purchasable == PurchasableState.PURCHASABLE]
 
-            if purchasable:
-                speech = ("Products available for purchase at this time are {}.  "
-                          "To learn more about a product, say 'Tell me more "
-                          "about' followed by the product name.  If you are ready "
-                          "to buy say 'Buy' followed by the product name. So what "
-                          "can I help you with?").format(get_product_list(purchasable))
-            else:
-                speech = ("There are no more products to buy.")
-            reprompt = "I didn't catch that. What can I help you with?"
-            return handler_input.response_builder.speak(speech).ask(reprompt).response
-
-
+#             if purchasable:
+#                 speech = ("Products available for purchase at this time are {}.  "
+#                           "To learn more about a product, say 'Tell me more "
+#                           "about' followed by the product name.  If you are ready "
+#                           "to buy say 'Buy' followed by the product name. So what "
+#                           "can I help you with?").format(get_product_list(purchasable))
+#             else:
+#                 speech = ("There are no more products to buy.")
+#             reprompt = "I didn't catch that. What can I help you with?"
+#             return handler_input.response_builder.speak(speech).ask(reprompt).response
 
 class BuyHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
@@ -881,7 +880,6 @@ class BuyHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-
             return handler_input.response_builder.add_directive(
                 SendRequestDirective(
                     name="Buy",
@@ -917,7 +915,7 @@ class BuyResponseHandler(AbstractRequestHandler):
                     "purchaseResult")
                 if purchase_result == PurchaseResult.ACCEPTED.value:
                     # PURCHASE SUCCESSFUL
-                    Store.cowboyMode = 'YES'
+                    planet_story.cowboy_unlocked = True
                 elif purchase_result in (
                         PurchaseResult.DECLINED.value,
                         PurchaseResult.ERROR.value,
@@ -1164,7 +1162,7 @@ sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Store handlers
 sb.add_request_handler(WhatCanIBuyHandler())
-sb.add_request_handler(StoreHandler())
+# sb.add_request_handler(StoreHandler())
 sb.add_request_handler(BuyHandler())
 sb.add_request_handler(BuyResponseHandler())
 sb.add_request_handler(ToggleVoiceHandler())
