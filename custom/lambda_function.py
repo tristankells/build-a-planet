@@ -24,7 +24,7 @@ from alexa.device import Device
 from logger import Logger
 
 # Purchasing
-from ask_sdk_model.services.monetization import EntitledState, InSkillProductsResponse, Error, InSkillProduct
+from ask_sdk_model.services.monetization import EntitledState, PurchasableState, InSkillProductsResponse, Error, InSkillProduct
 from ask_sdk_model.interfaces.monetization.v1 import PurchaseResult
 from planet_story.store import Store
 
@@ -74,6 +74,14 @@ def in_skill_product_response(handler_input):
     ms = handler_input.service_client_factory.get_monetization_service()
     return ms.get_in_skill_products(locale)
 
+def get_product_list(entitled_products_list):
+    product_names = [item.name for item in entitled_products_list]
+    if len(product_names) > 1:
+        speech = " and ".join(
+            [", ".join(product_names[:-1]), product_names[-1]])
+    else:
+        speech = ", ".join(product_names)
+    return speech
 
 def get_speak_ask_response(handler_input):
     handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
@@ -823,6 +831,45 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         return get_speak_ask_response(handler_input)
 
+class StoreHandler(AbstractRequestHandler):
+    """
+
+    S T O R E
+
+    """
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.YES)(handler_input) \
+               and planet_story.current_question == Question.REVIEW
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        Logger.info(f'StoreHandler handle() called.')
+
+        # Inform the user about what products are available for purchase
+        in_skill_response = in_skill_product_response(handler_input)
+        if in_skill_response:
+            purchasable = [l for l in in_skill_response.in_skill_products
+                           if l.entitled == EntitledState.NOT_ENTITLED and
+                           l.purchasable == PurchasableState.PURCHASABLE]
+
+            if purchasable:
+                speech = ("Products available for purchase at this time are {}.  "
+                          "To learn more about a product, say 'Tell me more "
+                          "about' followed by the product name.  If you are ready "
+                          "to buy say 'Buy' followed by the product name. So what "
+                          "can I help you with?").format(get_product_list(purchasable))
+            else:
+                speech = ("There are no more products to buy. To hear a "
+                          "random fact, you could say, 'Tell me a fact', or "
+                          "you can ask for a specific category you have "
+                          "purchased, for example, say 'Tell me a science "
+                          "fact'. So what can I help you with?")
+            reprompt = "I didn't catch that. What can I help you with?"
+            return handler_input.response_builder.speak(speech).ask(reprompt).response
+
+
+
 class BuyHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -1126,6 +1173,7 @@ sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Store handlers
 sb.add_request_handler(WhatCanIBuyHandler())
+sb.add_request_handler(StoreHandler())
 sb.add_request_handler(BuyHandler())
 sb.add_request_handler(BuyResponseHandler())
 sb.add_request_handler(ToggleVoiceHandler())
