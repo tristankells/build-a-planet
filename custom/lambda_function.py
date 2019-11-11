@@ -258,7 +258,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         Logger.info(f'StarBrightnessIntentHandler handle() called.')
 
         star_brightness = str(
-            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].resolutions.resolutions_per_authority[
+            handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].resolutions.resolutions_per_authority[
                 0].values[0].value.name
         ).lower()
 
