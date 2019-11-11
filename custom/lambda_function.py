@@ -74,7 +74,7 @@ def in_skill_product_response(handler_input):
     Logger.info(f'in_skill_product_response() called')
     Logger.info(locale)
     ms = handler_input.service_client_factory.get_monetization_service()
-    Logger.info(ms)
+    Logger.info(ms.get_in_skill_products(locale))
     return ms.get_in_skill_products(locale)
 
 def get_product_list(entitled_products_list):
