@@ -132,4 +132,5 @@ class DefaultTranslator:
         ]
 
     class Purchase:
-        purchase_request = ' There are premium voice packs you can purchase. Would you like to check out our store?'
+        purchase_request = " If you would like to support the developers of planet story, you can unlock the alternative" \
+                         " space cowboy narrator for 99 cents by saying 'Purchase Space Cowboy'."
