@@ -842,7 +842,7 @@ class PurchaseHandler(AbstractRequestHandler):
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return (is_intent_name(Intents.YES)(handler_input) or is_intent_name(Intents.NO)(handler_input)) \
+        return (is_intent_name(Intents.BUY_COWBOY)(handler_input)) \
                and planet_story.current_question == Question.PURCHASE
 
     def handle(self, handler_input):
