@@ -593,13 +593,20 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         Logger.info(f'PlanetDistanceHandler handle() called.')
 
         planet_distance = str(
-            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
+            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].re).lower()
+
+        planet_distance_resolution = str(
+            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].resolutions.resolutions_per_authority[
+                0].values[0].value.name.lower()
+        )
+
+
 
         planet_story.set_planet_distance(planet_distance)
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        if planet_distance == "near":
+        if planet_distance == "near" or planet_distance_resolution == "near":
             planet_story.speech_text += DefaultTranslator.Planet.planet_distance_near
             if planet_story.star.brightness == "yellow":
                 if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or \
@@ -628,7 +635,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 elif planet_story.planet.size == "small":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-        elif planet_distance == "midway":
+        elif planet_distance == "midway" or planet_distance_resolution == "midway":
             planet_story.speech_text += DefaultTranslator.Planet.planet_distance_midway
             if planet_story.planet.size == "large":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
@@ -641,7 +648,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
         elif planet_distance == "far":
             planet_story.speech_text += DefaultTranslator.Planet.planet_distance_far
-            if planet_story.planet.size == "large":
+            if planet_story.planet.size == "large" or planet_distance_resolution == "large":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_LARGE
             elif planet_story.planet.size == "medium":
