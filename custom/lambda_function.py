@@ -71,7 +71,10 @@ def get_all_entitled_products(in_skill_product_list):
 def in_skill_product_response(handler_input):
     """Get the In-skill product response from monetization service."""
     locale = handler_input.request_envelope.request.locale
+    Logger.info(f'in_skill_product_response() called')
+    Logger.info(locale)
     ms = handler_input.service_client_factory.get_monetization_service()
+    Logger.info(ms)
     return ms.get_in_skill_products(locale)
 
 def get_product_list(entitled_products_list):
