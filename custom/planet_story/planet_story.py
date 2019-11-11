@@ -255,7 +255,8 @@ class PlanetStory:
             return """Your planet is too small, and won't have enough gravity to be able to hold on to its atmosphere, which is essential for sustaining life. It's pretty much a barren rock."""
 
         if self.planet.age == 'young':
-            return """Your planet is still early stags in its evolution, and it's still forming. It's very likely that the surface is still full of molten rocks and not able to support liquid water."""
+            return """Your planet is in the early stages of its evolution and is still forming. It's very likely that 
+            the surface is full of molten rocks and not able to support liquid water."""
 
     def _set_default_session_variables(self):
         self.current_question = Question.Star.BRIGHTNESS
