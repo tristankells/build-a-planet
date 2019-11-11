@@ -840,7 +840,7 @@ class StoreHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
-               and planet_story.current_question == Question.REVIEW
+               and planet_story.current_question == Question.PURCHASE
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
