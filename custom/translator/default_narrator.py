@@ -93,8 +93,8 @@ class DefaultTranslator:
         planet_create_no = AUDIO.format("planet_create_no")
 
         planet_distance = AUDIO.format("planet_distance")
-        planet_distance_neighbouring = AUDIO.format("planet_distance_neighbouring")
-        planet_distance_near = AUDIO.format("planet_distance_near")
+        planet_distance_near = AUDIO.format("planet_distance_neighbouring")
+        planet_distance_midway = AUDIO.format("planet_distance_near")
         planet_distance_far = AUDIO.format("planet_distance_far")
         planet_distance_other = AUDIO.format("planet_distance_other")
 

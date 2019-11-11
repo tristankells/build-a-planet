@@ -600,7 +600,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         apl_datasource = _load_apl_document("./data/main.json")
 
         if planet_distance == "near":
-            planet_story.speech_text += DefaultTranslator.Planet.planet_distance_neighbouring
+            planet_story.speech_text += DefaultTranslator.Planet.planet_distance_near
             if planet_story.star.brightness == "yellow":
                 if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or \
                         planet_story.star.size == "super" or planet_story.star.size == "giant" or planet_story.star.age == "young":
@@ -629,7 +629,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
         elif planet_distance == "midway":
-            planet_story.speech_text += DefaultTranslator.Planet.planet_distance_near
+            planet_story.speech_text += DefaultTranslator.Planet.planet_distance_midway
             if planet_story.planet.size == "large":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
