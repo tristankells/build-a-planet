@@ -152,15 +152,6 @@ class LaunchRequestHandler(AbstractRequestHandler):
         planet_story.launch()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        # Cowboy mode check
-        # in_skill_response = in_skill_product_response(handler_input)
-        # if isinstance(in_skill_response, InSkillProductsResponse):
-        #     entitled_prods = get_all_entitled_products(in_skill_response.in_skill_products)
-        #     if entitled_prods:
-        #         Store.cowboyMode = 'PURCHASED'
-        #     else:
-        #         Store.cowbodeMode = 'NO'
-
         if device.apl_support:
             return get_apl_response(handler_input, datasource='./data/main.json')
         else:
@@ -832,6 +823,39 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         return get_speak_ask_response(handler_input)
 
+class BuyHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name(Intents.BUY_COWBOY)(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+   
+        # # Inform the user about what products are available for purchase
+        # in_skill_response = in_skill_product_response(handler_input)
+        # if in_skill_response:
+        #     product_category = get_resolved_value(handler_input.request_envelope.request, "productCategory")
+
+        #     # No entity resolution match
+        #     if product_category is None:
+        #         product_category = "all_access"
+        #     else:
+        #         product_category += "_pack"
+
+            # product = [l for l in in_skill_response.in_skill_products
+            #            if l.reference_name == product_category]
+            return handler_input.response_builder.add_directive(
+                SendRequestDirective(
+                    name="Buy",
+                    payload={
+                        "InSkillProduct": {
+                            "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080'
+                        }
+                    },
+                    token="correlationToken")
+            ).response
+
+
 class BuyResponseHandler(AbstractRequestHandler):
     """This handles the Connections.Response event after a buy occurs."""
     def can_handle(self, handler_input):
@@ -854,6 +878,7 @@ class BuyResponseHandler(AbstractRequestHandler):
                 purchase_result = handler_input.request_envelope.request.payload.get(
                     "purchaseResult")
                 if purchase_result == PurchaseResult.ACCEPTED.value:
+                    # PURCHASE SUCCESSFUL
                     Store.cowboyMode = 'YES'
                 elif purchase_result in (
                         PurchaseResult.DECLINED.value,
@@ -1101,9 +1126,9 @@ sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Store handlers
 sb.add_request_handler(WhatCanIBuyHandler())
+sb.add_request_handler(BuyHandler())
 sb.add_request_handler(BuyResponseHandler())
 sb.add_request_handler(ToggleVoiceHandler())
-sb.add_request_handler(UpsellResponseHandler())
 
 # endregion
 
