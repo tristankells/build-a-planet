@@ -832,74 +832,47 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         return get_speak_ask_response(handler_input)
 
-
-class PurchaseHandler(AbstractRequestHandler):
-    """
-
-    P U R C H A S E
-
-    """
-
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return (is_intent_name(Intents.BUY_COWBOY)(handler_input)) \
-               and planet_story.current_question == Question.PURCHASE
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        Logger.info(f'PurchaseHandler handle() called.')
-
-        return handler_input.response_builder.add_directive(
-            SendRequestDirective(
-                name="Upsell",
-                payload={
-                    "InSkillProduct": {
-                        "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080',
-                    },
-                    "upsellMessage": 'do you want to purchase test...',
-                },
-                token="correlationToken")
-        ).response
-
-
-class UpsellResponseHandler(AbstractRequestHandler):
-    """
-
-    UPSELL RESPONSE
-
-    """
-
+class BuyResponseHandler(AbstractRequestHandler):
+    """This handles the Connections.Response event after a buy occurs."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return (is_request_type("Connections.Response")(handler_input) and
-                handler_input.request_envelope.request.name == "Upsell")
+                handler_input.request_envelope.request.name == "Buy")
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        Logger.info(f'UpsellResponseHandler handle() called.')
+        in_skill_response = in_skill_product_response(handler_input)
+        product_id = handler_input.request_envelope.request.payload.get(
+            "productId")
 
-        all_facts = ""
+        if in_skill_response:
+            product = [l for l in in_skill_response.in_skill_products
+                       if l.product_id == product_id]
+            if handler_input.request_envelope.request.status.code == "200":
+                speech = None
+                reprompt = None
+                purchase_result = handler_input.request_envelope.request.payload.get(
+                    "purchaseResult")
+                if purchase_result == PurchaseResult.ACCEPTED.value:
+                    Store.cowboyMode = 'YES'
+                elif purchase_result in (
+                        PurchaseResult.DECLINED.value,
+                        PurchaseResult.ERROR.value,
+                        PurchaseResult.NOT_ENTITLED.value):
+                    speech = ("There was an error with your purchase.")
+                    reprompt = "Please try again."
+                elif purchase_result == PurchaseResult.ALREADY_PURCHASED.value:
+                    speech = "You have already purchase this feature."
+                else:
+                    # Invalid purchase result value
+                    return FallbackHandler().handle(handler_input)
 
-        if handler_input.request_envelope.request.status.code == "200":
-            if handler_input.request_envelope.request.payload.get("purchaseResult") == PurchaseResult.DECLINED.value:
-                speech = ("Ok. Here's a random fact: {} {}".format(
-                    get_random_from_list(all_facts),
-                    get_random_yes_no_question()))
-                reprompt = get_random_yes_no_question()
                 return handler_input.response_builder.speak(speech).ask(
                     reprompt).response
-        else:
-            return handler_input.response_builder.speak(
-                "There was an error handling your Upsell request. Please try again or contact us for help.").response
-
-
-def get_random_from_list(all_facts):
-    raise NotImplementedError
-
-
-def get_random_yes_no_question():
-    raise NotImplementedError
-
+            else:
+                return handler_input.response_builder.speak(
+                    "There was an error handling your purchase request. "
+                    "Please try again or contact us for help").response
 
 class YesPlayAgainHandler(AbstractRequestHandler):
     """
@@ -1128,7 +1101,7 @@ sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Store handlers
 sb.add_request_handler(WhatCanIBuyHandler())
-sb.add_request_handler(PurchaseHandler())
+sb.add_request_handler(BuyResponseHandler())
 sb.add_request_handler(ToggleVoiceHandler())
 sb.add_request_handler(UpsellResponseHandler())
 
