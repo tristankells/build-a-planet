@@ -257,7 +257,10 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'StarBrightnessIntentHandler handle() called.')
 
-        star_brightness = str(handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].value).lower()
+        star_brightness = str(
+            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].resolutions.resolutions_per_authority[
+                0].values[0].value.name
+        ).lower()
 
         planet_story.set_star_brightness(star_brightness)
 
