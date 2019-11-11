@@ -1,7 +1,9 @@
 # Generic ASK SDK imports
 from typing import Dict, Any, Union, List
 
-from ask_sdk_core.skill_builder import SkillBuilder
+# from ask_sdk_core.skill_builder import SkillBuilder
+from ask_sdk.standard import StandardSkillBuilder
+
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
@@ -44,7 +46,9 @@ DISTANCE = 'distance'
 
 SKILL_TITLE = 'Build A Planet'
 
-sb = SkillBuilder()
+# sb = SkillBuilder()
+
+sb = StandardSkillBuilder()
 planet_story: PlanetStory
 device: Device
 
@@ -65,11 +69,7 @@ def get_all_entitled_products(in_skill_product_list):
 
 
 def in_skill_product_response(handler_input):
-    """
-
-    Get the In-skill product response from monetization service.
-
-    """
+    """Get the In-skill product response from monetization service."""
     locale = handler_input.request_envelope.request.locale
     ms = handler_input.service_client_factory.get_monetization_service()
     return ms.get_in_skill_products(locale)
