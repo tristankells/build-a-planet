@@ -48,11 +48,13 @@ sb = SkillBuilder()
 planet_story: PlanetStory
 device: Device
 
+
 def _load_apl_document(file_path):
     # type: (str) -> Dict[str, Any]
     """Load the apl json document at the path into a dict object."""
     with open(file_path) as f:
         return json.load(f)
+
 
 def get_all_entitled_products(in_skill_product_list):
     """Get list of in-skill products in ENTITLED state."""
@@ -60,6 +62,7 @@ def get_all_entitled_products(in_skill_product_list):
         l for l in in_skill_product_list if (
                 l.entitled == EntitledState.ENTITLED)]
     return entitled_product_list
+
 
 def in_skill_product_response(handler_input):
     """
@@ -104,6 +107,7 @@ class SetupRequestInterceptor(AbstractRequestInterceptor):
     """
     Request interceptors are invoked immediately before execution of the request handler for an incoming request.
     """
+
     def process(self, handler_input):
         print("Request received: {}".format(
             handler_input.request_envelope.request))
@@ -123,6 +127,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
     L A U N C H
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_request_type("LaunchRequest")(handler_input)
@@ -193,7 +198,10 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        return get_speak_ask_response(handler_input)
+        if device.apl_support:
+            return get_apl_response(handler_input, datasource='./data/main.json')
+        else:
+            return get_speak_ask_response(handler_input)
 
 
 class NoLearnMoreIntentHandler(AbstractRequestHandler):
@@ -226,6 +234,7 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
     S T A R   B R I G H T N E S S
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_BRIGHTNESS)(handler_input) \
@@ -271,6 +280,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
     S T A R   S I Z E
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.STAR_SIZE)(handler_input) and planet_story.current_question == \
@@ -312,7 +322,7 @@ class StarSizeIntentHandler(AbstractRequestHandler):
             if star_size == "super":
                 planet_story.speech_text += DefaultTranslator.Star.star_size_super_giant
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_SUPER
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_SUPER            
+                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_SUPER
         elif planet_story.star.brightness == "yellow":
             if star_size == "dwarf":
                 planet_story.speech_text += DefaultTranslator.Star.star_size_dwarf
@@ -343,6 +353,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
     S T A R   A G E
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.AGE)(
@@ -499,6 +510,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
     P L A N E T   S I Z E
 
     """
+
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_SIZE)(handler_input) \
                and planet_story.current_question == Question.Planet.SIZE
@@ -515,7 +527,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "large":
             planet_story.speech_text += DefaultTranslator.Planet.planet_size_large
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or\
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
                     planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
@@ -525,7 +537,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
 
         if planet_size == "medium":
             planet_story.speech_text += DefaultTranslator.Planet.planet_size_medium
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or\
+            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
                     planet_story.star.age == "young":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
@@ -559,6 +571,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
     P L A N E T   D I S T A N C E
 
     """
+
     def can_handle(self, handler_input):
         return is_intent_name(Intents.PLANET_DISTANCE)(handler_input) \
                and planet_story.current_question == Question.Planet.DISTANCE
@@ -576,23 +589,23 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         if planet_distance == "near":
             planet_story.speech_text += DefaultTranslator.Planet.planet_distance_neighbouring
             if planet_story.star.brightness == "yellow":
-                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or\
+                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or \
                         planet_story.star.size == "super" or planet_story.star.size == "giant" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
                 elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or \
-                        planet_story.star.size == "super" or planet_story.star.size == "giant" or\
+                        planet_story.star.size == "super" or planet_story.star.size == "giant" or \
                         planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM   
-                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or\
-                        planet_story.star.size == "super" or planet_story.star.size == "giant"  or \
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
+                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or \
+                        planet_story.star.size == "super" or planet_story.star.size == "giant" or \
                         planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or\
+            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or \
                     planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
-                    planet_story.star.size == "giant"  or planet_story.star.age == "young":
+                    planet_story.star.size == "giant" or planet_story.star.age == "young":
                 if planet_story.planet.size == "large":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
@@ -641,6 +654,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
     P L A N E T  A G E
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.AGE)(handler_input) and planet_story.current_question == Question.Planet.AGE
@@ -665,12 +679,12 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
                 elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or \
                         planet_story.star.size == "super" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM   
+                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
                 elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or \
                         planet_story.star.size == "super" or planet_story.star.age == "young":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or\
+            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or \
                     planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
                 if planet_story.planet.size == "large":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
@@ -691,7 +705,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
             elif planet_story.planet.size == "small":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
-        elif planet_story.planet.distance == "far":    
+        elif planet_story.planet.distance == "far":
             if planet_story.planet.size == "large":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_LARGE
@@ -754,6 +768,7 @@ class YesReviewSolarSystem(AbstractRequestHandler):
     Y E S   -   R E V I E W
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -775,6 +790,7 @@ class NoReviewSolarSystem(AbstractRequestHandler):
     N O   -   R E V I E W
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.NO)(handler_input) \
@@ -796,10 +812,10 @@ class PurchaseHandler(AbstractRequestHandler):
     P U R C H A S E
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.YES)(handler_input) \
-               or is_intent_name(Intents.NO)(handler_input) \
+        return (is_intent_name(Intents.YES)(handler_input) or is_intent_name(Intents.NO)(handler_input)) \
                and planet_story.current_question == Question.PURCHASE
 
     def handle(self, handler_input):
@@ -807,16 +823,16 @@ class PurchaseHandler(AbstractRequestHandler):
         Logger.info(f'PurchaseHandler handle() called.')
 
         return handler_input.response_builder.add_directive(
-                        SendRequestDirective(
-                            name="Upsell",
-                            payload={
-                                "InSkillProduct": {
-                                    "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080',
-                                },
-                                "upsellMessage": 'do you want to purchase test...',
-                            },
-                            token="correlationToken")
-                    ).response
+            SendRequestDirective(
+                name="Upsell",
+                payload={
+                    "InSkillProduct": {
+                        "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080',
+                    },
+                    "upsellMessage": 'do you want to purchase test...',
+                },
+                token="correlationToken")
+        ).response
 
 
 class UpsellResponseHandler(AbstractRequestHandler):
@@ -825,6 +841,7 @@ class UpsellResponseHandler(AbstractRequestHandler):
     UPSELL RESPONSE
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return (is_request_type("Connections.Response")(handler_input) and
@@ -863,6 +880,7 @@ class YesPlayAgainHandler(AbstractRequestHandler):
     Y E S   -   P L A Y   A G A I N
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.YES)(handler_input) \
@@ -884,6 +902,7 @@ class NoPlayAgainHandler(AbstractRequestHandler):
     N O   -   P L A Y   A G A I N
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.NO)(handler_input) \
@@ -905,6 +924,7 @@ class HelpIntentHandler(AbstractRequestHandler):
     H E L P
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.HELP)(handler_input)
@@ -943,6 +963,7 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
     C A N C E L   A N D    S T O P
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.CANCEL)(handler_input) \
@@ -985,6 +1006,7 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
     S K I L L   E N D E D
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_request_type("SessionEndedRequest")(handler_input)
@@ -1042,6 +1064,7 @@ class AllExceptionHandler(AbstractExceptionHandler):
     A L L   E X E C E P T I O N S
 
     """
+
     def can_handle(self, handler_input, exception):
         # type: (HandlerInput, Exception) -> bool
         return True
@@ -1081,7 +1104,6 @@ sb.add_request_handler(WhatCanIBuyHandler())
 sb.add_request_handler(PurchaseHandler())
 sb.add_request_handler(ToggleVoiceHandler())
 sb.add_request_handler(UpsellResponseHandler())
-
 
 # endregion
 
