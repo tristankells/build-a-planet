@@ -58,8 +58,7 @@ class CowboyTranslator:
         cowboy_locked = 'You have not unlocked the cowboy narrator.'
 
     class Store:
-        what_can_i_buy = "If you would like to support the developers of planet story, you can unlock the alternative" \
-                         " space cowboy narrator. You will be able to toggle him on and off by saying toggle narrator."
+        what_can_i_buy = AUDIO.format("cowboy_what_can_i_buy")
 
     class SolarSystem:
         planetary_system_yes = AUDIO.format("planetary_system_yes")
@@ -132,4 +131,4 @@ class CowboyTranslator:
         ]
 
     class Purchase:
-        purchase_request = 'There is a premium Space Cowboy voice you can purchase. Say "Purchase Space Cowboy" to buy.'
+        purchase_request = AUDIO.format("purchase_request")
