@@ -132,4 +132,4 @@ class DefaultTranslator:
         ]
 
     class Purchase:
-        purchase_request = 'There is a premium Space Cowboy voice you can purchase. Say "Purchase Space Cowboy" to buy.'
+        purchase_request = ' There is a premium Space Cowboy voice you can purchase. Say "Purchase Space Cowboy" to buy.'
