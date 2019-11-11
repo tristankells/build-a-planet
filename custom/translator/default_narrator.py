@@ -133,4 +133,4 @@ class DefaultTranslator:
 
     class Purchase:
         purchase_request = " If you would like to support the developers of planet story, you can unlock the alternative" \
-                         " space cowboy narrator for 99 cents by saying 'Purchase Space Cowboy'."
+                         " space cowboy narrator by saying 'Purchase Space Cowboy'."
