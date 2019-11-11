@@ -59,7 +59,7 @@ class CowboyTranslator:
 
     class Store:
         what_can_i_buy = "If you would like to support the developers of planet story, you can unlock the alternative" \
-                         " space cowboy narrator. You will be able to toggle him on and off by saying toggle narrator."
+                         " space cowboy narrator. If you would like to unlock this additional content, say 'buy cowboy' "
 
     class SolarSystem:
         planetary_system_yes = AUDIO.format("planetary_system_yes")

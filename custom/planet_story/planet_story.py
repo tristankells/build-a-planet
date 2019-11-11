@@ -21,8 +21,6 @@ PREVIOUS_SPEECH_TEXT = 'previous_speech_text'
 NARRATOR = 'narrator'
 COWBOY_UNLOCKED = 'cowboy_unlocked'
 
-# TODO Removed the redudant tpyes in the questions
-
 
 class PlanetStory:
     current_question: str  # The question currently being asked
