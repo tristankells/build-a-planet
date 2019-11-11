@@ -593,7 +593,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         Logger.info(f'PlanetDistanceHandler handle() called.')
 
         planet_distance = str(
-            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].re).lower()
+            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
 
         planet_distance_resolution = str(
             handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].resolutions.resolutions_per_authority[
