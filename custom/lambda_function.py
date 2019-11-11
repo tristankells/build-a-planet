@@ -307,7 +307,9 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         Logger.info(f'StarSizeIntentHandler handle() called.')
 
         star_size = str(
-            handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].value).lower()
+            handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].resolutions.resolutions_per_authority[
+                0].values[0].value.name
+        ).lower()
 
         planet_story.set_star_size(star_size)
 
@@ -380,7 +382,9 @@ class StarAgeIntentHandler(AbstractRequestHandler):
         Logger.info(f'StarAgeIntentHandler handle() called.')
 
         star_age = str(
-            handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
+            handler_input.request_envelope.request.intent.slots[Slots.AGE].resolutions.resolutions_per_authority[
+                0].values[0].value.name
+        ).lower()
 
         planet_story.set_star_age(star_age)
 
@@ -535,7 +539,10 @@ class PlanetSizeHandler(AbstractRequestHandler):
         Logger.info(f'PlanetSizeHandler handle() called.')
 
         planet_size = str(
-            handler_input.request_envelope.request.intent.slots[Slots.PLANET_SIZE].value).lower()
+            handler_input.request_envelope.request.intent.slots[
+                Slots.PLANET_SIZE].resolutions.resolutions_per_authority[
+                0].values[0].value.name
+        ).lower()
 
         planet_story.set_planet_size(planet_size)
 
@@ -596,20 +603,15 @@ class PlanetDistanceHandler(AbstractRequestHandler):
         Logger.info(f'PlanetDistanceHandler handle() called.')
 
         planet_distance = str(
-            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].value).lower()
-
-        planet_distance_resolution = str(
             handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].resolutions.resolutions_per_authority[
-                0].values[0].value.name.lower()
-        )
-
-
+                0].values[0].value.name
+        ).lower()
 
         planet_story.set_planet_distance(planet_distance)
 
         apl_datasource = _load_apl_document("./data/main.json")
 
-        if planet_distance == "near" or planet_distance_resolution == "near":
+        if planet_distance == "near":
             planet_story.speech_text += DefaultTranslator.Planet.planet_distance_near
             if planet_story.star.brightness == "yellow":
                 if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or \
@@ -638,7 +640,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 elif planet_story.planet.size == "small":
                     apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
                     apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-        elif planet_distance == "midway" or planet_distance_resolution == "midway":
+        elif planet_distance == "midway":
             planet_story.speech_text += DefaultTranslator.Planet.planet_distance_midway
             if planet_story.planet.size == "large":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
@@ -651,7 +653,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
         elif planet_distance == "far":
             planet_story.speech_text += DefaultTranslator.Planet.planet_distance_far
-            if planet_story.planet.size == "large" or planet_distance_resolution == "large":
+            if planet_story.planet.size == "large":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_LARGE
             elif planet_story.planet.size == "medium":
@@ -687,7 +689,9 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
         Logger.info(f'PlanetAgeIntentHandler handle() called.')
 
         planet_age = str(
-            handler_input.request_envelope.request.intent.slots[Slots.AGE].value).lower()
+            handler_input.request_envelope.request.intent.slots[Slots.AGE].resolutions.resolutions_per_authority[
+                0].values[0].value.name
+        ).lower()
 
         planet_story.set_planet_age(planet_age)
 
