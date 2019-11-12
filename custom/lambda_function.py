@@ -866,7 +866,11 @@ class BuyResponseHandler(AbstractRequestHandler):
             else:
                 planet_story.purchase_declined()
             planet_story.speech_text += get_question_speech_text(planet_story.current_question)
-            return get_speak_ask_response(handler_input)
+            
+            if device.apl_support:
+                return get_apl_response(handler_input, datasource='./data/main_space_cowboy.json')
+            else:
+                return get_speak_ask_response(handler_input)
 
 
 class YesPlayAgainHandler(AbstractRequestHandler):

@@ -9,13 +9,13 @@
             "largeSourceUrl": null,
             "sources": [
                 {
-                    "url": "https://planet-story.s3.amazonaws.com/space-background-cowboy",
+                    "url": "https://planet-story.s3.amazonaws.com/space-background-cowboy-small.png",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "https://planet-story.s3.amazonaws.com/space-background-cowboy",
+                    "url": "https://planet-story.s3.amazonaws.com/space-background-cowboy.png",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
