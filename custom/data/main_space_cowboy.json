@@ -41,7 +41,7 @@
                 }
             ]
         },
-        "logoUrl": "https://planet-story.s3.amazonaws.com/512px512px.png",
+        "logoUrl": "",
         "hintText": "Try, \"Alexa, play Planet Story\""
     }
 }
