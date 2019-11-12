@@ -860,6 +860,9 @@ class BuyResponseHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+
+        planet_story.previous_speech_text = planet_story.speech_text
+        
         in_skill_response = in_skill_product_response(handler_input)
         product_id = handler_input.request_envelope.request.payload.get(
             "productId")
@@ -875,7 +878,7 @@ class BuyResponseHandler(AbstractRequestHandler):
                 if purchase_result == PurchaseResult.ACCEPTED.value:
                     # PURCHASE SUCCESSFUL
                     planet_story.cowboy_unlocked = True
-                    return FallbackHandler().handle(handler_input)
+                    return get_speak_ask_response(handler_input)
                 elif purchase_result in (
                         PurchaseResult.DECLINED.value,
                         PurchaseResult.ERROR.value,
@@ -883,11 +886,10 @@ class BuyResponseHandler(AbstractRequestHandler):
                     speech = ("There was an error with your purchase.")
                     reprompt = "Please try again."
                 elif purchase_result == PurchaseResult.ALREADY_PURCHASED.value:
-                    return FallbackHandler().handle(handler_input)
+                    return get_speak_ask_response(handler_input)
                 else:
                     # Invalid purchase result value
-                    return FallbackHandler().handle(handler_input)
-
+                    return get_speak_ask_response(handler_input)
                 return handler_input.response_builder.speak(speech).ask(
                     reprompt).response
             else:
