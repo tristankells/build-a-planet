@@ -187,8 +187,6 @@ class PlanetStory:
 
     def what_can_i_buy(self):
         self.speech_text = self.translator.Store.what_can_i_buy
-        # The below line is for testing only
-        self.cowboy_unlocked = True
 
     def toggle_voice(self):
         if self.narrator == Narrator.default:

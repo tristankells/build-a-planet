@@ -881,6 +881,7 @@ class BuyResponseHandler(AbstractRequestHandler):
             else:
                 planet_story.purchase_declined()
             # TODO: This should take you to the previous handler before BuyHandler.
+            planet_story.speech_text = get_question_speech_text(planet_story.current_question)
             return get_speak_ask_response(handler_input)
 
 
@@ -1044,33 +1045,33 @@ class FallbackHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'FallbackHandler handle() called.')
 
-        planet_story.speech_text = self.get_question_speech_text(planet_story.current_question)
+        planet_story.speech_text = get_question_speech_text(planet_story.current_question)
 
         return get_speak_ask_response(handler_input)
 
-    @staticmethod
-    def get_question_speech_text(current_question):
-        property_question_dict = {
-            Question.Star.BRIGHTNESS:
-                planet_story.translator.Star.star_brightness_other
-            ,
-            Question.Star.SIZE:
-                planet_story.translator.Star.star_size_other
-            ,
-            Question.Star.AGE:
-                planet_story.translator.Star.star_age_other
-            ,
-            Question.Planet.DISTANCE:
-                planet_story.translator.Planet.planet_distance_other
-            ,
-            Question.Planet.SIZE:
-                planet_story.translator.Planet.planet_size_other
-            ,
-            Question.Planet.AGE:
-                planet_story.translator.Planet.planet_age_other
-        }
 
-        return property_question_dict.get(current_question)
+def get_question_speech_text(current_question):
+    property_question_dict = {
+        Question.Star.BRIGHTNESS:
+            planet_story.translator.Star.star_brightness_other
+        ,
+        Question.Star.SIZE:
+            planet_story.translator.Star.star_size_other
+        ,
+        Question.Star.AGE:
+            planet_story.translator.Star.star_age_other
+        ,
+        Question.Planet.DISTANCE:
+            planet_story.translator.Planet.planet_distance_other
+        ,
+        Question.Planet.SIZE:
+            planet_story.translator.Planet.planet_size_other
+        ,
+        Question.Planet.AGE:
+            planet_story.translator.Planet.planet_age_other
+    }
+
+    return property_question_dict.get(current_question)
 
 
 class AllExceptionHandler(AbstractExceptionHandler):
