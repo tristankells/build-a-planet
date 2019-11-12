@@ -1094,6 +1094,12 @@ class FallbackHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'FallbackHandler handle() called.')
 
+        planet_story.speech_text = self.get_question_speech_text(planet_story.current_question)
+
+        return get_speak_ask_response(handler_input)
+
+    @staticmethod
+    def get_question_speech_text(current_question):
         property_question_dict = {
             Question.Star.BRIGHTNESS:
                 DefaultTranslator.Star.star_brightness_other
@@ -1114,9 +1120,7 @@ class FallbackHandler(AbstractRequestHandler):
                 DefaultTranslator.Planet.planet_age_other
         }
 
-        planet_story.speech_text = property_question_dict.get(planet_story.current_question)
-
-        return get_speak_ask_response(handler_input)
+        return property_question_dict.get(current_question)
 
 
 class AllExceptionHandler(AbstractExceptionHandler):
