@@ -169,7 +169,7 @@
                 "items": [
                     {
                         "type": "Image",
-                        "source": "${payload.bodyTemplate7Data.backgroundImage.sources[0].url}",
+                        "source": "${payload.bodyTemplate7Data.backgroundImage.sources[1].url}",
                         "scale": "best-fill",
                         "position": "absolute",
                         "width": "100vw",
@@ -193,7 +193,7 @@
                                 "type": "Image",
                                 "width": "90vw",
                                 "height": "70vh",
-                                "source": "${payload.bodyTemplate7Data.image.sources[0].url}",
+                                "source": "${payload.bodyTemplate7Data.image.sources[1].url}",
                                 "scale": "best-fit",
                                 "align": "center"
                             }
