@@ -909,6 +909,7 @@ class BuyResponseHandler(AbstractRequestHandler):
                 if purchase_result == PurchaseResult.ACCEPTED.value:
                     # PURCHASE SUCCESSFUL
                     planet_story.cowboy_unlocked = True
+                    return handler_input.response_builder.speak(speech).ask(reprompt).response
                 elif purchase_result in (
                         PurchaseResult.DECLINED.value,
                         PurchaseResult.ERROR.value,
