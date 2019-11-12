@@ -1,0 +1,47 @@
+{
+    "bodyTemplate7Data": {
+        "type": "object",
+        "objectId": "bt7Sample",
+        "title": "Planet Story",
+        "backgroundImage": {
+            "contentDescription": null,
+            "smallSourceUrl": null,
+            "largeSourceUrl": null,
+            "sources": [
+                {
+                    "url": "https://planet-story.s3.amazonaws.com/space-background-cowboy",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://planet-story.s3.amazonaws.com/space-background-cowboy",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "image": {
+            "contentDescription": null,
+            "smallSourceUrl": null,
+            "largeSourceUrl": null,
+            "sources": [
+                {
+                    "url": "",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "logoUrl": "https://planet-story.s3.amazonaws.com/512px512px.png",
+        "hintText": "Try, \"Alexa, play Planet Story\""
+    }
+}
