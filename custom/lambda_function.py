@@ -881,7 +881,7 @@ class BuyResponseHandler(AbstractRequestHandler):
             else:
                 planet_story.purchase_declined()
             # TODO: This should take you to the previous handler before BuyHandler.
-            planet_story.speech_text = get_question_speech_text(planet_story.current_question)
+            planet_story.speech_text += get_question_speech_text(planet_story.current_question)
             return get_speak_ask_response(handler_input)
 
 
