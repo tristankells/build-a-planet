@@ -917,7 +917,7 @@ class BuyResponseHandler(AbstractRequestHandler):
                     speech = ("There was an error with your purchase.")
                     reprompt = "Please try again."
                 elif purchase_result == PurchaseResult.ALREADY_PURCHASED.value:
-                    speech = "You have already purchase this feature."
+                    return handler_input.response_builder.speak(speech).ask(reprompt).response
                 else:
                     # Invalid purchase result value
                     return FallbackHandler().handle(handler_input)
@@ -927,7 +927,7 @@ class BuyResponseHandler(AbstractRequestHandler):
             else:
                 return handler_input.response_builder.speak(
                     "There was an error handling your purchase request. "
-                    "Please try again or contact us for help").response
+                    "Please try again or contact us for help").response.ask(reprompt).response
 
 
 class YesPlayAgainHandler(AbstractRequestHandler):
