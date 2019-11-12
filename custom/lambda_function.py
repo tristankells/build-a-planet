@@ -831,40 +831,6 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         return get_speak_ask_response(handler_input)
 
-# class StoreHandler(AbstractRequestHandler):
-#     """
-
-#     S T O R E
-
-#     """
-#     def can_handle(self, handler_input):
-#         # type: (HandlerInput) -> bool
-#         return is_intent_name(Intents.YES)(handler_input) \
-#                and planet_story.current_question == Question.PURCHASE
-
-#     def handle(self, handler_input):
-#         # type: (HandlerInput) -> Response
-#         Logger.info(f'StoreHandler handle() called.')
-
-#         # Inform the user about what products are available for purchase
-#         in_skill_response = in_skill_product_response(handler_input)
-#         Logger.info(in_skill_response)
-#         if in_skill_response:
-#             purchasable = [l for l in in_skill_response.in_skill_products
-#                            if l.entitled == EntitledState.NOT_ENTITLED and
-#                            l.purchasable == PurchasableState.PURCHASABLE]
-
-#             if purchasable:
-#                 speech = ("Products available for purchase at this time are {}.  "
-#                           "To learn more about a product, say 'Tell me more "
-#                           "about' followed by the product name.  If you are ready "
-#                           "to buy say 'Buy' followed by the product name. So what "
-#                           "can I help you with?").format(get_product_list(purchasable))
-#             else:
-#                 speech = ("There are no more products to buy.")
-#             reprompt = "I didn't catch that. What can I help you with?"
-#             return handler_input.response_builder.speak(speech).ask(reprompt).response
-
 class BuyHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
