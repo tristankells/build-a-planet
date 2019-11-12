@@ -860,19 +860,11 @@ class BuyResponseHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-
-        planet_story.previous_speech_text = planet_story.speech_text
-
         in_skill_response = in_skill_product_response(handler_input)
-        product_id = handler_input.request_envelope.request.payload.get(
-            "productId")
+        product_id = handler_input.request_envelope.request.payload.get("productId")
 
         if in_skill_response:
-            product = [l for l in in_skill_response.in_skill_products
-                       if l.product_id == product_id]
             if handler_input.request_envelope.request.status.code == "200":
-                speech = None
-                reprompt = None
                 purchase_result = handler_input.request_envelope.request.payload.get(
                     "purchaseResult")
                 if purchase_result == PurchaseResult.ACCEPTED.value:
@@ -886,8 +878,6 @@ class BuyResponseHandler(AbstractRequestHandler):
                     planet_story.purchase_success()
                 else: # Invalid purchase result value
                     planet_story.purchase_declined()
-                return handler_input.response_builder.speak(speech).ask(
-                    reprompt).response
             else:
                 planet_story.purchase_declined()
             return get_speak_ask_response(handler_input)
