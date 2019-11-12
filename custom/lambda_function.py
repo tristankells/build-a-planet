@@ -1,7 +1,9 @@
 # Generic ASK SDK imports
 from typing import Dict, Any, Union, List
 
-from ask_sdk_core.skill_builder import SkillBuilder
+# from ask_sdk_core.skill_builder import SkillBuilder
+from ask_sdk.standard import StandardSkillBuilder
+
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
@@ -22,9 +24,10 @@ from planet_story.solar_questions import Question
 from alexa.assets import Assets
 from alexa.device import Device
 from logger import Logger
+import apl_helper
 
 # Purchasing
-from ask_sdk_model.services.monetization import EntitledState, InSkillProductsResponse, Error, InSkillProduct
+from ask_sdk_model.services.monetization import EntitledState, PurchasableState, InSkillProductsResponse, Error, InSkillProduct
 from ask_sdk_model.interfaces.monetization.v1 import PurchaseResult
 from planet_story.store import Store
 
@@ -44,7 +47,9 @@ DISTANCE = 'distance'
 
 SKILL_TITLE = 'Build A Planet'
 
-sb = SkillBuilder()
+# sb = SkillBuilder()
+
+sb = StandardSkillBuilder()
 planet_story: PlanetStory
 device: Device
 
@@ -65,15 +70,19 @@ def get_all_entitled_products(in_skill_product_list):
 
 
 def in_skill_product_response(handler_input):
-    """
-
-    Get the In-skill product response from monetization service.
-
-    """
+    """Get the In-skill product response from monetization service."""
     locale = handler_input.request_envelope.request.locale
     ms = handler_input.service_client_factory.get_monetization_service()
     return ms.get_in_skill_products(locale)
 
+def get_product_list(entitled_products_list):
+    product_names = [item.name for item in entitled_products_list]
+    if len(product_names) > 1:
+        speech = " and ".join(
+            [", ".join(product_names[:-1]), product_names[-1]])
+    else:
+        speech = ", ".join(product_names)
+    return speech
 
 def get_speak_ask_response(handler_input):
     handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
@@ -151,6 +160,14 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
         planet_story.launch()
         planet_story.previous_speech_text = planet_story.speech_text
+
+        # Check purchased products
+        in_skill_response = in_skill_product_response(handler_input)
+        if isinstance(in_skill_response, InSkillProductsResponse):
+            entitled_prods = get_all_entitled_products(in_skill_response.in_skill_products)
+            # if spacecowboy in entitled_prods
+            if entitled_prods:
+                planet_story.cowboy_unlocked = True
 
         if device.apl_support:
             return get_apl_response(handler_input, datasource='./data/main.json')
@@ -755,18 +772,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         if planet_story.is_planet_habitable:
             # Change to earth pic
-            if planet_story.planet.size == "large":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_LARGE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_LARGE
-            elif planet_story.planet.size == "medium":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_MEDIUM
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_MEDIUM
-            elif planet_story.planet.size == "small":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_SMALL
-
-        # else:
-        #     # Don't change to earth
+            apl_datasource = apl_helper.get_image_habitable_planet(apl_datasource, planet_size=planet_story.planet.size)
 
         planet_story.speech_text += (' ' + DefaultTranslator.EndGame.game_end)
 
@@ -779,6 +785,9 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
 
 # endregion
+
+
+
 
 class YesReviewSolarSystem(AbstractRequestHandler):
     """
@@ -823,6 +832,40 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         return get_speak_ask_response(handler_input)
 
+# class StoreHandler(AbstractRequestHandler):
+#     """
+
+#     S T O R E
+
+#     """
+#     def can_handle(self, handler_input):
+#         # type: (HandlerInput) -> bool
+#         return is_intent_name(Intents.YES)(handler_input) \
+#                and planet_story.current_question == Question.PURCHASE
+
+#     def handle(self, handler_input):
+#         # type: (HandlerInput) -> Response
+#         Logger.info(f'StoreHandler handle() called.')
+
+#         # Inform the user about what products are available for purchase
+#         in_skill_response = in_skill_product_response(handler_input)
+#         Logger.info(in_skill_response)
+#         if in_skill_response:
+#             purchasable = [l for l in in_skill_response.in_skill_products
+#                            if l.entitled == EntitledState.NOT_ENTITLED and
+#                            l.purchasable == PurchasableState.PURCHASABLE]
+
+#             if purchasable:
+#                 speech = ("Products available for purchase at this time are {}.  "
+#                           "To learn more about a product, say 'Tell me more "
+#                           "about' followed by the product name.  If you are ready "
+#                           "to buy say 'Buy' followed by the product name. So what "
+#                           "can I help you with?").format(get_product_list(purchasable))
+#             else:
+#                 speech = ("There are no more products to buy.")
+#             reprompt = "I didn't catch that. What can I help you with?"
+#             return handler_input.response_builder.speak(speech).ask(reprompt).response
+
 class BuyHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -830,20 +873,6 @@ class BuyHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-   
-        # # Inform the user about what products are available for purchase
-        # in_skill_response = in_skill_product_response(handler_input)
-        # if in_skill_response:
-        #     product_category = get_resolved_value(handler_input.request_envelope.request, "productCategory")
-
-        #     # No entity resolution match
-        #     if product_category is None:
-        #         product_category = "all_access"
-        #     else:
-        #         product_category += "_pack"
-
-            # product = [l for l in in_skill_response.in_skill_products
-            #            if l.reference_name == product_category]
             return handler_input.response_builder.add_directive(
                 SendRequestDirective(
                     name="Buy",
@@ -879,7 +908,7 @@ class BuyResponseHandler(AbstractRequestHandler):
                     "purchaseResult")
                 if purchase_result == PurchaseResult.ACCEPTED.value:
                     # PURCHASE SUCCESSFUL
-                    Store.cowboyMode = 'YES'
+                    planet_story.cowboy_unlocked = True
                 elif purchase_result in (
                         PurchaseResult.DECLINED.value,
                         PurchaseResult.ERROR.value,
@@ -1058,6 +1087,12 @@ class FallbackHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'FallbackHandler handle() called.')
 
+        planet_story.speech_text = self.get_question_speech_text(planet_story.current_question)
+
+        return get_speak_ask_response(handler_input)
+
+    @staticmethod
+    def get_question_speech_text(current_question):
         property_question_dict = {
             Question.Star.BRIGHTNESS:
                 DefaultTranslator.Star.star_brightness_other
@@ -1078,9 +1113,7 @@ class FallbackHandler(AbstractRequestHandler):
                 DefaultTranslator.Planet.planet_age_other
         }
 
-        planet_story.speech_text = property_question_dict.get(planet_story.current_question)
-
-        return get_speak_ask_response(handler_input)
+        return property_question_dict.get(current_question)
 
 
 class AllExceptionHandler(AbstractExceptionHandler):
@@ -1126,6 +1159,7 @@ sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Store handlers
 sb.add_request_handler(WhatCanIBuyHandler())
+# sb.add_request_handler(StoreHandler())
 sb.add_request_handler(BuyHandler())
 sb.add_request_handler(BuyResponseHandler())
 sb.add_request_handler(ToggleVoiceHandler())
