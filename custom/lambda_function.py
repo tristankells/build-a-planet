@@ -862,7 +862,6 @@ class BuyResponseHandler(AbstractRequestHandler):
                     planet_story.purchase_declined()
             else:
                 planet_story.purchase_declined()
-            # TODO: This should take you to the previous handler before BuyHandler.
             planet_story.speech_text += get_question_speech_text(planet_story.current_question)
             return get_speak_ask_response(handler_input)
 
@@ -1123,7 +1122,6 @@ sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Store handlers
 sb.add_request_handler(WhatCanIBuyHandler())
-# sb.add_request_handler(StoreHandler())
 sb.add_request_handler(BuyHandler())
 sb.add_request_handler(BuyResponseHandler())
 sb.add_request_handler(ToggleVoiceHandler())
