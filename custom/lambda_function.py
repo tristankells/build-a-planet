@@ -1045,12 +1045,12 @@ class FallbackHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'FallbackHandler handle() called.')
 
-        planet_story.speech_text = get_question_speech_text(planet_story.current_question)
+        planet_story.speech_text = get_fallback_question_speech_text(planet_story.current_question)
 
         return get_speak_ask_response(handler_input)
 
 
-def get_question_speech_text(current_question):
+def get_fallback_question_speech_text(current_question):
     property_question_dict = {
         Question.Star.BRIGHTNESS:
             planet_story.translator.Star.star_brightness_other
@@ -1069,6 +1069,30 @@ def get_question_speech_text(current_question):
         ,
         Question.Planet.AGE:
             planet_story.translator.Planet.planet_age_other
+    }
+
+    return property_question_dict.get(current_question)
+
+
+def get_question_speech_text(current_question):
+    property_question_dict = {
+        Question.Star.BRIGHTNESS:
+            planet_story.translator.Star.star_brightness
+        ,
+        Question.Star.SIZE:
+            planet_story.translator.Star.star_size
+        ,
+        Question.Star.AGE:
+            planet_story.translator.Star.star_age
+        ,
+        Question.Planet.DISTANCE:
+            planet_story.translator.Planet.planet_distance
+        ,
+        Question.Planet.SIZE:
+            planet_story.translator.Planet.planet_size
+        ,
+        Question.Planet.AGE:
+            planet_story.translator.Planet.planet_age
     }
 
     return property_question_dict.get(current_question)
