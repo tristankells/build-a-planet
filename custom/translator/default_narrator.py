@@ -1,4 +1,4 @@
-ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/'
+ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/Tristan/'
 AUDIO = "<audio src='" + ROOT_URL + "{}.mp3' />"
 
 
@@ -68,7 +68,7 @@ class DefaultTranslator:
     class Star:
         star_create = AUDIO.format("star_create")
         star_create_yes = AUDIO.format("star_create_yes")
-        star_create_no = AUDIO.format("star_create_no")
+        star_create_no = AUDIO.format("star_brightness")
         star_brightness = AUDIO.format("star_brightness")
         star_brightness_blue = AUDIO.format("star_brightness_blue")
         star_brightness_yellow = AUDIO.format("star_brightness_yellow")

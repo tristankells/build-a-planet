@@ -1,4 +1,4 @@
-ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/'
+ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/Ranul'
 AUDIO = "<audio src='" + ROOT_URL + "{}.mp3' />"
 
 
@@ -44,7 +44,7 @@ def salli(speech_text):
 
 class CowboyTranslator:
     class Launch:
-        launch = AUDIO.format("launch")
+        launch = AUDIO.format("cowboy_launch")
 
     help = kendra("To exit at any time, say") \
            + joanna(' Exit. ') \
@@ -61,28 +61,28 @@ class CowboyTranslator:
         what_can_i_buy = AUDIO.format("cowboy_what_can_i_buy")
 
     class SolarSystem:
-        planetary_system_yes = AUDIO.format("planetary_system_yes")
-        planetary_system_no = AUDIO.format("planetary_system_no")
+        planetary_system_yes = AUDIO.format("cowboy_planetary_system_yes")
+        planetary_system_no = AUDIO.format("cowboy_planetary_system_no")
 
     class Star:
-        star_create = AUDIO.format("star_create")
-        star_create_yes = AUDIO.format("star_create_yes")
-        star_create_no = AUDIO.format("star_create_no")
-        star_brightness = AUDIO.format("star_brightness")
-        star_brightness_blue = AUDIO.format("star_brightness_blue")
-        star_brightness_yellow = AUDIO.format("star_brightness_yellow")
+        star_create = AUDIO.format("cowboy_star_create")
+        star_create_yes = AUDIO.format("cowboy_star_create_yes")
+        star_create_no = AUDIO.format("cowboy_star_create_no")
+        star_brightness = AUDIO.format("cowboy_star_brightness")
+        star_brightness_blue = AUDIO.format("cowboy_star_brightness_blue")
+        star_brightness_yellow = AUDIO.format("cowboy_star_brightness_yellow")
         star_brightness_red = AUDIO.format("star_brightness_red")
-        star_brightness_other = AUDIO.format("star_brightness_other")
+        star_brightness_other = AUDIO.format("cowboy_star_brightness_other")
 
-        star_size = AUDIO.format("star_size")
-        star_size_super_giant = AUDIO.format("star_size_super_giant")
-        star_size_giant = AUDIO.format("star_size_giant")
-        star_size_dwarf = AUDIO.format("star_size_dwarf")
-        star_size_other = AUDIO.format("star_size_other")
+        star_size = AUDIO.format("cowboy_star_size")
+        star_size_super_giant = AUDIO.format("cowboy_star_size_super_giant")
+        star_size_giant = AUDIO.format("cowboy_star_size_giant")
+        star_size_dwarf = AUDIO.format("cowboy_star_size_dwarf")
+        star_size_other = AUDIO.format("cowboy_star_size_other")
 
-        star_age = AUDIO.format("star_age")
+        star_age = AUDIO.format("cowboy_star_age")
         star_age_young = AUDIO.format("star_age_young")
-        star_age_middle = AUDIO.format("star_age_middle")
+        star_age_middle = AUDIO.format("cowboy_star_age_middle")
         star_age_old = AUDIO.format("star_age_old")
         star_age_other = AUDIO.format("star_age_other")
 
