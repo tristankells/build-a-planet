@@ -168,7 +168,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
                 planet_story.cowboy_unlocked = True
 
         if device.apl_support:
-            if planet_story.cowboy_unlocked == True:
+            if planet_story.cowboy_unlocked:
                 return get_apl_response(handler_input, datasource='./data/main_space_cowboy.json')
             else:
                 return get_apl_response(handler_input, datasource='./data/main.json')
@@ -829,7 +829,7 @@ class BuyHandler(AbstractRequestHandler):
                     name="Buy",
                     payload={
                         "InSkillProduct": {
-                            "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080'
+                            "productId": 'amzn1.adg.product.0be04a0c-2fb5-4763-acd0-f370dbafa339'
                         }
                     },
                     token="correlationToken")
