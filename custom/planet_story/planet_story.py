@@ -140,6 +140,13 @@ class PlanetStory:
         self.planet.age = age
         self.current_question = Question.REVIEW
 
+    def purchase_success(self):
+        self.speech_text = 'Thank you for purchasing the space cowboy voice pack.'
+        self.cowboy_unlocked = True
+
+    def purchase_declined(self):
+        self.speech_text = 'There was an error with your purchase'
+
     def learn_about_solar_systems(self):
         self.speech_text = self.translator.SolarSystem.planetary_system_yes
         self.speech_text += self.translator.Star.star_brightness

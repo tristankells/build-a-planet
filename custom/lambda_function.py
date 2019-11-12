@@ -876,32 +876,21 @@ class BuyResponseHandler(AbstractRequestHandler):
                 purchase_result = handler_input.request_envelope.request.payload.get(
                     "purchaseResult")
                 if purchase_result == PurchaseResult.ACCEPTED.value:
-                    # PURCHASE SUCCESSFUL
-                    Logger.info(f'Purchase successful.')
-                    Logger.info(planet_story.speech_text)
-                    planet_story.cowboy_unlocked = True
-                    return get_speak_ask_response(handler_input)
+                    planet_story.purchase_success()
                 elif purchase_result in (
                         PurchaseResult.DECLINED.value,
                         PurchaseResult.ERROR.value,
                         PurchaseResult.NOT_ENTITLED.value):
-                    Logger.info(f'Purchase error.')
-                    Logger.info(planet_story.speech_text)
-                    speech = ("There was an error with your purchase.")
-                    reprompt = "Please try again."
+                    planet_story.purchase_declined()
                 elif purchase_result == PurchaseResult.ALREADY_PURCHASED.value:
-                    Logger.info(f'Already purchased.')
-                    Logger.info(planet_story.speech_text)
-                    return get_speak_ask_response(handler_input)
-                else:
-                    # Invalid purchase result value
-                    return get_speak_ask_response(handler_input)
+                    planet_story.purchase_success()
+                else: # Invalid purchase result value
+                    planet_story.purchase_declined()
                 return handler_input.response_builder.speak(speech).ask(
                     reprompt).response
             else:
-                return handler_input.response_builder.speak(
-                    "There was an error handling your purchase request. "
-                    "Please try again or contact us for help").response.ask(reprompt).response
+                planet_story.purchase_declined()
+            return get_speak_ask_response(handler_input)
 
 
 class YesPlayAgainHandler(AbstractRequestHandler):
