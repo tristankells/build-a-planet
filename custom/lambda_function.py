@@ -873,6 +873,7 @@ class BuyHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+            planet_story.previous_speech_text = planet_story.speech_text
             return handler_input.response_builder.add_directive(
                 SendRequestDirective(
                     name="Buy",
