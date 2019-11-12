@@ -15,7 +15,6 @@ from planet_story.narrator import Narrator
 CURRENT_QUESTION = 'current_question'
 STAR = 'star'
 PLANET = 'planet'
-AGE = 'age'
 PLANET_STORY = 'planet_story'
 PREVIOUS_SPEECH_TEXT = 'previous_speech_text'
 NARRATOR = 'narrator'
@@ -46,12 +45,12 @@ class PlanetStory:
 
             star_brightness = session_variables[STAR][Star.BRIGHTNESS] if STAR in session_variables else ''
             star_size = session_variables[STAR][Star.SIZE] if STAR in session_variables else ''
-            star_age = session_variables[STAR][AGE] if STAR in session_variables else ''
+            star_age = session_variables[STAR][Star.AGE] if STAR in session_variables else ''
             self.star = Star(star_brightness, star_size, star_age)
 
             planet_size = session_variables[PLANET][Planet.SIZE] if PLANET in session_variables else ''
             planet_distance = session_variables[PLANET][Planet.DISTANCE] if PLANET in session_variables else ''
-            planet_age = session_variables[PLANET][AGE] if PLANET in session_variables else ''
+            planet_age = session_variables[PLANET][Planet.AGE] if PLANET in session_variables else ''
             self.planet = Planet(planet_size, planet_distance, planet_age)
 
             self.planet_story = session_variables[

@@ -24,6 +24,7 @@ from planet_story.solar_questions import Question
 from alexa.assets import Assets
 from alexa.device import Device
 from logger import Logger
+import apl_helper
 
 # Purchasing
 from ask_sdk_model.services.monetization import EntitledState, PurchasableState, InSkillProductsResponse, Error, InSkillProduct
@@ -771,18 +772,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         if planet_story.is_planet_habitable:
             # Change to earth pic
-            if planet_story.planet.size == "large":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_LARGE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_LARGE
-            elif planet_story.planet.size == "medium":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_MEDIUM
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_MEDIUM
-            elif planet_story.planet.size == "small":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.EARTH_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.EARTH_SMALL
-
-        # else:
-        #     # Don't change to earth
+            apl_datasource = apl_helper.get_image_habitable_planet(apl_datasource, planet_size=planet_story.planet.size)
 
         planet_story.speech_text += (' ' + DefaultTranslator.EndGame.game_end)
 
@@ -795,6 +785,9 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
 
 # endregion
+
+
+
 
 class YesReviewSolarSystem(AbstractRequestHandler):
     """
