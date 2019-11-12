@@ -1,5 +1,5 @@
 # Generic ASK SDK imports
-from typing import Dict, Any, Union, List
+from typing import Dict, Any
 
 # from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk.standard import StandardSkillBuilder
@@ -17,7 +17,7 @@ from ask_sdk_core.utils import viewport
 
 # Custom skill code
 from alexa.intents import Intents
-from alexa.intent_slots import Slots
+from alexa.slots import Slots
 from planet_story.planet_story import PlanetStory
 from planet_story.solar_questions import Question
 from alexa.assets import Assets
@@ -26,9 +26,8 @@ from logger import Logger
 import apl_helper
 
 # Purchasing
-from ask_sdk_model.services.monetization import EntitledState, PurchasableState, InSkillProductsResponse, Error, InSkillProduct
+from ask_sdk_model.services.monetization import EntitledState, InSkillProductsResponse
 from ask_sdk_model.interfaces.monetization.v1 import PurchaseResult
-from planet_story.store import Store
 
 # For APL
 import json
@@ -271,27 +270,10 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
 
         planet_story.set_star_brightness(star_brightness)
 
-        apl_datasource = _load_apl_document("./data/main.json")
-
-        if star_brightness == "red":
-            planet_story.speech_text += planet_story.translator.Star.star_brightness_red
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_BRIGHTNESS
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_BRIGHTNESS
-        if star_brightness == "blue":
-            planet_story.speech_text += planet_story.translator.Star.star_brightness_blue
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_BRIGHTNESS
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_BRIGHTNESS
-        if star_brightness == "yellow":
-            planet_story.speech_text += planet_story.translator.Star.star_brightness_yellow
-            apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_BRIGHTNESS
-            apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_BRIGHTNESS
-
-        # Ask next question
-        planet_story.speech_text += (' ' + planet_story.translator.Star.star_size)
-
-        planet_story.previous_speech_text = planet_story.speech_text
-
         if device.apl_support:
+            apl_datasource = _load_apl_document("./data/main.json")
+            apl_datasource = apl_helper.get_image_star_brightness(apl_datasource, star_brightness=star_brightness)
+
             return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
