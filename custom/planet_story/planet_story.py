@@ -277,6 +277,7 @@ class PlanetStory:
 
     def _set_default_session_variables(self):
         self.current_question = Question.Star.BRIGHTNESS
+        self.speech_text = ''
         self.planet = Planet()
         self.star = Star()
         self.is_planet_habitable = False
