@@ -878,7 +878,7 @@ class BuyResponseHandler(AbstractRequestHandler):
                 if purchase_result == PurchaseResult.ACCEPTED.value:
                     # PURCHASE SUCCESSFUL
                     Logger.info(f'Purchase successful.')
-                    Logger.info(handler_input)
+                    Logger.info(planet_story.speech_text)
                     planet_story.cowboy_unlocked = True
                     return get_speak_ask_response(handler_input)
                 elif purchase_result in (
@@ -886,12 +886,12 @@ class BuyResponseHandler(AbstractRequestHandler):
                         PurchaseResult.ERROR.value,
                         PurchaseResult.NOT_ENTITLED.value):
                     Logger.info(f'Purchase error.')
-                    Logger.info(handler_input)
+                    Logger.info(planet_story.speech_text)
                     speech = ("There was an error with your purchase.")
                     reprompt = "Please try again."
                 elif purchase_result == PurchaseResult.ALREADY_PURCHASED.value:
                     Logger.info(f'Already purchased.')
-                    Logger.info(handler_input)
+                    Logger.info(planet_story.speech_text)
                     return get_speak_ask_response(handler_input)
                 else:
                     # Invalid purchase result value
