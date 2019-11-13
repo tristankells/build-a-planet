@@ -7,22 +7,31 @@ class Slots:
 
 
 class Brightness:
+    YELLOW = 'yellow'
     RED = 'red'
     BLUE = 'blue'
-    YELLOW = 'yellow'
 
 
 class StarSize:
     DWARF = 'dwarf'
-
-
-class PlanetSize:
-    LARGE = 'large'
+    GIANT = 'giant'
+    SUPER = 'super'
 
 
 class Age:
     YOUNG = 'young'
+    MIDDLE = 'middle-aged'
+    OLD = 'old'
+
+
+class PlanetSize:
+    SMALL = 'small'
+    MEDIUM = 'medium'
+    LARGE = 'large'
 
 
 class Distance:
+    NEAR = 'near'
+    MIDWAY = 'midway'
     FAR = 'far'
+

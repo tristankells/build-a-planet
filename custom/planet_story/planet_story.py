@@ -9,7 +9,7 @@ from translator.cowboy_narrator import CowboyTranslator
 from planet_story.planet import Planet
 from planet_story.star import Star
 from planet_story.narrator import Narrator
-from alexa.slots import Brightness
+from alexa.slots import Brightness, StarSize
 
 # constants
 CURRENT_QUESTION = 'current_question'
@@ -101,15 +101,13 @@ class PlanetStory:
 
         if brightness == Brightness.RED:
             self.speech_text += self.translator.Star.star_brightness_red
-
         if brightness == Brightness.BLUE:
             self.speech_text += self.translator.Star.star_brightness_blue
-
         if brightness == Brightness.YELLOW:
             self.speech_text += self.translator.Star.star_brightness_yellow
 
         # Ask next question
-        self.speech_text += (' ' + self.translator.Star.star_size)
+        self.speech_text += '' + self.translator.Star.star_size
 
         self.previous_speech_text = self.speech_text
 
@@ -121,6 +119,18 @@ class PlanetStory:
         :return:
         """
         self.star.size = size
+
+        if size == StarSize.DWARF:
+            self.speech_text += self.translator.Star.star_size_dwarf
+        if size == StarSize.GIANT:
+            self.speech_text += self.translator.Star.star_size_giant
+        if size == StarSize.SUPER:
+            self.speech_text += self.translator.Star.star_size_super_giant
+
+        self.speech_text += ' ' + self.translator.Star.star_age
+
+        self.previous_speech_text = self.speech_text
+
         self.current_question = Question.Star.AGE
 
     def set_star_age(self, age):

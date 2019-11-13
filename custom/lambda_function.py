@@ -23,7 +23,7 @@ from planet_story.solar_questions import Question
 from alexa.assets import Assets
 from alexa.device import Device
 from logger import Logger
-import apl_helper
+from apl import planet_apl, star_apl
 
 # Purchasing
 from ask_sdk_model.services.monetization import EntitledState, InSkillProductsResponse
@@ -50,6 +50,13 @@ SKILL_TITLE = 'Build A Planet'
 sb = StandardSkillBuilder()
 planet_story: PlanetStory
 device: Device
+
+
+def get_slot_value_from_handler(handler_input, slot_name):
+    return str(
+        handler_input.request_envelope.request.intent.slots[slot_name].resolutions.resolutions_per_authority[
+            0].values[0].value.name
+    ).lower()
 
 
 def _load_apl_document(file_path):
@@ -266,16 +273,13 @@ class StarBrightnessIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'StarBrightnessIntentHandler handle() called.')
 
-        star_brightness = str(
-            handler_input.request_envelope.request.intent.slots[Slots.BRIGHTNESS].resolutions.resolutions_per_authority[
-                0].values[0].value.name
-        ).lower()
+        star_brightness = get_slot_value_from_handler(handler_input, slot_name=Slots.BRIGHTNESS)
 
         planet_story.set_star_brightness(star_brightness)
 
         if device.apl_support:
             apl_datasource = _load_apl_document("./data/main.json")
-            apl_datasource = apl_helper.get_image_star_brightness(apl_datasource, star_brightness=star_brightness)
+            apl_datasource = star_apl.get_image_star_brightness(apl_datasource, star_brightness=star_brightness)
 
             return get_apl_response(handler_input, datasource=apl_datasource)
         else:
@@ -298,60 +302,19 @@ class StarSizeIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'StarSizeIntentHandler handle() called.')
 
-        star_size = str(
-            handler_input.request_envelope.request.intent.slots[Slots.STAR_SIZE].resolutions.resolutions_per_authority[
-                0].values[0].value.name
-        ).lower()
+        star_size = get_slot_value_from_handler(handler_input, slot_name=Slots.STAR_SIZE)
 
         planet_story.set_star_size(star_size)
 
-        apl_datasource = _load_apl_document("./data/main.json")
-
-        if planet_story.star.brightness == "blue":
-            if star_size == "dwarf":
-                planet_story.speech_text += planet_story.translator.Star.star_size_dwarf
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF
-            if star_size == "giant":
-                planet_story.speech_text += planet_story.translator.Star.star_size_giant
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT
-            if star_size == "super":
-                planet_story.speech_text += planet_story.translator.Star.star_size_super_giant
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER
-        elif planet_story.star.brightness == "red":
-            if star_size == "dwarf":
-                planet_story.speech_text += planet_story.translator.Star.star_size_dwarf
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_DWARF
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_DWARF
-            if star_size == "giant":
-                planet_story.speech_text += planet_story.translator.Star.star_size_giant
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_GIANT
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_GIANT
-            if star_size == "super":
-                planet_story.speech_text += planet_story.translator.Star.star_size_super_giant
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_SUPER
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_SUPER
-        elif planet_story.star.brightness == "yellow":
-            if star_size == "dwarf":
-                planet_story.speech_text += planet_story.translator.Star.star_size_dwarf
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_DWARF
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_DWARF
-            if star_size == "giant":
-                planet_story.speech_text += planet_story.translator.Star.star_size_giant
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_GIANT
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_GIANT
-            if star_size == "super":
-                planet_story.speech_text += planet_story.translator.Star.star_size_super_giant
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_SUPER
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_SUPER
-
-        planet_story.speech_text += (' ' + planet_story.translator.Star.star_age)
-
-        planet_story.previous_speech_text = planet_story.speech_text
-
         if device.apl_support:
+            apl_datasource = _load_apl_document("./data/main.json")
+
+            apl_datasource = star_apl.get_image_star_size(
+                apl_datasource,
+                star_brightness=planet_story.star.brightness,
+                star_size=star_size
+            )
+
             return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
@@ -373,10 +336,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'StarAgeIntentHandler handle() called.')
 
-        star_age = str(
-            handler_input.request_envelope.request.intent.slots[Slots.AGE].resolutions.resolutions_per_authority[
-                0].values[0].value.name
-        ).lower()
+        star_age = get_slot_value_from_handler(handler_input, slot_name=Slots.AGE)
 
         planet_story.set_star_age(star_age)
 
@@ -756,7 +716,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         if planet_story.is_planet_habitable:
             # Change to earth pic
-            apl_datasource = apl_helper.get_image_habitable_planet(apl_datasource, planet_size=planet_story.planet.size)
+            apl_datasource = planet_apl.get_image_habitable_planet(apl_datasource, planet_size=planet_story.planet.size)
 
         planet_story.speech_text += (' ' + planet_story.translator.EndGame.game_end)
 
