@@ -9,7 +9,7 @@ from translator.cowboy_narrator import CowboyTranslator
 from planet_story.planet import Planet
 from planet_story.star import Star
 from planet_story.narrator import Narrator
-from alexa.slots import Brightness, StarSize
+from alexa.slots import Brightness, StarSize, Age
 
 # constants
 CURRENT_QUESTION = 'current_question'
@@ -70,9 +70,9 @@ class PlanetStory:
             self.reprompt = 'Please say again.'
 
         if self.narrator == Narrator.cowboy:
-            self.translator = CowboyTranslator
+            self.translator = CowboyTranslator()
         else:
-            self.translator = DefaultTranslator
+            self.translator = DefaultTranslator()
 
     def get_session_variables(self):
         return {
@@ -139,6 +139,18 @@ class PlanetStory:
         :return:
         """
         self.star.age = age
+
+        if age == Age.YOUNG:
+            self.speech_text += self.translator.Star.star_age_young
+        if age == Age.MIDDLE:
+            self.speech_text += self.translator.Star.star_age_middle
+        if age == Age.OLD:
+            self.speech_text += self.translator.Star.star_age_old
+
+        self.speech_text += ' ' + self.translator.Planet.planet_size
+
+        self.previous_speech_text = self.speech_text
+
         self.current_question = Question.Planet.SIZE
 
     def set_planet_size(self, size):

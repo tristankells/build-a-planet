@@ -92,6 +92,7 @@ class IntegrationTests(unittest.TestCase):
         planet_story.set_planet_distance('test')
 
         self.assertEqual(planet_story.planet.distance, 'test', 'Should be test')
+        self.assertEqual(planet_story.planet.distance, 'test', 'Should be test')
 
 
 if __name__ == '__main__':
