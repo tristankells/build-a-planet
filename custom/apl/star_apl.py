@@ -17,11 +17,11 @@ def get_image_star_brightness(apl_datasource, star_brightness):
     image_url = None
 
     if star_brightness == Brightness.YELLOW:
-        image_url = Assets.Pictures.YELLOW_BRIGHTNESS
+        image_url = PICTURES.YELLOW_BRIGHTNESS
     elif star_brightness == Brightness.RED:
-        image_url = Assets.Pictures.RED_BRIGHTNESS
+        image_url = PICTURES.RED_BRIGHTNESS
     elif star_brightness == Brightness.BLUE:
-        image_url = Assets.Pictures.BLUE_BRIGHTNESS
+        image_url = PICTURES.BLUE_BRIGHTNESS
 
     apl_datasource = set_apl_datasource_image_sources(apl_datasource, image_url)
 
@@ -68,8 +68,81 @@ def get_image_star_size(apl_datasource, star_brightness, star_size):
 
 
 def get_image_star_age(apl_datasource, star_brightness, star_size, star_age):
+
     image_url = None
 
+    if star_brightness == Brightness.YELLOW:
+        image_url = _set_image_url_based_on_star_size(
+            star_size,
+            dwarf_url=_set_image_url_based_on_star_age(
+                star_age,
+                young_url=PICTURES.YELLOW_DWARF_YOUNG,
+                middle_url=PICTURES.YELLOW_DWARF_MIDDLE,
+                old_url=PICTURES.YELLOW_DWARF_OLD
+            ),
+            giant_url=_set_image_url_based_on_star_age(
+                star_age,
+                young_url=PICTURES.YELLOW_GIANT_YOUNG,
+                middle_url=PICTURES.YELLOW_GIANT_MIDDLE,
+                old_url=PICTURES.YELLOW_GIANT_OLD
+            ),
+            super_url=_set_image_url_based_on_star_age(
+                star_age,
+                young_url=PICTURES.YELLOW_SUPER_YOUNG,
+                middle_url=PICTURES.YELLOW_SUPER_MIDDLE,
+                old_url=PICTURES.YELLOW_SUPER_OLD
+            )
+        )
+
+    elif star_brightness == Brightness.RED:
+        image_url = _set_image_url_based_on_star_size(
+            star_size,
+            dwarf_url=_set_image_url_based_on_star_age(
+                star_age,
+                young_url=PICTURES.RED_DWARF_YOUNG,
+                middle_url=PICTURES.RED_DWARF_MIDDLE,
+                old_url=PICTURES.RED_DWARF_OLD
+            ),
+            giant_url=_set_image_url_based_on_star_age(
+                star_age,
+                young_url=PICTURES.RED_GIANT_YOUNG,
+                middle_url=PICTURES.RED_GIANT_MIDDLE,
+                old_url=PICTURES.RED_GIANT_OLD
+            ),
+            super_url=_set_image_url_based_on_star_age(
+                star_age,
+                young_url=PICTURES.RED_SUPER_YOUNG,
+                middle_url=PICTURES.RED_SUPER_MIDDLE,
+                old_url=PICTURES.RED_SUPER_OLD
+            )
+        )
+
+    elif star_brightness == Brightness.BLUE:
+        image_url = _set_image_url_based_on_star_size(
+            star_size,
+            dwarf_url=_set_image_url_based_on_star_age(
+                star_age,
+                young_url=PICTURES.BLUE_DWARF_YOUNG,
+                middle_url=PICTURES.BLUE_DWARF_MIDDLE,
+                old_url=PICTURES.BLUE_DWARF_OLD
+            ),
+            giant_url=_set_image_url_based_on_star_age(
+                star_age,
+                young_url=PICTURES.BLUE_GIANT_YOUNG,
+                middle_url=PICTURES.BLUE_GIANT_MIDDLE,
+                old_url=PICTURES.BLUE_GIANT_OLD
+            ),
+            super_url=_set_image_url_based_on_star_age(
+                star_age,
+                young_url=PICTURES.BLUE_SUPER_YOUNG,
+                middle_url=PICTURES.BLUE_SUPER_MIDDLE,
+                old_url=PICTURES.BLUE_SUPER_OLD
+            )
+        )
+
+    apl_datasource = set_apl_datasource_image_sources(apl_datasource, image_url)
+
+    return apl_datasource
 
 # endregion
 
@@ -85,12 +158,12 @@ def _set_image_url_based_on_star_size(size, dwarf_url, giant_url, super_url):
         return super_url
 
 
-def _set_image_url_based_on_star_age(size, dwarf_url, giant_url, super_url):
-    if size == Age.YOUNG:
-        return dwarf_url
-    if size == Age.MIDDLE:
-        return giant_url
-    if size == Age.OLD:
-        return super_url
+def _set_image_url_based_on_star_age(age, young_url, middle_url, old_url):
+    if age == Age.YOUNG:
+        return young_url
+    if age == Age.MIDDLE:
+        return middle_url
+    if age == Age.OLD:
+        return old_url
 
 # endregion
