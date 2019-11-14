@@ -1,5 +1,7 @@
 # Planet Story
 
+Website: https://planetstory.co/
+
 ## Alexa Store Links:
  - United States – https://www.amazon.com/dp/B0816H3FYP
  - United Kingdom – https://www.amazon.co.uk/dp/B0816H3FYP
@@ -17,8 +19,8 @@ ________________________
 
 ### Enable the Skill on your mobile device:
 Depending on if you have an Android or iOS device, please download the Alexa app:
- - Android: (https://play.google.com/store/apps/de...)
- - iOS: (https://apps.apple.com/us/app/amazon-...)
+ - Android: (https://play.google.com/store/apps/details?id=com.amazon.dee.app)
+ - iOS: (https://apps.apple.com/us/app/amazon-alexa/id944011620)
  1. Enable the Skill by Saying “Alexa, enable Planet Story”
  2. Navigate to Skill & Games on the left the side menu,
  3. Tap on the search icon, type Planet Story
