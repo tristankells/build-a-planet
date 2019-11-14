@@ -463,7 +463,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_SUPER_OLD
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_SUPER_OLD
 
-        planet_story.speech_text += (' ' + planet_story.translator.Planet.planet_size)
+        planet_story.speech_text += planet_story.translator.Planet.planet_size
 
         planet_story.previous_speech_text = planet_story.speech_text
 
@@ -532,7 +532,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
 
-        planet_story.speech_text += (' ' + planet_story.translator.Planet.planet_distance)
+        planet_story.speech_text += planet_story.translator.Planet.planet_distance
 
         planet_story.previous_speech_text = planet_story.speech_text
 
@@ -617,7 +617,7 @@ class PlanetDistanceHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_SMALL
 
-        planet_story.speech_text += ' ' + planet_story.translator.Planet.planet_age
+        planet_story.speech_text += planet_story.translator.Planet.planet_age
 
         planet_story.previous_speech_text = planet_story.speech_text
 
@@ -720,7 +720,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
             # Change to earth pic
             apl_datasource = planet_apl.get_image_habitable_planet(apl_datasource, planet_size=planet_story.planet.size)
 
-        planet_story.speech_text += (' ' + planet_story.translator.EndGame.game_end)
+        planet_story.speech_text += planet_story.translator.EndGame.game_end
 
         planet_story.previous_speech_text = planet_story.speech_text
 
