@@ -183,16 +183,14 @@ class PlanetStory:
     def review_solar_system(self):
         self.speech_text += self.planet_story
         self.speech_text += self.translator.Purchase.purchase_request
-        # self.speech_text += Translator.EndGame.game_play_again
+        self.speech_text += Translator.EndGame.game_play_again
 
-        # self.current_question = Question.PLAY_AGAIN
         self.current_question = Question.PLAY_AGAIN
 
     def do_not_review_solar_system(self):
         self.speech_text += self.translator.Purchase.purchase_request
         self.speech_text = self.translator.EndGame.game_play_again
 
-        # self.current_question = Question.PLAY_AGAIN
         self.current_question = Question.PLAY_AGAIN
 
     def play_again(self):
