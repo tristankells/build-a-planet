@@ -342,131 +342,6 @@ class StarAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.set_star_age(star_age)
 
-        apl_datasource = _load_apl_document("./data/main.json")
-
-        if planet_story.star.brightness == "blue" and planet_story.star.size == "dwarf":
-            if star_age == "young":
-                planet_story.speech_text += planet_story.translator.Star.star_age_young
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF_YOUNG
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF_YOUNG
-            if star_age == "middle-aged":
-                planet_story.speech_text += planet_story.translator.Star.star_age_middle
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF_MIDDLE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF_MIDDLE
-            if star_age == "old":
-                planet_story.speech_text += planet_story.translator.Star.star_age_old
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_DWARF_OLD
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_DWARF_OLD
-        elif planet_story.star.brightness == "red" and planet_story.star.size == "dwarf":
-            if star_age == "young":
-                planet_story.speech_text += planet_story.translator.Star.star_age_young
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_DWARF_YOUNG
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_DWARF_YOUNG
-            if star_age == "middle-aged":
-                planet_story.speech_text += planet_story.translator.Star.star_age_middle
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_DWARF_MIDDLE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_DWARF_MIDDLE
-            if star_age == "old":
-                planet_story.speech_text += planet_story.translator.Star.star_age_old
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_DWARF_OLD
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_DWARF_OLD
-        elif planet_story.star.brightness == "yellow" and planet_story.star.size == "dwarf":
-            if star_age == "young":
-                planet_story.speech_text += planet_story.translator.Star.star_age_young
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_DWARF_YOUNG
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_DWARF_YOUNG
-            if star_age == "middle-aged":
-                planet_story.speech_text += planet_story.translator.Star.star_age_middle
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_DWARF_MIDDLE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_DWARF_MIDDLE
-            if star_age == "old":
-                planet_story.speech_text += planet_story.translator.Star.star_age_old
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_DWARF_OLD
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_DWARF_OLD
-        elif planet_story.star.brightness == "blue" and planet_story.star.size == "giant":
-            if star_age == "young":
-                planet_story.speech_text += planet_story.translator.Star.star_age_young
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT_YOUNG
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT_YOUNG
-            if star_age == "middle-aged":
-                planet_story.speech_text += planet_story.translator.Star.star_age_middle
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT_MIDDLE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT_MIDDLE
-            if star_age == "old":
-                planet_story.speech_text += planet_story.translator.Star.star_age_old
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_GIANT_OLD
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_GIANT_OLD
-        elif planet_story.star.brightness == "red" and planet_story.star.size == "giant":
-            if star_age == "young":
-                planet_story.speech_text += planet_story.translator.Star.star_age_young
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_GIANT_YOUNG
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_GIANT_YOUNG
-            if star_age == "middle-aged":
-                planet_story.speech_text += planet_story.translator.Star.star_age_middle
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_GIANT_MIDDLE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_GIANT_MIDDLE
-            if star_age == "old":
-                planet_story.speech_text += planet_story.translator.Star.star_age_old
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_GIANT_OLD
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_GIANT_OLD
-        elif planet_story.star.brightness == "yellow" and planet_story.star.size == "giant":
-            if star_age == "young":
-                planet_story.speech_text += planet_story.translator.Star.star_age_young
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_GIANT_YOUNG
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_GIANT_YOUNG
-            if star_age == "middle-aged":
-                planet_story.speech_text += planet_story.translator.Star.star_age_middle
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_GIANT_MIDDLE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_GIANT_MIDDLE
-            if star_age == "old":
-                planet_story.speech_text += planet_story.translator.Star.star_age_old
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_GIANT_OLD
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_GIANT_OLD
-
-        elif planet_story.star.brightness == "blue" and planet_story.star.size == "super":
-            if star_age == "young":
-                planet_story.speech_text += planet_story.translator.Star.star_age_young
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_YOUNG
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_YOUNG
-            if star_age == "middle-aged":
-                planet_story.speech_text += planet_story.translator.Star.star_age_middle
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_MIDDLE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_MIDDLE
-            if star_age == "old":
-                planet_story.speech_text += planet_story.translator.Star.star_age_old
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.BLUE_SUPER_OLD
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.BLUE_SUPER_OLD
-        elif planet_story.star.brightness == "red" and planet_story.star.size == "super":
-            if star_age == "young":
-                planet_story.speech_text += planet_story.translator.Star.star_age_young
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_SUPER_YOUNG
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_SUPER_YOUNG
-            if star_age == "middle-aged":
-                planet_story.speech_text += planet_story.translator.Star.star_age_middle
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_SUPER_MIDDLE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_SUPER_MIDDLE
-            if star_age == "old":
-                planet_story.speech_text += planet_story.translator.Star.star_age_old
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.RED_SUPER_OLD
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.RED_SUPER_OLD
-        elif planet_story.star.brightness == "yellow" and planet_story.star.size == "super":
-            if star_age == "young":
-                planet_story.speech_text += planet_story.translator.Star.star_age_young
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_SUPER_YOUNG
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_SUPER_YOUNG
-            if star_age == "middle-aged":
-                planet_story.speech_text += planet_story.translator.Star.star_age_middle
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_SUPER_MIDDLE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_SUPER_MIDDLE
-            if star_age == "old":
-                planet_story.speech_text += planet_story.translator.Star.star_age_old
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.YELLOW_SUPER_OLD
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.YELLOW_SUPER_OLD
-
-        planet_story.speech_text += (' ' + planet_story.translator.Planet.planet_size)
-
-        planet_story.previous_speech_text = planet_story.speech_text
-
         if device.apl_support:
             apl_datasource = _load_apl_document("./data/main.json")
 
@@ -500,52 +375,23 @@ class PlanetSizeHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         Logger.info(f'PlanetSizeHandler handle() called.')
 
-        planet_size = str(
-            handler_input.request_envelope.request.intent.slots[
-                Slots.PLANET_SIZE].resolutions.resolutions_per_authority[
-                0].values[0].value.name
-        ).lower()
+        planet_size = get_slot_value_from_handler(handler_input, slot_name=Slots.PLANET_SIZE)
 
         planet_story.set_planet_size(planet_size)
 
-        apl_datasource = _load_apl_document("./data/main.json")
-
-        if planet_size == "large":
-            planet_story.speech_text += planet_story.translator.Planet.planet_size_large
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
-                    planet_story.star.age == "young":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
-            else:
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
-
-        if planet_size == "medium":
-            planet_story.speech_text += planet_story.translator.Planet.planet_size_medium
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
-                    planet_story.star.age == "young":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-            else:
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_MEDIUM
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_MEDIUM
-
-        if planet_size == "small":
-            planet_story.speech_text += planet_story.translator.Planet.planet_size_small
-            if planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
-                    planet_story.star.age == "young":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-            else:
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
-
-        planet_story.speech_text += planet_story.translator.Planet.planet_distance
-
-        planet_story.previous_speech_text = planet_story.speech_text
-
         if device.apl_support:
-            return get_apl_response(handler_input, datasource=apl_datasource)
+            if device.apl_support:
+                apl_datasource = _load_apl_document("./data/main.json")
+
+                apl_datasource = planet_apl.get_image_planet_size(
+                    apl_datasource,
+                    planet_size,
+                    star_brightness=planet_story.star.brightness,
+                    star_size=planet_story.star.size,
+                    star_age=planet_story.star.age
+                )
+
+                return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
 

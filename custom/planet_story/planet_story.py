@@ -9,7 +9,7 @@ from translator.cowboy_narrator import CowboyTranslator
 from planet_story.planet import Planet
 from planet_story.star import Star
 from planet_story.narrator import Narrator
-from alexa.slots import Brightness, StarSize, Age
+from alexa.slots import Brightness, StarSize, Age, PlanetSize
 
 # constants
 CURRENT_QUESTION = 'current_question'
@@ -159,6 +159,18 @@ class PlanetStory:
         :return:
         """
         self.planet.size = size
+
+        if size == PlanetSize.SMALL:
+            self.speech_text += self.translator.Planet.planet_size_small
+        if size == PlanetSize.MEDIUM:
+            self.speech_text += self.translator.Planet.planet_size_medium
+        if size == PlanetSize.LARGE:
+            self.speech_text += self.translator.Planet.planet_size_large
+
+        self.speech_text += self.translator.Planet.planet_distance
+
+        self.previous_speech_text = self.speech_text
+
         self.current_question = Question.Planet.DISTANCE
 
     def set_planet_distance(self, distance):
