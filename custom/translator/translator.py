@@ -135,5 +135,5 @@ class Translator:
         ]
 
     class Purchase:
-        purchase_request = " If you would like to support the developers of planet story, you can unlock the alternative" \
+        purchase_request = " If you would like to support the developers of Planet Story, you can unlock the alternative" \
                          " space cowboy narrator by saying 'Purchase Space Cowboy'."
