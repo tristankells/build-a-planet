@@ -383,7 +383,7 @@ class PlanetSizeHandler(AbstractRequestHandler):
             if device.apl_support:
                 apl_datasource = _load_apl_document("./data/main.json")
 
-                apl_datasource = planet_apl.get_image_planet_size(
+                apl_datasource = planet_apl.get_image_based_on_planet_size(
                     apl_datasource,
                     planet_size,
                     star_brightness=planet_story.star.brightness,
@@ -410,73 +410,24 @@ class PlanetDistanceHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         Logger.info(f'PlanetDistanceHandler handle() called.')
 
-        planet_distance = str(
-            handler_input.request_envelope.request.intent.slots[Slots.DISTANCE].resolutions.resolutions_per_authority[
-                0].values[0].value.name
-        ).lower()
+        planet_distance = get_slot_value_from_handler(handler_input, slot_name=Slots.DISTANCE)
 
         planet_story.set_planet_distance(planet_distance)
 
-        apl_datasource = _load_apl_document("./data/main.json")
-
-        if planet_distance == "near":
-            planet_story.speech_text += planet_story.translator.Planet.planet_distance_near
-            if planet_story.star.brightness == "yellow":
-                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or \
-                        planet_story.star.size == "super" or planet_story.star.size == "giant" or planet_story.star.age == "young":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
-                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or \
-                        planet_story.star.size == "super" or planet_story.star.size == "giant" or \
-                        planet_story.star.age == "young":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or \
-                        planet_story.star.size == "super" or planet_story.star.size == "giant" or \
-                        planet_story.star.age == "young":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or \
-                    planet_story.star.brightness == "blue" or planet_story.star.size == "super" or \
-                    planet_story.star.size == "giant" or planet_story.star.age == "young":
-                if planet_story.planet.size == "large":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
-                elif planet_story.planet.size == "medium":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                elif planet_story.planet.size == "small":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-        elif planet_distance == "midway":
-            planet_story.speech_text += planet_story.translator.Planet.planet_distance_midway
-            if planet_story.planet.size == "large":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
-            elif planet_story.planet.size == "medium":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_MEDIUM
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_MEDIUM
-            elif planet_story.planet.size == "small":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
-        elif planet_distance == "far":
-            planet_story.speech_text += planet_story.translator.Planet.planet_distance_far
-            if planet_story.planet.size == "large":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_LARGE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_LARGE
-            elif planet_story.planet.size == "medium":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_MEDIUM
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_MEDIUM
-            elif planet_story.planet.size == "small":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_SMALL
-
-        planet_story.speech_text += planet_story.translator.Planet.planet_age
-
-        planet_story.previous_speech_text = planet_story.speech_text
-
         if device.apl_support:
-            return get_apl_response(handler_input, datasource=apl_datasource)
+            if device.apl_support:
+                apl_datasource = _load_apl_document("./data/main.json")
+
+                apl_datasource = planet_apl.get_image_based_on_planet_distance(
+                    apl_datasource,
+                    planet_distance,
+                    planet_size=planet_story.planet.size,
+                    star_brightness=planet_story.star.brightness,
+                    star_size=planet_story.star.size,
+                    star_age=planet_story.star.age
+                )
+
+                return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
 
@@ -496,10 +447,7 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'PlanetAgeIntentHandler handle() called.')
 
-        planet_age = str(
-            handler_input.request_envelope.request.intent.slots[Slots.AGE].resolutions.resolutions_per_authority[
-                0].values[0].value.name
-        ).lower()
+        planet_age = get_slot_value_from_handler(handler_input, slot_name=Slots.AGE)
 
         planet_story.set_planet_age(planet_age)
 
@@ -552,7 +500,6 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_SMALL
 
         if planet_age == "young":
-            planet_story.speech_text += planet_story.translator.Planet.planet_age_young
             if planet_story.planet.size == "large":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
@@ -562,21 +509,10 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
             elif planet_story.planet.size == "small":
                 apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
                 apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
-        if planet_age == "middle-aged":
-            planet_story.speech_text += planet_story.translator.Planet.planet_age_middleaged
-        if planet_age == "old":
-            planet_story.speech_text += planet_story.translator.Planet.planet_age_old
-
-        # Now solar system is built, test if planet is habitable
-        planet_story.test_if_planet_habitable()
 
         if planet_story.is_planet_habitable:
             # Change to earth pic
             apl_datasource = planet_apl.get_image_habitable_planet(apl_datasource, planet_size=planet_story.planet.size)
-
-        planet_story.speech_text += planet_story.translator.EndGame.game_end
-
-        planet_story.previous_speech_text = planet_story.speech_text
 
         if device.apl_support:
             return get_apl_response(handler_input, datasource=apl_datasource)

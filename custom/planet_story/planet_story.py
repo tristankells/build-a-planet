@@ -9,7 +9,7 @@ from translator.cowboy_narrator import CowboyTranslator
 from planet_story.planet import Planet
 from planet_story.star import Star
 from planet_story.narrator import Narrator
-from alexa.slots import Brightness, StarSize, Age, PlanetSize
+from alexa.slots import Brightness, StarSize, Age, PlanetSize, Distance
 
 # constants
 CURRENT_QUESTION = 'current_question'
@@ -179,6 +179,18 @@ class PlanetStory:
         :return:
         """
         self.planet.distance = distance
+
+        if distance == Distance.NEAR:
+            self.speech_text += self.translator.Planet.planet_distance_near
+        if distance == Distance.MIDWAY:
+            self.speech_text += self.translator.Planet.planet_distance_midway
+        if distance == Distance.FAR:
+            self.speech_text += self.translator.Planet.planet_distance_far
+
+        self.speech_text += self.translator.Planet.planet_age
+
+        self.previous_speech_text = self.speech_text
+
         self.current_question = Question.Planet.AGE
 
     def set_planet_age(self, age):
@@ -187,6 +199,21 @@ class PlanetStory:
         :return:
         """
         self.planet.age = age
+
+        if age == Age.YOUNG:
+            self.speech_text += self.translator.Planet.planet_age_young
+        if age == Age.MIDDLE:
+            self.speech_text += self.translator.Planet.planet_age_middleaged
+        if age == Age.OLD:
+            self.speech_text += self.translator.Planet.planet_age_old
+
+        # Now solar system is built, test if planet is habitable
+        self.test_if_planet_habitable()
+
+        self.speech_text += self.translator.EndGame.game_end
+
+        self.previous_speech_text = self.speech_text
+
         self.current_question = Question.REVIEW
 
     def purchase_success(self):
