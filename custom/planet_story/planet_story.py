@@ -217,11 +217,11 @@ class PlanetStory:
         self.current_question = Question.REVIEW
 
     def purchase_success(self):
-        self.speech_text = 'Thank you for purchasing the space cowboy voice pack.'
+        self.speech_text = 'Thank you for purchasing the space cowboy voice pack. Say "Activate Space Cowboy" at any time to change voice.'
         self.cowboy_unlocked = True
 
     def purchase_declined(self):
-        self.speech_text = 'There was an error with your purchase'
+        self.speech_text = 'Resuming your game.'
 
     def learn_about_solar_systems(self):
         self.speech_text = self.translator.SolarSystem.planetary_system_yes
