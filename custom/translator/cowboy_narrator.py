@@ -1,6 +1,6 @@
 from translator.translator import Translator
 
-ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/Ranul'
+ROOT_URL = 'https://s3.amazonaws.com/planet-story/Audio/Ranul/'
 AUDIO = "<audio src='" + ROOT_URL + "{}.mp3' />"
 
 
