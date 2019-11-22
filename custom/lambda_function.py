@@ -20,6 +20,7 @@ from alexa.intents import Intents
 from alexa.slots import Slots
 from planet_story.planet_story import PlanetStory
 from planet_story.solar_questions import Question
+from planet_story.narrator import Narrator
 from alexa.assets import Assets
 from alexa.device import Device
 from logger import Logger
@@ -175,7 +176,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
                 planet_story.cowboy_unlocked = True
 
         if device.apl_support:
-            if planet_story.narrator == 'cowboy':
+            if planet_story.narrator == Narrator.cowboy:
                 return get_apl_response(handler_input, datasource='./data/main_space_cowboy.json')
             else:
                 return get_apl_response(handler_input, datasource='./data/main.json')
