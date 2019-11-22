@@ -269,16 +269,15 @@ class PlanetStory:
             if self.cowboy_unlocked:
                 self.narrator = Narrator.cowboy
                 self.speech_text = self.translator.ToggleVoice.cowboy
+                self.speech_text += self.previous_speech_text.replace('Tristan/', 'Ranul/cowboy_')
             else:
                 self.speech_text = self.translator.ToggleVoice.cowboy_locked
+                self.speech_text += self.previous_speech_text
 
         elif self.narrator == Narrator.cowboy:
             self.narrator = Narrator.default
             self.speech_text = self.translator.ToggleVoice.default
-
-        # repeat question after toggle
-        self.speech_text += self.previous_speech_text
-
+            self.speech_text += self.previous_speech_text.replace('Ranul/cowboy_', 'Tristan/')
 
     def test_if_planet_habitable(self):
         """
