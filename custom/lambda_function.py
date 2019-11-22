@@ -750,6 +750,7 @@ class ToggleVoiceHandler(AbstractRequestHandler):
         Logger.info(f'ToggleVoiceHandler handle() called.')
 
         planet_story.toggle_voice()
+        planet_story.repeat()
 
         return get_speak_ask_response(handler_input)
 
