@@ -276,6 +276,9 @@ class PlanetStory:
             self.narrator = Narrator.default
             self.speech_text = self.translator.ToggleVoice.default
 
+        # repeat question after toggle
+        self.speech_text += self.previous_speech_text
+
 
     def test_if_planet_habitable(self):
         """
