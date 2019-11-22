@@ -787,7 +787,7 @@ class FallbackHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'FallbackHandler handle() called.')
 
-        planet_story.speech_text = get_fallback_question_speech_text(planet_story.current_question)
+        planet_story.speech_text = get_fallback_question_speech_text(planet_story.previous_speech_text)
 
         return get_speak_ask_response(handler_input)
 
