@@ -582,7 +582,7 @@ class BuyHandler(AbstractRequestHandler):
                     name="Buy",
                     payload={
                         "InSkillProduct": {
-                            "productId": 'amzn1.adg.product.0be04a0c-2fb5-4763-acd0-f370dbafa339'
+                            "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080'
                         }
                     },
                     token="correlationToken")
