@@ -175,7 +175,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
                 planet_story.cowboy_unlocked = True
 
         if device.apl_support:
-            if planet_story.cowboy_unlocked:
+            if planet_story.narrator == 'cowboy':
                 return get_apl_response(handler_input, datasource='./data/main_space_cowboy.json')
             else:
                 return get_apl_response(handler_input, datasource='./data/main.json')
