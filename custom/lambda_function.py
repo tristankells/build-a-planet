@@ -752,8 +752,13 @@ class ToggleVoiceHandler(AbstractRequestHandler):
 
         planet_story.toggle_voice()
 
-        return get_speak_ask_response(handler_input)
-
+        if device.apl_support:
+            if planet_story.narrator == Narrator.cowboy and planet_story.current_question == Question.Star.BRIGHTNESS:
+                return get_apl_response(handler_input, datasource='./data/main_space_cowboy.json')
+            else:
+                return get_apl_response(handler_input, datasource='./data/main.json')
+        else:
+            return get_speak_ask_response(handler_input)
 
 class SessionEndedRequestHandler(AbstractRequestHandler):
     """
