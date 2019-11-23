@@ -28,3 +28,4 @@ class Intents:
     BUY_COWBOY = 'BuyCowboyIntent'
     CANCEL_PURCHASE = 'CancelPurchaseIntent'
     TOGGLE_VOICE = 'ToggleVoiceIntent'
+    REFUND_SKILL_ITEM = 'RefundSkillItemIntent'
