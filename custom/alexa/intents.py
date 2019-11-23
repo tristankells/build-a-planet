@@ -24,7 +24,7 @@ class Intents:
     SCROLL_DOWN = 'AMAZON.ScrollDownIntent'
     SCROLL_LEFT = 'AMAZON.ScrollLeftIntent'
     SCROLL_UP = 'AMAZON.ScrollUpIntent'
-    WHAT_CAN_IBUY = 'WhatCanIBuy'
+    WHAT_CAN_I_BUY = 'WhatCanIBuy'
     BUY_COWBOY = 'BuyCowboyIntent'
     CANCEL_PURCHASE = 'CancelPurchaseIntent'
     TOGGLE_VOICE = 'ToggleVoiceIntent'

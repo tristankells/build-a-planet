@@ -193,7 +193,7 @@ class WhatCanIBuyHandler(AbstractRequestHandler):
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.WHAT_CAN_IBUY)(handler_input)
+        return is_intent_name(Intents.WHAT_CAN_I_BUY)(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -910,6 +910,7 @@ sb.add_request_handler(CancelAndStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Store handlers
+sb.add_request_handler(RefundPurchaseHandler())
 sb.add_request_handler(WhatCanIBuyHandler())
 sb.add_request_handler(BuyHandler())
 sb.add_request_handler(BuyResponseHandler())
