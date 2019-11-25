@@ -4,6 +4,7 @@ class Slots:
     PLANET_SIZE = 'PlanetSize'
     AGE = 'Age'
     DISTANCE = 'Distance'
+    PRODUCT = 'Product'
 
 
 class Brightness:

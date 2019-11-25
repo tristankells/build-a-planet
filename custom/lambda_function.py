@@ -573,21 +573,24 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 class BuyHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name(Intents.BUY_COWBOY)(handler_input)
+        return is_intent_name(Intents.BUY_SKILL_ITEM)(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-            planet_story.previous_speech_text = planet_story.speech_text
-            return handler_input.response_builder.add_directive(
-                SendRequestDirective(
-                    name="Buy",
-                    payload={
-                        "InSkillProduct": {
-                            "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080'
-                        }
-                    },
-                    token="correlationToken")
-            ).response
+        planet_story.previous_speech_text = planet_story.speech_text
+
+        product_name = get_slot_value_from_handler(handler_input, slot_name=Slots.PRODUCT)
+
+        return handler_input.response_builder.add_directive(
+            SendRequestDirective(
+                name="Buy",
+                payload={
+                    "InSkillProduct": {
+                        "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080'
+                    }
+                },
+                token="correlationToken")
+        ).response
 
 
 class BuyResponseHandler(AbstractRequestHandler):
@@ -781,6 +784,7 @@ class ToggleVoiceHandler(AbstractRequestHandler):
                 return get_apl_response(handler_input, datasource='./data/main.json')
         else:
             return get_speak_ask_response(handler_input)
+
 
 class SessionEndedRequestHandler(AbstractRequestHandler):
     """
