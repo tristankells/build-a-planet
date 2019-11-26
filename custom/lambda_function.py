@@ -81,6 +81,7 @@ def in_skill_product_response(handler_input):
     ms = handler_input.service_client_factory.get_monetization_service()
     return ms.get_in_skill_products(locale)
 
+
 def get_product_list(entitled_products_list):
     product_names = [item.name for item in entitled_products_list]
     if len(product_names) > 1:
@@ -89,6 +90,7 @@ def get_product_list(entitled_products_list):
     else:
         speech = ", ".join(product_names)
     return speech
+
 
 def get_speak_ask_response(handler_input):
     handler_input.response_builder.speak(planet_story.speech_text).ask(planet_story.reprompt)
@@ -618,7 +620,7 @@ class BuyResponseHandler(AbstractRequestHandler):
                     planet_story.purchase_declined()
                 elif purchase_result == PurchaseResult.ALREADY_PURCHASED.value:
                     planet_story.purchase_success()
-                else: # Invalid purchase result value
+                else:  # Invalid purchase result value
                     planet_story.purchase_declined()
             else:
                 planet_story.purchase_declined()
@@ -632,13 +634,21 @@ class BuyResponseHandler(AbstractRequestHandler):
 
 
 class RefundPurchaseHandler(AbstractRequestHandler):
+    """
 
+    R E F U N D  -  S K I L L  I T E M
+
+    """
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.REFUND_SKILL_ITEM)(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        Logger.info(f'RefundPurchaseHandler handle() called.')
+
+        product_name = get_slot_value_from_handler(handler_input, slot_name=Slots.PRODUCT)
+
         planet_story.previous_speech_text = planet_story.speech_text
 
         return handler_input.response_builder.add_directive(
