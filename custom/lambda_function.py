@@ -250,10 +250,7 @@ class YesLearnMoreIntentHandler(AbstractRequestHandler):
 
         planet_story.previous_speech_text = planet_story.speech_text
 
-        if device.apl_support:
-            return get_apl_response(handler_input, datasource='./data/main.json')
-        else:
-            return get_speak_ask_response(handler_input)
+        return get_speak_ask_upsell_response(handler_input)
 
 
 class NoLearnMoreIntentHandler(AbstractRequestHandler):
@@ -274,7 +271,7 @@ class NoLearnMoreIntentHandler(AbstractRequestHandler):
 
         planet_story.do_not_learn_about_solar_systems()
 
-        return get_speak_ask_response(handler_input)
+        return get_speak_ask_upsell_response(handler_input)
 
 
 # region Star Handlers
