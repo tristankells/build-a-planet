@@ -124,6 +124,24 @@ def get_apl_response(handler_input, datasource):
         )
     return handler_input.response_builder.response
 
+def get_speak_ask_upsell_response(handler_input):
+    handler_input.response_builder.speak(
+        planet_story.speech_text
+        ).ask(
+            planet_story.reprompt
+        ).add_directive(
+            SendRequestDirective(
+                name="Upsell",
+                payload={
+                    "InSkillProduct": {
+                        "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080'
+                    },
+                    "upsellMessage": 'This is a test upsell'
+                },
+                token="correlationToken"
+            )
+        )
+    return handler_input.response_builder.response
 
 # TODO: Fix rest of audio
 # TODO: Make clean ending
@@ -571,6 +589,27 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         return get_speak_ask_response(handler_input)
 
+class UpsellResponseHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return (is_request_type("Connections.Response")(handler_input) and
+                handler_input.request_envelope.request.name == "Upsell")
+        
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        if handler_input.request_envelope.request.status.code == "200":
+            if handler_input.request_envelope.request.payload.get("purchaseResult") == PurchaseResult.DECLINED.value:
+                planet_story.purchase_declined()
+        else:
+           planet_story.purchase_declined()
+
+        planet_story.speech_text += get_question_speech_text(planet_story.current_question)
+
+        if device.apl_support:
+            return get_apl_response(handler_input, datasource='./data/main_space_cowboy.json')
+        else:
+            return get_speak_ask_response(handler_input)
+
 
 class BuyHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
@@ -924,6 +963,7 @@ sb.add_request_handler(CancelAndStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 
 # region Store handlers
+sb.add_request_handler(UpsellResponseHandler())
 sb.add_request_handler(RefundPurchaseHandler())
 sb.add_request_handler(WhatCanIBuyHandler())
 sb.add_request_handler(BuyHandler())
