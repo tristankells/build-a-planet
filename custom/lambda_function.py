@@ -565,7 +565,7 @@ class YesReviewSolarSystem(AbstractRequestHandler):
         planet_story.review_solar_system()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        return get_speak_ask_upsell_response(handler)
+        return get_speak_ask_upsell_response(handler_input)
 
 
 class NoReviewSolarSystem(AbstractRequestHandler):
@@ -587,7 +587,7 @@ class NoReviewSolarSystem(AbstractRequestHandler):
         planet_story.do_not_review_solar_system()
         planet_story.previous_speech_text = planet_story.speech_text
 
-        return get_speak_ask_upsell_response(handler)
+        return get_speak_ask_upsell_response(handler_input)
 
 class UpsellResponseHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
