@@ -24,7 +24,7 @@ class CowboyTranslator(Translator):
         star_brightness = AUDIO.format("cowboy_star_brightness")
         star_brightness_blue = AUDIO.format("cowboy_star_brightness_blue")
         star_brightness_yellow = AUDIO.format("cowboy_star_brightness_yellow")
-        star_brightness_red = AUDIO.format("star_brightness_red")
+        star_brightness_red = AUDIO.format("cowboy_star_brightness_red")
         star_brightness_other = AUDIO.format("cowboy_star_brightness_other")
 
         star_size = AUDIO.format("cowboy_star_size")
@@ -64,7 +64,7 @@ class CowboyTranslator(Translator):
         planet_age_other = AUDIO.format("planet_age_other")
 
     class EndGame:
-        game_end = AUDIO.format("game_end")
+        game_end = AUDIO.format("cowboy_end_game")
         game_play_again = AUDIO.format("game_play_again")
         game_play_again_yes = AUDIO.format("game_play_again_yes")
         game_play_again_no = AUDIO.format("game_play_again_no")
