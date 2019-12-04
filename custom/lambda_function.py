@@ -89,7 +89,15 @@ def get_product_list(entitled_products_list):
             [", ".join(product_names[:-1]), product_names[-1]])
     else:
         speech = ", ".join(product_names)
-    return speech
+    return
+
+
+def get_global_isp_permissions(handler_input):
+    # type: (HandlerInput) -> bool
+    monetization_service = handler_input.service_client_factory.get_monetization_service()
+    voice_purchase_setting = yield monetization_service.get_voice_purchase_setting()
+    return voice_purchase_setting
+
 
 
 def get_speak_ask_response(handler_input):
@@ -562,7 +570,8 @@ class YesReviewSolarSystem(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'YesReviewSolarSystem handle() called.')
 
-        planet_story.review_solar_system()
+        isp_enabled = get_global_isp_permissions(handler_input)
+        planet_story.review_solar_system(isp_enabled)
         planet_story.previous_speech_text = planet_story.speech_text
 
         return get_speak_ask_upsell_response(handler_input)
@@ -584,7 +593,8 @@ class NoReviewSolarSystem(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         Logger.info(f'NoReviewSolarSystem handle() called.')
 
-        planet_story.do_not_review_solar_system()
+        isp_enabled = get_global_isp_permissions(handler_input)
+        planet_story.do_not_review_solar_system(isp_enabled)
         planet_story.previous_speech_text = planet_story.speech_text
 
         return get_speak_ask_upsell_response(handler_input)

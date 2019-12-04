@@ -40,29 +40,16 @@ def get_image_based_on_planet_distance(apl_datasource, planet_distance, planet_s
                                        star_age):
     image_url = None
 
-    if planet_distance == Distance.NEAR:
-        if star_brightness == Brightness.YELLOW:
-            if planet_size == "large" or star_brightness == "blue" or \
-                    star_size == "super" or star_size == "giant" or star_age == "young":
-                image_url = Assets.Pictures.FIREBALL_LARGE
-            elif planet_size == "medium" or star_brightness == "blue" or \
-                    star_size == "super" or star_size == "giant" or \
-                    star_age == "young":
-                image_url = Assets.Pictures.FIREBALL_MEDIUM
-            elif planet_size == "small" or star_brightness == "blue" or \
-                    star_size == "super" or star_size == "giant" or \
-                    star_age == "young":
-                image_url = Assets.Pictures.FIREBALL_SMALL
-        elif (star_brightness == "red" and star_size == "super") or \
-                star_brightness == "blue" or star_size == "super" or \
-                star_size == "giant" or star_age == "young":
+    if planet_distance == Distance.NEAR or \
+            star_size == StarSize.SUPER or \
+            (star_size == StarSize.GIANT and star_age == Age.YOUNG):
 
-            image_url = _set_image_url_based_on_planet_size(
-                planet_size,
-                small_url=PICTURES.FIREBALL_SMALL,
-                medium_url=PICTURES.FIREBALL_MEDIUM,
-                large_url=PICTURES.FIREBALL_LARGE
-            )
+        image_url = _set_image_url_based_on_planet_size(
+            planet_size,
+            small_url=PICTURES.FIREBALL_SMALL,
+            medium_url=PICTURES.FIREBALL_MEDIUM,
+            large_url=PICTURES.FIREBALL_LARGE
+        )
 
     elif planet_distance == Distance.MIDWAY:
         image_url = _set_image_url_based_on_planet_size(

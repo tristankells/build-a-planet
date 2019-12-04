@@ -231,16 +231,16 @@ class PlanetStory:
         self.speech_text = self.translator.SolarSystem.planetary_system_no
         self.speech_text += self.translator.Star.star_brightness
 
-    def review_solar_system(self):
+    def review_solar_system(self, isp_enabled):
         self.speech_text += self.planet_story
-        if self.cowboy_unlocked == False:
+        if self.cowboy_unlocked is False and isp_enabled:
             self.speech_text += self.translator.Purchase.purchase_request
         self.speech_text += self.translator.EndGame.game_play_again
 
         self.current_question = Question.PLAY_AGAIN
 
-    def do_not_review_solar_system(self):
-        if self.cowboy_unlocked == False:
+    def do_not_review_solar_system(self, isp_enabled):
+        if self.cowboy_unlocked is False and isp_enabled:
             self.speech_text += self.translator.Purchase.purchase_request
         self.speech_text = self.translator.EndGame.game_play_again
 

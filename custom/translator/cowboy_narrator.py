@@ -34,9 +34,9 @@ class CowboyTranslator(Translator):
         star_size_other = AUDIO.format("cowboy_star_size_other")
 
         star_age = AUDIO.format("cowboy_star_age")
-        star_age_young = AUDIO.format("star_age_young")
+        star_age_young = AUDIO.format("cowboy_star_age_young")
         star_age_middle = AUDIO.format("cowboy_star_age_middle")
-        star_age_old = AUDIO.format("star_age_old")
+        star_age_old = AUDIO.format("cowboy_star_age_old")
         star_age_other = AUDIO.format("star_age_other")
 
     class Planet:
@@ -50,16 +50,17 @@ class CowboyTranslator(Translator):
         planet_distance_far = AUDIO.format("cowboy_planet_distance_far")
         planet_distance_other = AUDIO.format("cowboy_invalid_distance")
 
-        planet_size = AUDIO.format("planet_size")
-        planet_size_large = AUDIO.format("planet_size_large")
-        planet_size_medium = AUDIO.format("planet_size_medium")
-        planet_size_small = AUDIO.format("planet_size_small")
+        planet_size = AUDIO.format("cowboy_what_is_the_size_of_your_planet") + AUDIO.format(
+            "cowboy_planet_size_options")
+        planet_size_large = AUDIO.format("cowboy_planet_size_is_gigantic")
+        planet_size_medium = AUDIO.format("cowboy_planet_size_medium")
+        planet_size_small = AUDIO.format("cowboy_planet_size_small")
         planet_size_other = AUDIO.format("planet_size_other")
 
-        planet_age = AUDIO.format("planet_age")
-        planet_age_young = AUDIO.format("planet_age_young")
-        planet_age_middleaged = AUDIO.format("planet_age_middleaged")
-        planet_age_old = AUDIO.format("planet_age_old")
+        planet_age = AUDIO.format("cowboy_what_is_the_age_of_your_planet")
+        planet_age_young = AUDIO.format("cowboy_planet_age_young")
+        planet_age_middleaged = AUDIO.format("cowboy_planet_age_middle")
+        planet_age_old = AUDIO.format("cowboy_planet_age_old")
         planet_age_other = AUDIO.format("planet_age_other")
 
     class EndGame:
