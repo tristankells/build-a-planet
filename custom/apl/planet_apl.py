@@ -72,8 +72,65 @@ def get_image_based_on_planet_distance(apl_datasource, planet_distance, planet_s
     return apl_datasource
 
 
-def get_image_based_on_planet_age(apl_datasource, planet_distance, planet_size, star_brightness, star_size, star_age):
-    raise NotImplementedError
+def get_image_based_on_planet_age(apl_datasource, planet_age, planet_distance, planet_size, star_brightness, star_size,
+                                  star_age, is_planet_habitable):
+    image_url = None
+
+    if planet_distance == Distance.NEAR:
+        if star_brightness == Brightness.YELLOW:
+            if planet_size == PlanetSize.LARGE or star_brightness == Brightness.BLUE or \
+                    star_size == StarSize.SUPER or star_age == Age.YOUNG:
+                image_url = PICTURES.FIREBALL_LARGE
+
+            elif planet_size == PlanetSize.MEDIUM or star_brightness == Brightness.BLUE or \
+                    star_size == StarSize.SUPER or star_age == Age.YOUNG:
+                image_url = PICTURES.FIREBALL_MEDIUM
+
+            elif planet_size == PlanetSize.SMALL or star_brightness == Brightness.BLUE or \
+                    star_size == StarSize.SUPER or star_age == Age.YOUNG:
+                image_url = PICTURES.FIREBALL_SMALL
+
+        elif (star_brightness == Brightness.RED and star_size == StarSize.SUPER) or \
+                star_size == StarSize.SUPER or star_age == Age.YOUNG:
+            if planet_size == PlanetSize.LARGE:
+                image_url = PICTURES.FIREBALL_LARGE
+
+            elif planet_size == PlanetSize.MEDIUM:
+                image_url = PICTURES.FIREBALL_MEDIUM
+
+            elif planet_size == PlanetSize.SMALL:
+                image_url = PICTURES.FIREBALL_SMALL
+
+    elif planet_distance == Distance.MIDWAY:
+        if planet_size == PlanetSize.LARGE:
+            image_url = PICTURES.GENERIC_LARGE
+        elif planet_size == PlanetSize.MEDIUM:
+            image_url = PICTURES.GENERIC_MEDIUM
+        elif planet_size == PlanetSize.SMALL:
+            image_url = PICTURES.GENERIC_SMALL
+    elif planet_distance == Distance.FAR:
+        if planet_size == PlanetSize.LARGE:
+            image_url = PICTURES.ICEBALL_LARGE
+        elif planet_size == PlanetSize.MEDIUM:
+            image_url = PICTURES.ICEBALL_MEDIUM
+        elif planet_size == PlanetSize.SMALL:
+            image_url = PICTURES.ICEBALL_SMALL
+
+    if planet_age == Age.YOUNG:
+        if planet_size == PlanetSize.LARGE:
+            image_url = PICTURES.GENERIC_LARGE
+        elif planet_size == PlanetSize.MEDIUM:
+            image_url = PICTURES.GENERIC_MEDIUM
+        elif planet_size == PlanetSize.SMALL:
+            image_url = PICTURES.GENERIC_SMALL
+
+    if is_planet_habitable:
+        # Change to earth pic
+        apl_datasource = get_image_habitable_planet(apl_datasource, planet_size=planet_size)
+
+    apl_datasource = set_apl_datasource_image_sources(apl_datasource, image_url)
+
+    return apl_datasource
 
 
 def get_image_habitable_planet(apl_datasource, planet_size):

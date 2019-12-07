@@ -1,39 +1,34 @@
 # Generic ASK SDK imports
+# For APL
+import json
 from typing import Dict, Any
 
-# from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk.standard import StandardSkillBuilder
-
-from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.utils import is_request_type, is_intent_name
-from ask_sdk_core.handler_input import HandlerInput
-from ask_sdk_model import Response
-from ask_sdk_model.interfaces.connections import SendRequestDirective
-from ask_sdk_model.ui import SimpleCard
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
+from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
+from ask_sdk_core.handler_input import HandlerInput
+from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_core.utils import viewport
+from ask_sdk_model import Response
+from ask_sdk_model.interfaces.alexa.presentation.apl import (
+    RenderDocumentDirective)
+from ask_sdk_model.interfaces.connections import SendRequestDirective
+from ask_sdk_model.interfaces.monetization.v1 import PurchaseResult
+# Purchasing
+from ask_sdk_model.services.monetization import EntitledState, InSkillProductsResponse
+from ask_sdk_model.ui import SimpleCard
 
+from alexa.device import Device
 # Custom skill code
 from alexa.intents import Intents
 from alexa.slots import Slots
+from apl import planet_apl, star_apl
+from logger import Logger
+from planet_story.narrator import Narrator
 from planet_story.planet_story import PlanetStory
 from planet_story.solar_questions import Question
-from planet_story.narrator import Narrator
-from alexa.assets import Assets
-from alexa.device import Device
-from logger import Logger
-from apl import planet_apl, star_apl
-
-# Purchasing
-from ask_sdk_model.services.monetization import EntitledState, InSkillProductsResponse
-from ask_sdk_model.interfaces.monetization.v1 import PurchaseResult
-
-# For APL
-import json
-from ask_sdk_model.interfaces.alexa.presentation.apl import (
-    RenderDocumentDirective)
 
 # Const strings
 
@@ -70,8 +65,8 @@ def _load_apl_document(file_path):
 def get_all_entitled_products(in_skill_product_list):
     """Get list of in-skill products in ENTITLED state."""
     entitled_product_list = [
-        l for l in in_skill_product_list if (
-                l.entitled == EntitledState.ENTITLED)]
+        skill_product for skill_product in in_skill_product_list if (
+                skill_product.entitled == EntitledState.ENTITLED)]
     return entitled_product_list
 
 
@@ -97,7 +92,6 @@ def get_global_isp_permissions(handler_input):
     monetization_service = handler_input.service_client_factory.get_monetization_service()
     voice_purchase_setting = yield monetization_service.get_voice_purchase_setting()
     return voice_purchase_setting
-
 
 
 def get_speak_ask_response(handler_input):
@@ -132,24 +126,26 @@ def get_apl_response(handler_input, datasource):
         )
     return handler_input.response_builder.response
 
+
 def get_speak_ask_upsell_response(handler_input):
     handler_input.response_builder.speak(
         planet_story.speech_text
-        ).ask(
-            planet_story.reprompt
-        ).add_directive(
-            SendRequestDirective(
-                name="Upsell",
-                payload={
-                    "InSkillProduct": {
-                        "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080'
-                    },
-                    "upsellMessage": 'This is a test upsell'
+    ).ask(
+        planet_story.reprompt
+    ).add_directive(
+        SendRequestDirective(
+            name="Upsell",
+            payload={
+                "InSkillProduct": {
+                    "productId": 'amzn1.adg.product.9881949f-e95d-4e03-a790-885468e8b080'
                 },
-                token="correlationToken"
-            )
+                "upsellMessage": 'This is a test upsell'
+            },
+            token="correlationToken"
         )
+    )
     return handler_input.response_builder.response
+
 
 # TODO: Fix rest of audio
 # TODO: Make clean ending
@@ -385,6 +381,7 @@ class StarAgeIntentHandler(AbstractRequestHandler):
         else:
             return get_speak_ask_response(handler_input)
 
+
 # endregion
 
 # region Planet Handlers
@@ -480,78 +477,27 @@ class PlanetAgeIntentHandler(AbstractRequestHandler):
 
         planet_story.set_planet_age(planet_age)
 
-        apl_datasource = _load_apl_document("./data/main.json")
-
-        if planet_story.planet.distance == "near":
-            if planet_story.star.brightness == "yellow":
-                if planet_story.planet.size == "large" or planet_story.star.brightness == "blue" or \
-                        planet_story.star.size == "super" or planet_story.star.age == "young":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
-                elif planet_story.planet.size == "medium" or planet_story.star.brightness == "blue" or \
-                        planet_story.star.size == "super" or planet_story.star.age == "young":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                elif planet_story.planet.size == "small" or planet_story.star.brightness == "blue" or \
-                        planet_story.star.size == "super" or planet_story.star.age == "young":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-            elif (planet_story.star.brightness == "red" and planet_story.star.size == "super") or \
-                    planet_story.star.brightness == "blue" or planet_story.star.size == "super" or planet_story.star.age == "young":
-                if planet_story.planet.size == "large":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_LARGE
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_LARGE
-                elif planet_story.planet.size == "medium":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_MEDIUM
-                elif planet_story.planet.size == "small":
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.FIREBALL_SMALL
-                    apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.FIREBALL_SMALL
-        elif planet_story.planet.distance == "midway":
-            if planet_story.planet.size == "large":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
-            elif planet_story.planet.size == "medium":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_MEDIUM
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_MEDIUM
-            elif planet_story.planet.size == "small":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
-        elif planet_story.planet.distance == "far":
-            if planet_story.planet.size == "large":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_LARGE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_LARGE
-            elif planet_story.planet.size == "medium":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_MEDIUM
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_MEDIUM
-            elif planet_story.planet.size == "small":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.ICEBALL_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.ICEBALL_SMALL
-
-        if planet_age == "young":
-            if planet_story.planet.size == "large":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_LARGE
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_LARGE
-            elif planet_story.planet.size == "medium":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_MEDIUM
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_MEDIUM
-            elif planet_story.planet.size == "small":
-                apl_datasource['bodyTemplate7Data']['image']['sources'][0]['url'] = Assets.Pictures.GENERIC_SMALL
-                apl_datasource['bodyTemplate7Data']['image']['sources'][1]['url'] = Assets.Pictures.GENERIC_SMALL
-
-        if planet_story.is_planet_habitable:
-            # Change to earth pic
-            apl_datasource = planet_apl.get_image_habitable_planet(apl_datasource, planet_size=planet_story.planet.size)
-
         if device.apl_support:
-            return get_apl_response(handler_input, datasource=apl_datasource)
+            if device.apl_support:
+                apl_datasource = _load_apl_document("./data/main.json")
+
+                apl_datasource = planet_apl.get_image_based_on_planet_age(
+                    apl_datasource,
+                    planet_age,
+                    planet_distance=planet_story.planet.age,
+                    planet_size=planet_story.planet.size,
+                    star_brightness=planet_story.star.brightness,
+                    star_size=planet_story.star.size,
+                    star_age=planet_story.star.age,
+                    is_planet_habitable=planet_story.is_planet_habitable
+                )
+
+                return get_apl_response(handler_input, datasource=apl_datasource)
         else:
             return get_speak_ask_response(handler_input)
 
 
 # endregion
-
-
 
 
 class YesReviewSolarSystem(AbstractRequestHandler):
@@ -599,19 +545,20 @@ class NoReviewSolarSystem(AbstractRequestHandler):
 
         return get_speak_ask_response(handler_input)
 
+
 class UpsellResponseHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return (is_request_type("Connections.Response")(handler_input) and
                 handler_input.request_envelope.request.name == "Upsell")
-        
+
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         if handler_input.request_envelope.request.status.code == "200":
             if handler_input.request_envelope.request.payload.get("purchaseResult") == PurchaseResult.DECLINED.value:
                 planet_story.purchase_declined()
         else:
-           planet_story.purchase_declined()
+            planet_story.purchase_declined()
 
         planet_story.speech_text += get_question_speech_text(planet_story.current_question)
 
@@ -646,6 +593,7 @@ class BuyHandler(AbstractRequestHandler):
 
 class BuyResponseHandler(AbstractRequestHandler):
     """This handles the Connections.Response event after a buy occurs."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return (is_request_type("Connections.Response")(handler_input) and
@@ -688,6 +636,7 @@ class RefundPurchaseHandler(AbstractRequestHandler):
     R E F U N D  -  S K I L L  I T E M
 
     """
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name(Intents.REFUND_SKILL_ITEM)(handler_input)
@@ -886,20 +835,15 @@ class FallbackHandler(AbstractRequestHandler):
 def get_fallback_question_speech_text(current_question):
     property_question_dict = {
         Question.Star.BRIGHTNESS:
-            planet_story.translator.Star.star_brightness_other
-        ,
+            planet_story.translator.Star.star_brightness_other,
         Question.Star.SIZE:
-            planet_story.translator.Star.star_size_other
-        ,
+            planet_story.translator.Star.star_size_other,
         Question.Star.AGE:
-            planet_story.translator.Star.star_age_other
-        ,
+            planet_story.translator.Star.star_age_other,
         Question.Planet.DISTANCE:
-            planet_story.translator.Planet.planet_distance_other
-        ,
+            planet_story.translator.Planet.planet_distance_other,
         Question.Planet.SIZE:
-            planet_story.translator.Planet.planet_size_other
-        ,
+            planet_story.translator.Planet.planet_size_other,
         Question.Planet.AGE:
             planet_story.translator.Planet.planet_age_other
     }
@@ -910,20 +854,15 @@ def get_fallback_question_speech_text(current_question):
 def get_question_speech_text(current_question):
     property_question_dict = {
         Question.Star.BRIGHTNESS:
-            planet_story.translator.Star.star_brightness
-        ,
+            planet_story.translator.Star.star_brightness,
         Question.Star.SIZE:
-            planet_story.translator.Star.star_size
-        ,
+            planet_story.translator.Star.star_size,
         Question.Star.AGE:
-            planet_story.translator.Star.star_age
-        ,
+            planet_story.translator.Star.star_age,
         Question.Planet.DISTANCE:
-            planet_story.translator.Planet.planet_distance
-        ,
+            planet_story.translator.Planet.planet_distance,
         Question.Planet.SIZE:
-            planet_story.translator.Planet.planet_size
-        ,
+            planet_story.translator.Planet.planet_size,
         Question.Planet.AGE:
             planet_story.translator.Planet.planet_age
     }
